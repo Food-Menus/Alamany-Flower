@@ -1,8 +1,9 @@
+     @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 /* General Styles */
 /*
 ad-container
 offers-slider
-
+navbar
 */
 :root {
     --primary-color: #FF69B4; /* Pink */
@@ -20,7 +21,7 @@ offers-slider
 }
 
 body {
-    font-family: 'Arial', sans-serif; /* You might want to use a more Arabic-friendly font */
+    font-family: 'Almarai', sans-serif;
     background-color: var(--white);
     color: var(--text-color);
     line-height: 1.6;
@@ -51,7 +52,7 @@ button {
 
 /* Navbar (Top) */
 .navbar {
-    background-color: var(--light-grey); /* Grey in pinkish theme */
+    background-color: var(--secondary-color); /* Grey in pinkish theme */
     color: var(--primary-color);
     padding: 15px 20px;
     text-align: center;
@@ -212,14 +213,14 @@ button {
 .offers-section {
     position: relative;
     overflow: hidden;
-    height: 300px; /* Fixed height for slider */
+    height: 500px; /* Fixed height for slider */
     background-color: var(--light-grey);
     padding: 0;
 }
 
 .offers-slider {
     display: flex;
-    width: 100%;
+    width: 105%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
 }
@@ -670,7 +671,7 @@ button {
     }
 
     .offers-section {
-        height: 250px;
+        height: 500px;
     }
 
     .offer-item h3 {
@@ -683,7 +684,7 @@ button {
 
     .ads-section .ad-container img {
         width: 620px; /* Slightly smaller for mobile */
-        height: 150px;
+        height: 100px;
     }
 
     .categories-grid {
@@ -720,7 +721,7 @@ button {
     }
 
     .offers-section {
-        height: 200px;
+        height: 400px;
     }
 
     .offer-item h3 {
