@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصر زهور الأماني - الإعجابات</title>
+    <link rel="stylesheet" href="./../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-name">قصر زهور الأماني</div>
+    </header>
+
+    <main class="content">
+        <section class="wishlist-section">
+            <h2>منتجاتك المفضلة</h2>
+            <div id="wishlist-products-container" class="products-grid">
+                <p class="empty-message">لا توجد منتجات في قائمة الإعجابات.</p>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="./../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="wishlist.html" class="nav-item active">
+            <i class="fas fa-heart"></i>
+            <span>الإعجابات</span>
+        </a>
+        <a href="cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span>السلة</span>
+        </a>
+        <a href="admin-login.html" class="nav-item">
+            <i class="fas fa-user-shield"></i>
+            <span>المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">&times;</button>
+        <ul>
+            <li><a href="#">من نحن</a></li>
+            <li><a href="#">اتصل بنا</a></li>
+            <li><a href="#">سياسة الخصوصية</a></li>
+            <li><a href="#">الأسئلة الشائعة</a></li>
+        </ul>
+    </div>
+
+    <script src="./../server/script.js"></script>
+    <script>
+        // JavaScript to load wishlist items from Local Storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const wishlistContainer = document.getElementById('wishlist-products-container');
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+            if (wishlist.length === 0) {
+                wishlistContainer.querySelector('.empty-message').style.display = 'block';
+            } else {
+                wishlistContainer.querySelector('.empty-message').style.display = 'none';
+                wishlist.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    productCard.dataset.productId = product.id;
+                    productCard.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="old-price">${product.oldPrice}</p>
+                        <p class="current-price">${product.currentPrice}</p>
+                        <div class="actions">
+                            <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> أضف للسلة</button>
+                            <button class="remove-from-wishlist-btn"><i class="fas fa-times"></i> إزالة</button>
+                        </div>
+                    `;
+                    wishlistContainer.appendChild(productCard);
+                });
+
+                // Add event listeners for cart/remove buttons on loaded items (would be handled in script.js)
+                // This is just a placeholder to show where the logic would go.
+                // You'd need a more robust way to handle these dynamically added elements.
+            }
+        });
+    </script>
+</body>
+</html>

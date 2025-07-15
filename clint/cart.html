@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصر زهور الأماني - سلة الشراء</title>
+    <link rel="stylesheet" href="./../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-name">قصر زهور الأماني</div>
+    </header>
+
+    <main class="content">
+        <section class="cart-section">
+            <h2>سلة مشترياتك</h2>
+            <div id="cart-products-container" class="products-grid">
+                <p class="empty-message">سلتك فارغة.</p>
+            </div>
+            <div class="cart-summary">
+                <h3>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
+                <button class="checkout-btn">إتمام الشراء</button>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="./../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="wishlist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>الإعجابات</span>
+        </a>
+        <a href="cart.html" class="nav-item active">
+            <i class="fas fa-shopping-basket"></i>
+            <span>السلة</span>
+        </a>
+        <a href="admin-login.html" class="nav-item">
+            <i class="fas fa-user-shield"></i>
+            <span>المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">&times;</button>
+        <ul>
+            <li><a href="#">من نحن</a></li>
+            <li><a href="#">اتصل بنا</a></li>
+            <li><a href="#">سياسة الخصوصية</a></li>
+            <li><a href="#">الأسئلة الشائعة</a></li>
+        </ul>
+    </div>
+
+    <script src="./../server/script.js"></script>
+    <script>
+        // JavaScript to load cart items from Local Storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartContainer = document.getElementById('cart-products-container');
+            const cartTotalSpan = document.getElementById('cart-total');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartContainer.querySelector('.empty-message').style.display = 'block';
+            } else {
+                cartContainer.querySelector('.empty-message').style.display = 'none';
+                cart.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    productCard.dataset.productId = product.id;
+                    productCard.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="current-price">${product.currentPrice}</p>
+                        <div class="cart-quantity-controls">
+                            <button class="decrease-quantity-btn" data-product-id="${product.id}">-</button>
+                            <span>${product.quantity || 1}</span>
+                            <button class="increase-quantity-btn" data-product-id="${product.id}">+</button>
+                        </div>
+                        <button class="remove-from-cart-btn"><i class="fas fa-trash"></i> إزالة</button>
+                    `;
+                    cartContainer.appendChild(productCard);
+                    total += parseFloat(product.currentPrice) * (product.quantity || 1);
+                });
+
+                // Add event listeners for quantity/remove buttons (would be handled in script.js)
+            }
+            cartTotalSpan.textContent = total.toFixed(2);
+        });
+    </script>
+</body>
+</html>
