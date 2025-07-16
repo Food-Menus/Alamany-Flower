@@ -4,10 +4,14 @@
 ad-container
 offers-slider
 navbar
+category-item
+.product-card .actions button
 */
+
 :root {
-    --primary-color: #FF69B4; /* Pink */
+    --primary-color: #e7ad00; /* Pink */
     --secondary-color: #333;   /* Dark Grey */
+    --secondary-color2: #8c8c8c;   /* Dark Grey */
     --light-grey: #f4f4f4;
     --white: #ffffff;
     --text-color: #333;
@@ -330,7 +334,7 @@ button {
 }
 
 .category-item {
-    background-color: var(--light-grey);
+    background-color: var(--secondary-color2);
     border-radius: var(--border-radius);
     padding: 15px 10px;
     display: flex;
@@ -355,7 +359,7 @@ button {
 .category-item span {
     font-size: 0.9em;
     font-weight: bold;
-    color: var(--text-color);
+    color: var(--white);
 }
 
 /* Product Cards (Best Sellers, Suggestions, Wishlist, Cart) */
@@ -440,6 +444,10 @@ button {
     display: flex;
     align-items: center;
     gap: 5px;
+    display: flex; /* اجعلها فليكس بوكس */
+    flex-direction: column; /* ترتيب العناصر عمودياً (أيقونة ثم نص) */
+    align-items: center; /* توسيط الأيقونة والنص أفقياً */
+    gap: 3px; /* مسافة صغيرة بين الأيقونة والنص */
     transition: background-color 0.3s ease;
 }
 
@@ -650,7 +658,38 @@ button {
     margin-top: 15px;
     font-weight: bold;
 }
+/* Language Switcher Button */
 
+
+.lang-switcher {
+    background-color: #dc3545; /* لون بمبي */
+    color: var(--white); /* نص أبيض */
+    border: none;
+    padding: 8px 15px;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.lang-switcher:hover {
+    background-color: #e05c9e; /* لون بمبي أغمق عند المرور بالماوس */
+}
+
+/* لتعديل حجم الخط على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .lang-switcher {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    .navbar .brand-name {
+        font-size: 1.5em; /* قد تحتاج لتصغير اسم البراند قليلاً */
+    }
+}
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .content {

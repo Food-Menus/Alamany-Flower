@@ -289,3 +289,380 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+
+// --- Language Switcher Functionality ---
+const languageSwitcherBtn = document.getElementById('language-switcher');
+const htmlElement = document.documentElement; // يمثل عنصر <html> في الصفحة
+
+// قاموس الترجمات
+const translations = {
+    ar: {
+        // عام
+        brandName: "قصر زهور الأماني",
+        home: "الرئيسية",
+        likes: "الإعجابات",
+        cart: "السلة",
+        admin: "المدير",
+        menu: "القائمة",
+        aboutUs: "من نحن",
+        contactUs: "اتصل بنا",
+        privacyPolicy: "سياسة الخصوصية",
+        faq: "الأسئلة الشائعة",
+        adminDashboard: "لوحة تحكم المدير",
+        allRightsReserved: "© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.",
+        clickHere: "اضغط هنا",
+        addToCart: "اضافة",
+        addToWishlist: "إعجاب", // هذه للعنصر الذي فيه أيقونة قلب فقط
+        removeFromWishlist: "إزالة",
+        removeFromCart: "إزالة",
+        emptyWishlist: "لا توجد منتجات في قائمة الإعجابات.",
+        emptyCart: "سلتك فارغة.",
+        cartTotal: "إجمالي السلة:",
+        checkout: "إتمام الشراء",
+        login: "تسجيل الدخول",
+        username: "اسم المستخدم:",
+        password: "كلمة المرور:",
+        loginSuccess: "تم تسجيل الدخول بنجاح! جاري التوجيه...",
+        loginError: "اسم المستخدم أو كلمة المرور غير صحيحة.",
+
+        // الصفحة الرئيسية
+        offersTitle: "عروضنا المميزة",
+        adsTitle: "إعلانات",
+        categoriesTitle: "أنواع الزهور",
+        bestSellersTitle: "الأكثر مبيعًا",
+        suggestionsTitle: "اقتراحات لك",
+        locationTitle: "موقعنا",
+
+        // أمثلة لعروض محددة (استخدم فقط تلك التي تظهر في HTML)
+        engagementRoses: "ورد الخطوبة",
+        engagementRosesDesc: "أجمل باقات الورد لمناسباتكم السعيدة.",
+        eventFlowers: "زهور المناسبات",
+        eventFlowersDesc: "تشكيلة واسعة من الزهور لكل مناسبة.",
+        graduationBouquets: "باقات التخرج",
+        graduationBouquetsDesc: "احتفل بتخرجك مع باقاتنا الفريدة.",
+
+        // أمثلة لأنواع الزهور
+        naturalRoses: "ورد طبيعي",
+        artificialRoses: "ورد صناعي",
+        indoorPlants: "نباتات داخلية",
+        readyBouquets: "باقات جاهزة",
+        gifts: "هدايا",
+        specialArrangements: "تنسيقات خاصة",
+        supplies: "مستلزمات",
+        trees: "أشجار",
+        rareFlowers: "أزهار نادرة",
+
+        // نصوص المنتجات في (الأكثر مبيعًا، الاقتراحات)
+        product1Title: "باقة الورد الأحمر",
+        priceOld1: "150 جنيه",
+        priceCurrent1: "120 جنيه",
+        product2Title: "تنسيقة زهور الربيع",
+        priceOld2: "200 جنيه",
+        priceCurrent2: "180 جنيه",
+        product3Title: "باقة زفاف بيضاء",
+        priceOld3: "500 جنيه",
+        priceCurrent3: "450 جنيه",
+        product4Title: "صندوق هدايا زهور",
+        priceOld4: "100 جنيه",
+        priceCurrent4: "80 جنيه",
+        product5Title: "ورد جوري مميز",
+        priceOld5: "90 جنيه",
+        priceCurrent5: "75 جنيه",
+        product6Title: "باقة توليب ملونة",
+        priceOld6: "180 جنيه",
+        priceCurrent6: "160 جنيه",
+
+        // رسائل تأكيدية (هذه تظهر عادة في تنبيهات أو رسائل مؤقتة)
+        productAddedToCart: "تمت إضافته إلى السلة!",
+        productAddedToWishlist: "تمت إضافته إلى الإعجابات!",
+        productRemovedFromWishlist: "تمت إزالته من الإعجابات.",
+        productRemovedFromCart: "تمت إزالة المنتج من السلة."
+    },
+    en: {
+        // General
+        brandName: "Amani Flowers Palace",
+        home: "Home",
+        likes: "Likes",
+        cart: "Cart",
+        admin: "Admin",
+        menu: "Menu",
+        aboutUs: "About Us",
+        contactUs: "Contact Us",
+        privacyPolicy: "Privacy Policy",
+        faq: "FAQ",
+        adminDashboard: "Admin Dashboard",
+        allRightsReserved: "© 2025 Amani Flowers Palace. All Rights Reserved.",
+        clickHere: "Click Here",
+        addToCart: "Add to Cart",
+        addToWishlist: "Like",
+        removeFromWishlist: "Remove",
+        removeFromCart: "Remove",
+        emptyWishlist: "No products in your wishlist.",
+        emptyCart: "Your cart is empty.",
+        cartTotal: "Cart Total:",
+        checkout: "Checkout",
+        login: "Login",
+        username: "Username:",
+        password: "Password:",
+        loginSuccess: "Login successful! Redirecting...",
+        loginError: "Incorrect username or password.",
+
+        // Home Page
+        offersTitle: "Our Special Offers",
+        adsTitle: "Advertisements",
+        categoriesTitle: "Flower Types",
+        bestSellersTitle: "Best Sellers",
+        suggestionsTitle: "Suggestions for You",
+        locationTitle: "Our Location",
+
+        // Specific offers examples
+        engagementRoses: "Engagement Roses",
+        engagementRosesDesc: "The most beautiful rose bouquets for your happy occasions.",
+        eventFlowers: "Event Flowers",
+        eventFlowersDesc: "A wide selection of flowers for every occasion.",
+        graduationBouquets: "Graduation Bouquets",
+        graduationBouquetsDesc: "Celebrate your graduation with our unique bouquets.",
+
+        // Flower types examples
+        naturalRoses: "Natural Roses",
+        artificialRoses: "Artificial Roses",
+        indoorPlants: "Indoor Plants",
+        readyBouquets: "Ready Bouquets",
+        gifts: "Gifts",
+        specialArrangements: "Special Arrangements",
+        supplies: "Supplies",
+        trees: "Trees",
+        rareFlowers: "Rare Flowers",
+
+        // Product texts (Best Sellers, Suggestions)
+        product1Title: "Red Rose Bouquet",
+        priceOld1: "150 EGP",
+        priceCurrent1: "120 EGP",
+        product2Title: "Spring Flower Arrangement",
+        priceOld2: "200 EGP",
+        priceCurrent2: "180 EGP",
+        product3Title: "White Wedding Bouquet",
+        priceOld3: "500 EGP",
+        priceCurrent3: "450 EGP",
+        product4Title: "Flower Gift Box",
+        priceOld4: "100 EGP",
+        priceCurrent4: "80 EGP",
+        product5Title: "Special Rose",
+        priceOld5: "90 EGP",
+        priceCurrent5: "75 EGP",
+        product6Title: "Colorful Tulip Bouquet",
+        priceOld6: "180 EGP",
+        priceCurrent6: "160 EGP",
+
+        // Confirmation messages
+        productAddedToCart: "Added to cart!",
+        productAddedToWishlist: "Added to wishlist!",
+        productRemovedFromWishlist: "Removed from wishlist.",
+        productRemovedFromCart: "Product removed from cart."
+    }
+};
+
+// وظيفة لتغيير لغة الموقع
+function setLanguage(lang) {
+    // 1. تغيير اتجاه الصفحة (RTL/LTR) وسمة اللغة
+    htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlElement.setAttribute('lang', lang);
+
+    // 2. تحديث النصوص بناءً على اللغة المختارة باستخدام data-translate-key
+    const currentTranslations = translations[lang];
+
+    // تحديث جميع العناصر التي تحتوي على data-translate-key
+    document.querySelectorAll('[data-translate-key]').forEach(element => {
+        const key = element.dataset.translateKey;
+        if (currentTranslations[key]) {
+            // معالجة خاصة للأزرار التي تحتوي على أيقونات ونص
+            if (element.classList.contains('add-to-cart-btn') || element.classList.contains('add-to-wishlist-btn') ||
+                element.classList.contains('remove-from-wishlist-btn') || element.classList.contains('remove-from-cart-btn')) {
+                const icon = element.querySelector('i');
+                element.innerHTML = ''; // إزالة النص القديم
+                if (icon) {
+                    element.appendChild(icon); // إضافة الأيقونة مرة أخرى
+                }
+                element.innerHTML += ` ${currentTranslations[key]}`; // إضافة النص الجديد
+            }
+            // معالجة خاصة لرسائل الأسعار (لضمان بقاء الأرقام إذا كانت جزءًا من النص المترجم)
+            else if (element.classList.contains('old-price') || element.classList.contains('current-price')) {
+                 // إذا كانت الترجمة تتضمن وحدة العملة، سنقوم بتحديثها بالكامل
+                 // وإلا، سنعتبر الرقم ثابتًا ونترجم النص المحيط به فقط
+                 element.textContent = currentTranslations[key];
+            }
+            else {
+                element.textContent = currentTranslations[key];
+            }
+        }
+    });
+
+    // تحديث نص زر تبديل اللغة نفسه
+    languageSwitcherBtn.textContent = lang === 'ar' ? 'EN / عربي' : 'AR / English';
+
+    // تخزين اللغة المفضلة في Local Storage
+    localStorage.setItem('preferredLang', lang);
+
+    // ملاحظة: إذا كان لديك أي محتوى يتم إنشاؤه ديناميكيًا بعد تحميل الصفحة
+    // مثل إضافة منتجات من سلة التسوق أو قائمة الإعجابات، فستحتاج إلى
+    // إعادة استدعاء وظيفة تحديث السلة/الإعجابات بعد تغيير اللغة
+    // لضمان أن النصوص المضافة حديثًا تظهر باللغة الصحيحة.
+    // مثال: if (typeof updateCartDisplay === 'function') updateCartDisplay();
+    // if (typeof updateWishlistDisplay === 'function') updateWishlistDisplay();
+}
+
+// دالة لمعالجة فتح/إغلاق القائمة الجانبية (من الكود الأصلي لديك)
+function setupSideMenu() {
+    const hamburgerBtn = document.querySelector('.hamburger-menu-btn');
+    const sideMenu = document.querySelector('.side-menu');
+    const closeSideMenuBtn = document.querySelector('.close-side-menu');
+
+    if (hamburgerBtn && sideMenu && closeSideMenuBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+        });
+
+        closeSideMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+        });
+
+        // Close side menu when clicking outside (optional, but good UX)
+        document.addEventListener('click', (event) => {
+            if (!sideMenu.contains(event.target) && !hamburgerBtn.contains(event.target) && sideMenu.classList.contains('open')) {
+                sideMenu.classList.remove('open');
+            }
+        });
+    }
+}
+
+
+// دالة للتعامل مع السلايدر (Offers Slider)
+function setupOffersSlider() {
+    const offersSlider = document.querySelector('.offers-slider');
+    const offerItems = document.querySelectorAll('.offer-item');
+    const dots = document.querySelectorAll('.slider-controls .dot');
+    let currentIndex = 0;
+
+    function updateSlider() {
+        if (!offersSlider || offerItems.length === 0) return;
+
+        const offset = -currentIndex * 100; // 100% for each slide
+        offersSlider.style.transform = `translateX(${offset}%)`;
+
+        dots.forEach((dot, index) => {
+            if (index === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            currentIndex = parseInt(e.target.dataset.slide);
+            updateSlider();
+        });
+    });
+
+    // Optional: Auto-slide
+    // setInterval(() => {
+    //     currentIndex = (currentIndex + 1) % offerItems.length;
+    //     updateSlider();
+    // }, 5000); // Change slide every 5 seconds
+
+    // Initial update
+    updateSlider();
+}
+
+
+// وظيفة للتعامل مع إضافة المنتجات إلى السلة (Cart functionality)
+function setupCartFunctionality() {
+    // هذه مجرد وظيفة وهمية، تحتاج إلى ربطها بـ Local Storage
+    // أو قاعدة بيانات حقيقية
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const productCard = event.target.closest('.product-card');
+            const productId = productCard.dataset.productId;
+            const productName = productCard.querySelector('h3').textContent;
+            const productPrice = productCard.querySelector('.current-price').textContent;
+
+            // يمكنك إضافة منطق هنا لإضافة المنتج إلى Local Storage
+            // أو إرساله إلى السيرفر
+            console.log(`Product Added: ID ${productId}, Name: ${productName}, Price: ${productPrice}`);
+            alert(translations[localStorage.getItem('preferredLang') || 'ar'].productAddedToCart); // رسالة تأكيد مترجمة
+        });
+    });
+}
+
+// وظيفة للتعامل مع قائمة الإعجابات (Wishlist functionality)
+function setupWishlistFunctionality() {
+    document.querySelectorAll('.add-to-wishlist-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const productCard = event.target.closest('.product-card');
+            const productId = productCard.dataset.productId;
+            const productName = productCard.querySelector('h3').textContent;
+
+            // تبديل حالة الإعجاب
+            button.classList.toggle('liked');
+            if (button.classList.contains('liked')) {
+                console.log(`Product Liked: ID ${productId}, Name: ${productName}`);
+                alert(translations[localStorage.getItem('preferredLang') || 'ar'].productAddedToWishlist);
+            } else {
+                console.log(`Product Unliked: ID ${productId}, Name: ${productName}`);
+                alert(translations[localStorage.getItem('preferredLang') || 'ar'].productRemovedFromWishlist);
+            }
+        });
+    });
+}
+
+
+// عند تحميل الصفحة بالكامل
+document.addEventListener('DOMContentLoaded', () => {
+    // تهيئة وظائف تبديل اللغة أولاً
+    // استرجع اللغة المفضلة المخزنة، أو استخدم "ar" كافتراضي
+    const storedLang = localStorage.getItem('preferredLang') || 'ar';
+    setLanguage(storedLang); // طبق اللغة عند التحميل الأولي للصفحة
+
+    // أضف مستمع الحدث لزر تبديل اللغة
+    if (languageSwitcherBtn) {
+        languageSwitcherBtn.addEventListener('click', () => {
+            const currentLang = htmlElement.getAttribute('dir') === 'rtl' ? 'ar' : 'en';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            setLanguage(newLang); // غير اللغة عند النقر
+        });
+    }
+
+    // تهيئة باقي وظائف الصفحة
+    setupSideMenu();
+    setupOffersSlider();
+    setupCartFunctionality(); // تأكد من استدعائها
+    setupWishlistFunctionality(); // تأكد من استدعائها
+
+    // يمكنك إضافة وظائف تهيئة أخرى هنا للصفحة الرئيسية إذا كانت موجودة
+});
+
+// هذا الكود يمكن أن يكون في ملف منفصل لصفحات السلة/الإعجابات
+// إذا كانت لديك صفحات منفصلة لهم
+
+// وظائف مساعدة (مثال فقط، تحتاج إلى تنفيذها بالكامل لصفحات السلة/الإعجابات)
+function updateCartTotal() {
+    // هذه وظيفة وهمية، تحتاج إلى قراءة عناصر السلة من Local Storage
+    // وحساب الإجمالي الفعلي.
+    const cartTotalElement = document.getElementById('cart-total');
+    if (cartTotalElement) {
+        // افترض أن لديك دالة تجلب الإجمالي، مثلاً getCartTotalPrice()
+        // cartTotalElement.textContent = `${getCartTotalPrice()} جنيه`;
+        cartTotalElement.textContent = "0 جنيه"; // Placeholder
+    }
+}
+
+// هذه الدالة ستكون في صفحة السلة cart.html
+// document.addEventListener('DOMContentLoaded', () => {
+//     if (document.body.classList.contains('cart-page')) { // استخدم فئة لتحديد الصفحة
+//         // تحميل عناصر السلة من Local Storage وعرضها
+//         // تحديث الإجمالي بعد التحميل
+//         updateCartTotal();
+//     }
+// });
