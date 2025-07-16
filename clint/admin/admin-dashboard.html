@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="adminPanelTitle">قصر زهور الأماني - لوحة تحكم المدير</title>
+    <link rel="stylesheet" href="./../../server/static/css/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
+        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+
+    <main class="content">
+        <section class="data-display-section">
+            <h2 data-translate-key="adminPanelTitle">لوحة تحكم المدير</h2>
+            <div class="admin-controls-grid">
+                <a href="orders.html" class="admin-control-button">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span data-translate-key="manageOrders">إدارة الطلبات</span>
+                </a>
+                <a href="view-products.html" class="admin-control-button">
+                    <i class="fas fa-boxes"></i>
+                    <span data-translate-key="manageProducts">إدارة المنتجات</span>
+                </a>
+                <a href="../user/add-feedback.html" class="admin-control-button"> <i class="fas fa-comment-dots"></i>
+                    <span data-translate-key="addFeedback">إضافة تقييم</span>
+                </a>
+                <a href="view-feedback.html" class="admin-control-button">
+                    <i class="fas fa-star-half-alt"></i>
+                    <span data-translate-key="viewAllFeedback">عرض كل التقييمات</span>
+                </a>
+                <a href="reports.html" class="admin-control-button">
+                    <i class="fas fa-chart-line"></i>
+                    <span data-translate-key="viewReports">عرض التقارير</span>
+                </a>
+                <button class="admin-control-button" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span data-translate-key="logout">تسجيل الخروج</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span data-translate-key="home">الرئيسية</span>
+        </a>
+        <a href="../clint/wishlist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span data-translate-key="likes">الإعجابات</span>
+        </a>
+        <a href="../clint/cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span data-translate-key="cart">السلة</span>
+        </a>
+        <a href="admin-login.html" class="nav-item active">
+            <i class="fas fa-user-shield"></i>
+            <span data-translate-key="admin">المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span data-translate-key="menu">القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">×</button>
+        <ul>
+            <li><a href="../clint/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="#" data-translate-key="contactUs">اتصل بنا</a></li>
+            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
+            <li><a href="#" data-translate-key="faq">الأسئلة الشائعة</a></li>
+            <li><a href="admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>
+    </div>
+
+    <script src="./../../server/script.js"></script>
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    alert(translations[localStorage.getItem('preferredLang') || 'ar'].logout);
+                    window.location.href = 'admin-login.html'; // Redirect to login page
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="ordersTitle">قصر زهور الأماني - الطلبات</title>
+    <link rel="stylesheet" href="./../../server/static/css/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
+        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+
+    <main class="content">
+        <section class="data-display-section">
+            <h2 data-translate-key="ordersTitle">الطلبات الواردة</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th data-translate-key="orderId">رقم الطلب</th>
+                            <th data-translate-key="customerName">اسم العميل</th>
+                            <th data-translate-key="orderDate">تاريخ الطلب</th>
+                            <th data-translate-key="orderTotal">الإجمالي</th>
+                            <th data-translate-key="orderStatus">الحالة</th>
+                            <th data-translate-key="actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1001</td>
+                            <td>أحمد محمد</td>
+                            <td>2025-07-15</td>
+                            <td>350 جنيه</td>
+                            <td class="status-pending" data-translate-key="statusPending">معلق</td>
+                            <td class="action-buttons">
+                                <button data-translate-key="viewOrder">عرض</button>
+                                <button class="complete-btn" data-translate-key="completeOrder">إتمام</button>
+                                <button class="delete-btn" data-translate-key="cancelOrder">إلغاء</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1002</td>
+                            <td>فاطمة علي</td>
+                            <td>2025-07-14</td>
+                            <td>120 جنيه</td>
+                            <td class="status-completed" data-translate-key="statusCompleted">مكتمل</td>
+                            <td class="action-buttons">
+                                <button data-translate-key="viewOrder">عرض</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1003</td>
+                            <td>محمد السيد</td>
+                            <td>2025-07-13</td>
+                            <td>500 جنيه</td>
+                            <td class="status-processing" data-translate-key="statusProcessing">قيد المعالجة</td>
+                            <td class="action-buttons">
+                                <button data-translate-key="viewOrder">عرض</button>
+                                <button class="complete-btn" data-translate-key="completeOrder">إتمام</button>
+                                <button class="delete-btn" data-translate-key="cancelOrder">إلغاء</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+                <p class="empty-message" style="display: none;" data-translate-key="noOrders">لا توجد طلبات حالياً.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span data-translate-key="home">الرئيسية</span>
+        </a>
+        <a href="../clint/wishlist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span data-translate-key="likes">الإعجابات</span>
+        </a>
+        <a href="../clint/cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span data-translate-key="cart">السلة</span>
+        </a>
+        <a href="admin-login.html" class="nav-item active"> <i class="fas fa-user-shield"></i>
+            <span data-translate-key="admin">المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span data-translate-key="menu">القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">×</button>
+        <ul>
+            <li><a href="../clint/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="#" data-translate-key="contactUs">اتصل بنا</a></li>
+            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
+            <li><a href="#" data-translate-key="faq">الأسئلة الشائعة</a></li>
+            <li><a href="admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>
+    </div>
+
+    <script src="./../../server/script.js"></script>
+</body>
+</html>

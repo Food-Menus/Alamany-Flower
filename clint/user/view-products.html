@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="viewProductsTitle">قصر زهور الأماني - عرض المنتجات</title>
+    <link rel="stylesheet" href="./../../server/static/css/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
+        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+
+    <main class="content">
+        <section class="data-display-section">
+            <h2 data-translate-key="viewProductsTitle">عرض المنتجات</h2>
+            <div style="text-align: left; margin-bottom: 20px;">
+                <a href="add-product.html" class="action-button" data-translate-key="addNewProduct">
+                    <i class="fas fa-plus"></i> إضافة منتج جديد
+                </a>
+            </div>
+            <div class="product-management-grid">
+                <div class="manage-product-card" data-product-id="1">
+                    <img src="../server/static/images/11.jpg" alt="باقة الورد الأحمر">
+                    <h3 data-translate-key="product1Title">باقة الورد الأحمر</h3>
+                    <p class="price"> <span data-translate-key="priceCurrent1">120 جنيه</span></p>
+                    <p data-translate-key="productStatus">الحالة: <span class="status-completed" data-translate-key="inStock">متوفر</span></p>
+                    <div class="actions">
+                        <a href="edit-product.html?id=1" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
+                        <button class="delete-btn" data-translate-key="delete">حذف</button>
+                    </div>
+                </div>
+                <div class="manage-product-card" data-product-id="2">
+                    <img src="../server/static/images/22.jpg" alt="تنسيقة زهور الربيع">
+                    <h3 data-translate-key="product2Title">تنسيقة زهور الربيع</h3>
+                    <p class="price"> <span data-translate-key="priceCurrent2">180 جنيه</span></p>
+                    <p data-translate-key="productStatus">الحالة: <span class="status-pending" data-translate-key="outOfStock">غير متوفر</span></p>
+                    <div class="actions">
+                        <a href="edit-product.html?id=2" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
+                        <button class="delete-btn" data-translate-key="delete">حذف</button>
+                    </div>
+                </div>
+                </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span data-translate-key="home">الرئيسية</span>
+        </a>
+        <a href="../clint/wishlist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span data-translate-key="likes">الإعجابات</span>
+        </a>
+        <a href="../clint/cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span data-translate-key="cart">السلة</span>
+        </a>
+        <a href="admin-login.html" class="nav-item active">
+            <i class="fas fa-user-shield"></i>
+            <span data-translate-key="admin">المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span data-translate-key="menu">القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">×</button>
+        <ul>
+            <li><a href="../clint/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="#" data-translate-key="contactUs">اتصل بنا</a></li>
+            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
+            <li><a href="#" data-translate-key="faq">الأسئلة الشائعة</a></li>
+            <li><a href="admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>
+    </div>
+
+    <script src="./../../server/script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.manage-product-card .delete-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.closest('.manage-product-card').dataset.productId;
+                    if (confirm(`هل أنت متأكد من حذف المنتج رقم ${productId}؟`)) {
+                        console.log(`Deleting product with ID: ${productId}`);
+                        // هنا يمكنك إضافة منطق لحذف المنتج من قاعدة البيانات/Local Storage
+                        event.target.closest('.manage-product-card').remove(); // Remove from DOM
+                        alert(translations[localStorage.getItem('preferredLang') || 'ar'].productRemovedSuccess || "تم حذف المنتج بنجاح!");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

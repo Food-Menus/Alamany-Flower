@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قصر زهور الأماني - سلة الشراء</title>
-    <link rel="stylesheet" href="./../server/static/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <header class="navbar">
-        <div class="brand-name">قصر زهور الأماني</div>
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
     </header>
+        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
 
     <main class="content">
         <section class="cart-section">
@@ -59,7 +60,8 @@
         </ul>
     </div>
 
-    <script src="./../server/script.js"></script>
+    <script src="./../../server/script.js"></script>
+
     <script>
         // JavaScript to load cart items from Local Storage
         document.addEventListener('DOMContentLoaded', () => {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="feedbackTitle">قصر زهور الأماني - أضف تقييمك</title>
+    <link rel="stylesheet" href="./../../server/static/css/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
+        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+
+    <main class="content">
+        <section class="form-section">
+            <h2 data-translate-key="feedbackFormTitle">مشاركة رأيك</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name" data-translate-key="yourName">اسمك:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" data-translate-key="yourEmail">بريدك الإلكتروني:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="rating" data-translate-key="yourRating">تقييمك:</label>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="comments" data-translate-key="yourComments">تعليقاتك:</label>
+                    <textarea id="comments" name="comments" rows="5"></textarea>
+                </div>
+                <button type="submit" class="submit-btn" data-translate-key="submitFeedback">إرسال التقييم</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span data-translate-key="home">الرئيسية</span>
+        </a>
+        <a href="wishlist.html" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span data-translate-key="likes">الإعجابات</span>
+        </a>
+        <a href="cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span data-translate-key="cart">السلة</span>
+        </a>
+        <a href="../admin/admin-login.html" class="nav-item">
+            <i class="fas fa-user-shield"></i>
+            <span data-translate-key="admin">المدير</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn active">
+            <i class="fas fa-bars"></i>
+            <span data-translate-key="menu">القائمة</span>
+        </button>
+    </nav>
+
+    <div class="side-menu">
+        <button class="close-side-menu">×</button>
+        <ul>
+            <li><a href="about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="#" data-translate-key="contactUs">اتصل بنا</a></li>
+            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
+            <li><a href="#" data-translate-key="faq">الأسئلة الشائعة</a></li>
+            <li><a href="../admin/admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>
+    </div>
+
+    <script src="./../../server/script.js"></script>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // هنا يمكنك جمع بيانات النموذج وإرسالها
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const rating = document.querySelector('input[name="rating"]:checked');
+                    const comments = document.getElementById('comments').value;
+
+                    console.log({ name, email, rating: rating ? rating.value : 'No rating', comments });
+                    alert(translations[localStorage.getItem('preferredLang') || 'ar'].feedbackAddedSuccess);
+                    feedbackForm.reset(); // إعادة تعيين النموذج
+                });
+            }
+        });
+    </script>
+</body>
+</html>

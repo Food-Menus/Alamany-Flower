@@ -1,0 +1,433 @@
+/* Custom Styles for New Pages */
+
+/* General Card/Form Section */
+.info-section, .form-section, .data-display-section {
+    background-color: var(--white);
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.info-section h2, .form-section h2, .data-display-section h2 {
+    margin-bottom: 25px;
+    font-size: 2em;
+    color: var(--primary-color);
+    text-align: center;
+    position: relative;
+}
+
+.info-section h2::after, .form-section h2::after, .data-display-section h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background-color: var(--primary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Forms (Feedback, Add Product) */
+.form-group {
+    margin-bottom: 20px;
+    text-align: right; /* Default for RTL */
+}
+html[dir="ltr"] .form-group {
+    text-align: left; /* For LTR */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 1.1em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Almarai', sans-serif;
+    background-color: var(--light-grey);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-btn, .action-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+}
+
+.submit-btn:hover, .action-button:hover {
+    background-color: #d39c00; /* Darker primary */
+    transform: translateY(-2px);
+}
+
+/* Admin Dashboard & General Control Buttons */
+.admin-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-control-button {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-control-button i {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.admin-control-button:hover {
+    background-color: var(--secondary-color2);
+    transform: translateY(-5px);
+}
+
+
+/* Data Tables (Orders, Feedback, Products) */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* For rounded corners */
+}
+
+.data-table thead {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: right; /* Default for RTL */
+    border-bottom: 1px solid #ddd;
+}
+html[dir="ltr"] .data-table th, html[dir="ltr"] .data-table td {
+    text-align: left; /* For LTR */
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: var(--light-grey);
+}
+
+.data-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+.data-table .status-pending {
+    color: var(--color1); /* Red */
+    font-weight: bold;
+}
+.data-table .status-completed {
+    color: var(--color2); /* Green */
+    font-weight: bold;
+}
+.data-table .status-processing {
+    color: var(--primary-color); /* Orange/Yellow */
+    font-weight: bold;
+}
+
+.data-table .action-buttons button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.data-table .action-buttons button:hover {
+    background-color: #d39c00;
+}
+
+.data-table .action-buttons .delete-btn {
+    background-color: var(--color1); /* Red */
+}
+.data-table .action-buttons .delete-btn:hover {
+    background-color: var(--color3); /* Darker Red */
+}
+
+/* Feedback Specifics (Star Ratings) */
+.rating {
+    display: flex;
+    direction: rtl; /* For stars to align right-to-left in RTL */
+    justify-content: center;
+}
+html[dir="ltr"] .rating {
+    direction: ltr; /* For stars to align left-to-right in LTR */
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    font-size: 1.8em;
+    color: #ccc; /* Grey stars */
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input[type="radio"]:checked ~ label {
+    color: var(--primary-color); /* Yellow/Orange for selected stars */
+}
+.feedback-card {
+    background-color: var(--light-grey);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.feedback-card p {
+    margin-bottom: 5px;
+}
+.feedback-card .feedback-meta {
+    font-size: 0.9em;
+    color: #666;
+    text-align: left; /* Name and date to the left for RTL */
+}
+html[dir="ltr"] .feedback-card .feedback-meta {
+    text-align: right; /* Name and date to the right for LTR */
+}
+
+/* Reports Page */
+.report-card {
+    background-color: var(--light-grey);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.report-card h3 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    text-align: center;
+}
+.report-card ul {
+    list-style: none;
+    padding: 0;
+}
+.report-card ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.report-card ul li:last-child {
+    border-bottom: none;
+}
+.report-card .percentage {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Progress Bars for Reports (e.g., customer satisfaction) */
+.progress-bar-container {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.progress-bar {
+    height: 25px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Products Management Page */
+.product-management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+.manage-product-card {
+    background-color: var(--white);
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+.manage-product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+.manage-product-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+    color: var(--text-color);
+    padding: 0 10px;
+}
+.manage-product-card p {
+    font-size: 0.9em;
+    color: #666;
+    padding: 0 10px;
+}
+.manage-product-card .price {
+    font-size: 1.1em;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.manage-product-card .actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: var(--light-grey);
+    border-top: 1px solid #eee;
+    margin-top: auto;
+}
+.manage-product-card .actions button {
+    flex-grow: 1;
+    margin: 0 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: var(--white);
+    transition: background-color 0.3s ease;
+}
+.manage-product-card .actions .edit-btn {
+    background-color: var(--primary-color);
+}
+.manage-product-card .actions .edit-btn:hover {
+    background-color: #d39c00;
+}
+.manage-product-card .actions .delete-btn {
+    background-color: var(--color1);
+}
+.manage-product-card .actions .delete-btn:hover {
+    background-color: var(--color3);
+}
+
+/* Specific adjustments for LTR mode for forms and tables */
+html[dir="ltr"] .form-group {
+    text-align: left;
+}
+html[dir="ltr"] .data-table th,
+html[dir="ltr"] .data-table td {
+    text-align: left;
+}
+html[dir="ltr"] .feedback-card .feedback-meta {
+    text-align: right;
+}
+html[dir="ltr"] .side-menu {
+    left: -100%;
+    right: auto;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: left 0.4s ease-in-out;
+}
+html[dir="ltr"] .side-menu.open {
+    left: 0;
+}
+html[dir="ltr"] .side-menu .close-side-menu {
+    align-self: flex-end;
+}
+html[dir="ltr"] .lang-switcher {
+    order: 1; /* Puts the language switcher button to the right in LTR */
+}
+html[dir="ltr"] .navbar .brand-name {
+    text-align: left; /* Adjust alignment for brand name in LTR if needed */
+}
+
+/* Media Queries for New Sections */
+@media (max-width: 768px) {
+    .admin-controls-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    .admin-control-button {
+        font-size: 1em;
+        padding: 15px;
+    }
+    .admin-control-button i {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .data-table th, .data-table td {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+    .manage-product-card {
+        padding: 10px;
+    }
+    .manage-product-card h3 {
+        font-size: 1.1em;
+    }
+    .manage-product-card .actions button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .content section {
+        padding: 15px;
+    }
+    .info-section h2, .form-section h2, .data-display-section h2 {
+        font-size: 1.5em;
+    }
+    .form-group label {
+        font-size: 1em;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 10px;
+    }
+    .submit-btn, .action-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
