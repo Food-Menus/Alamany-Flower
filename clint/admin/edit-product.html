@@ -4,62 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
-    <title data-translate-key="editProductTitle">قصر زهور الأماني - تعديل المنتج</title>
+    <title data-translate-key="adminPanelTitle">قصر زهور الأماني - لوحة تحكم المدير</title>
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px; /* مسافة بين الفورم والفوتر */
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select { /* أضفنا select هنا */
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        input[type="file"] {
+            padding: 8px 0;
+        }
+        .buttons-group {
+            display: flex;
+            gap: 10px; /* مسافة بين الأزرار */
+            margin-top: 20px;
+        }
+        .submit-btn, .delete-btn { /* سمينا الأزرار submit-btn و delete-btn لتمييزها عن submit القديم */
+            flex: 1; /* لجعل الأزرار تأخذ نفس المساحة */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn {
+            background-color: #007bff; /* لون أزرق للحفظ */
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn {
+            background-color: #dc3545; /* لون أحمر للحذف */
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #007bff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none; /* مخفي افتراضيًا */
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
 <!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
 <!--###################################################################################-->
 
 
-    <main class="content">
-        <section class="form-section">
-            <h2 data-translate-key="editProductTitle">تعديل المنتج</h2>
-            <form id="productForm">
-                <div class="form-group">
-                    <label for="productName" data-translate-key="productName">اسم المنتج:</label>
-                    <input type="text" id="productName" name="productName" value="باقة الورد الأحمر" required>
-                </div>
-                <div class="form-group">
-                    <label for="productDescription" data-translate-key="productDescription">وصف المنتج:</label>
-                    <textarea id="productDescription" name="productDescription" rows="4">باقة أنيقة من أجود أنواع الورد الأحمر الطازج، مثالية للتعبير عن الحب والمشاعر الصادقة في جميع المناسبات.</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="productPrice" data-translate-key="productPrice">السعر:</label>
-                    <input type="number" id="productPrice" name="productPrice" value="120" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="productOldPrice" data-translate-key="productOldPrice">السعر القديم (اختياري):</label>
-                    <input type="number" id="productOldPrice" name="productOldPrice" value="150" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label for="productImageURL" data-translate-key="productImageURL">رابط صورة المنتج:</label>
-                    <input type="url" id="productImageURL" name="productImageURL" value="./server/static/images/11.jpg" required>
-                </div>
-                <div class="form-group">
-                    <label for="productCategory" data-translate-key="productCategory">الفئة:</label>
-                    <select id="productCategory" name="productCategory">
-                        <option value="naturalRoses" data-translate-key="naturalRoses">ورد طبيعي</option>
-                        <option value="artificialRoses" data-translate-key="artificialRoses">ورد صناعي</option>
-                        <option value="indoorPlants" data-translate-key="indoorPlants">نباتات داخلية</option>
-                        <option value="rareFlowers" data-translate-key="rareFlowers">أزهار نادرة</option>
-                        </select>
-                </div>
-                <button type="submit" class="submit-btn" data-translate-key="saveChanges">حفظ التغييرات</button>
-            </form>
-        </section>
-    </main>
+    <div class="container">
+            <h2>تعديل / حذف منتج</h2>
 
+            <div class="form-group">
+                <label for="productSelector">اختر المنتج:</label>
+                <select id="productSelector">
+                    <option value="">-- اختر منتجًا --</option>
+                </select>
+            </div>
 
+            <div id="productDetailsForm" class="hidden">
+                <form id="editProductForm">
+                    <div class="form-group">
+                        <label for="edit_product_Name">اسم المنتج:</label>
+                        <input type="text" id="edit_product_Name" name="product_Name" readonly>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="edit_product_Details">تفاصيل المنتج:</label>
+                        <textarea id="edit_product_Details" name="product_Details"></textarea>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="edit_product_prise_1">السعر الأول:</label>
+                        <input type="number" step="0.01" id="edit_product_prise_1" name="product_prise_1">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="edit_product_prise_2">السعر الثاني:</label>
+                        <input type="number" step="0.01" id="edit_product_prise_2" name="product_prise_2">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="edit_product_type_1">النوع الأول:</label>
+                        <input type="text" id="edit_product_type_1" name="product_type_1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_product_type_2">النوع الثاني:</label>
+                        <input type="text" id="edit_product_type_2" name="product_type_2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_product_suitable">مناسب لـ (فئات):</label>
+                        <input type="text" id="edit_product_suitable" name="product_suitable">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_product_image">صورة المنتج:</label>
+                        <input type="file" id="edit_product_image" name="product_image" accept="image/*">
+                        <img id="current_product_image" src="" alt="صورة المنتج الحالية" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none;">
+                    </div>
+
+                    <div class="buttons-group">
+                        <button type="submit" class="submit-btn">حفظ التعديلات</button>
+                        <button type="button" id="deleteProductBtn" class="delete-btn">حذف المنتج</button>
+                    </div>
+                </form>
+            </div>
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            <div id="message" class="message"></div>
+    </div>
 
 
 <!--###################################################################################-->
@@ -73,11 +193,11 @@
         <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
-        <a href="./../../index.html" class="nav-item active">
+        <a href="./../../index.html" class="nav-item">
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./../user/wishlist.html" class="nav-item">
+        <a href="./../user/wishlist.html" class="nav-item" >
             <i class="fas fa-heart"></i>
             <span data-translate-key="likes">الإعجابات</span>
         </a>
@@ -85,9 +205,9 @@
             <i class="fas fa-shopping-basket"></i>
             <span data-translate-key="cart">السلة</span>
         </a>
-        <a href="./admin-login.html" class="nav-item">
-            <i class="fas fa-user-shield"></i>
-            <span data-translate-key="admin">المدير</span>
+        <a href="./../user/view-products.html" class="nav-item">
+            <i class="fas fa-store"></i>
+            <span data-translate-key="admin">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -98,41 +218,219 @@
         <h1>قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
             <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">قائمة المنتجات</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
         </ul>        
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
 <!--###################################################################################-->
 
-
-
-
-
-
-    <script src="./../../server/script.js"></script>
-
+<script src="./../../server/script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const productForm = document.getElementById('productForm');
-            if (productForm) {
-                productForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    // هنا يمكنك جمع بيانات المنتج المحدثة وإرسالها
-                    const productName = document.getElementById('productName').value;
-                    const productPrice = document.getElementById('productPrice').value;
-                    // ... get other fields
+        // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // يجب أن يكون هذا نفس الـ URL الذي استخدمته لإضافة المنتج
 
-                    console.log(`Product Updated: ${productName}, Price: ${productPrice}`);
-                    alert(translations[localStorage.getItem('preferredLang') || 'ar'].productUpdatedSuccess);
-                    // Optionally redirect to view-products.html
-                    // window.location.href = 'view-products.html';
-                });
+        const productSelector = document.getElementById('productSelector');
+        const productDetailsFormDiv = document.getElementById('productDetailsForm');
+        const editProductForm = document.getElementById('editProductForm');
+        const deleteProductBtn = document.getElementById('deleteProductBtn');
+        const messageDiv = document.getElementById('message');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        let allProducts = []; // لتخزين جميع المنتجات التي تم جلبها
+
+        // دوال مساعدة لإظهار/إخفاء Spinner والرسائل
+        function showSpinner() {
+            loadingSpinner.style.display = 'block';
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+        }
+
+        function hideSpinner() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+
+        // --- جلب المنتجات لملء القائمة المنسدلة ---
+        async function fetchProducts() {
+            showSpinner();
+            try {
+                // نستخدم doGet لطلب قائمة المنتجات
+                const response = await fetch(WEB_APP_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                allProducts = await response.json();
+
+                productSelector.innerHTML = '<option value="">-- اختر منتجًا --</option>'; // مسح الخيارات القديمة
+                if (allProducts && allProducts.length > 0) {
+                    allProducts.forEach(product => {
+                        const option = document.createElement('option');
+                        option.value = product.product_Name; // نستخدم اسم المنتج كقيمة للخيار
+                        option.textContent = product.product_Name;
+                        productSelector.appendChild(option);
+                    });
+                } else {
+                    showMessage('لا توجد منتجات متاحة.', 'error');
+                }
+            } catch (error) {
+                showMessage('فشل في جلب المنتجات: ' + error.message, 'error');
+                console.error('Error fetching products:', error);
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // --- عند اختيار منتج من القائمة المنسدلة ---
+        productSelector.addEventListener('change', function() {
+            const selectedProductName = this.value;
+            if (selectedProductName) {
+                const selectedProduct = allProducts.find(p => p.product_Name === selectedProductName);
+                if (selectedProduct) {
+                    fillFormWithProductData(selectedProduct);
+                    productDetailsFormDiv.classList.remove('hidden'); // إظهار قسم التفاصيل
+                    showMessage('', ''); // مسح الرسائل
+                }
+            } else {
+                productDetailsFormDiv.classList.add('hidden'); // إخفاء قسم التفاصيل
+                editProductForm.reset(); // مسح حقول النموذج
+                document.getElementById('current_product_image').style.display = 'none'; // إخفاء الصورة
+                document.getElementById('current_product_image').src = '';
+                showMessage('', ''); // مسح الرسائل
             }
         });
+
+        // --- ملء النموذج ببيانات المنتج المحدد ---
+        function fillFormWithProductData(product) {
+            document.getElementById('edit_product_Name').value = product.product_Name || '';
+            document.getElementById('edit_product_Details').value = product.product_Details || '';
+            document.getElementById('edit_product_prise_1').value = product.product_prise_1 || 0;
+            document.getElementById('edit_product_prise_2').value = product.product_prise_2 || 0;
+            document.getElementById('edit_product_type_1').value = product.product_type_1 || '';
+            document.getElementById('edit_product_type_2').value = product.product_type_2 || '';
+            document.getElementById('edit_product_suitable').value = product.product_suitable || '';
+
+            const currentImage = document.getElementById('current_product_image');
+            if (product.product_image) {
+                currentImage.src = product.product_image;
+                currentImage.style.display = 'block';
+            } else {
+                currentImage.src = '';
+                currentImage.style.display = 'none';
+            }
+            document.getElementById('edit_product_image').value = ''; // مسح اختيار الملف
+        }
+
+        // --- عند الضغط على زر حفظ التعديلات ---
+        editProductForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); // منع الإرسال الافتراضي
+
+            const originalProductName = document.getElementById('edit_product_Name').value; // الاسم الأصلي للمنتج (معرف)
+
+            const formData = new FormData();
+            formData.append('action', 'update'); // تحديد العملية كـ 'update'
+            formData.append('product_Name', originalProductName); // إرسال اسم المنتج كمعرف
+
+            // جمع البيانات المحدثة
+            formData.append('product_Details', document.getElementById('edit_product_Details').value);
+            formData.append('product_prise_1', parseFloat(document.getElementById('edit_product_prise_1').value) || 0);
+            formData.append('product_prise_2', parseFloat(document.getElementById('edit_product_prise_2').value) || 0);
+            formData.append('product_type_1', document.getElementById('edit_product_type_1').value);
+            formData.append('product_type_2', document.getElementById('edit_product_type_2').value);
+            formData.append('product_suitable', document.getElementById('edit_product_suitable').value);
+
+            const productImageInput = document.getElementById('edit_product_image');
+
+            if (productImageInput.files.length > 0) {
+                const file = productImageInput.files[0];
+                const reader = new FileReader();
+
+                reader.onloadend = async function() {
+                    const base64Image = reader.result.split(',')[1];
+                    if (base64Image) {
+                        formData.append('product_image', base64Image);
+                        await sendDataToAppsScript(formData);
+                    } else {
+                        showMessage('حدث خطأ في ترميز ملف الصورة.', 'error');
+                    }
+                };
+
+                reader.onerror = function() {
+                    showMessage('حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.', 'error');
+                    console.error('FileReader error:', reader.error);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                // إذا لم يتم اختيار صورة جديدة، لا نرسل بارامتر 'product_image'
+                // Apps Script سيتجاهل تحديث الصورة في هذه الحالة
+                await sendDataToAppsScript(formData);
+            }
+        });
+
+        // --- عند الضغط على زر حذف المنتج ---
+        deleteProductBtn.addEventListener('click', async function() {
+            const originalProductName = document.getElementById('edit_product_Name').value;
+            if (!originalProductName) {
+                showMessage('الرجاء اختيار منتج لحذفه أولاً.', 'error');
+                return;
+            }
+
+            if (confirm(`هل أنت متأكد أنك تريد حذف المنتج: "${originalProductName}"؟`)) {
+                const formData = new FormData();
+                formData.append('action', 'delete'); // تحديد العملية كـ 'delete'
+                formData.append('product_Name', originalProductName); // إرسال اسم المنتج كمعرف
+
+                await sendDataToAppsScript(formData);
+            }
+        });
+
+        // --- دالة موحدة لإرسال البيانات إلى Apps Script ---
+        async function sendDataToAppsScript(formData) {
+            showSpinner();
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(result.message, 'success');
+                    // تحديث القائمة بعد الحفظ أو الحذف
+                    await fetchProducts();
+                    // إخفاء النموذج ومسح البيانات بعد الحذف أو التحديث
+                    productDetailsFormDiv.classList.add('hidden');
+                    editProductForm.reset();
+                    document.getElementById('current_product_image').style.display = 'none';
+                    document.getElementById('current_product_image').src = '';
+                    productSelector.value = ''; // إعادة القائمة المنسدلة للوضع الافتراضي
+                } else {
+                    showMessage('فشل: ' + (result.message || 'خطأ غير معروف من الخادم.'), 'error');
+                }
+            } catch (error) {
+                showMessage('حدث خطأ أثناء الاتصال بالخادم: ' + error.message, 'error');
+                console.error('Error sending data:', error);
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // --- عند تحميل الصفحة، جلب المنتجات لأول مرة ---
+        document.addEventListener('DOMContentLoaded', fetchProducts);
+
     </script>
 </body>
 </html>

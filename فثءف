@@ -3,90 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
-    <title data-translate-key="adminPanelTitle">قصر زهور الأماني - لوحة تحكم المدير</title>
-    <link rel="stylesheet" href="./../../server/static/css/style.css">
-    <link rel="stylesheet" href="./../../server/static/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>إضافة منتج جديد</title>
     <style>
-
-    .container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 500px;
-    }
-    h2 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-        font-weight: bold;
-    }
-    input[type="text"],
-    input[type="number"],
-    textarea {
-        width: calc(100% - 20px);
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-        box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ */
-    }
-    textarea {
-        resize: vertical;
-        min-height: 80px;
-    }
-    input[type="file"] {
-        padding: 8px 0;
-    }
-    .submit {
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 18px;
-        width: 100%;
-        transition: background-color 0.3s ease;
-    }
-    .submit:hover {
-        background-color: #45a049;
-    }
-    .message {
-        margin-top: 20px;
-        padding: 10px;
-        border-radius: 4px;
-        text-align: center;
-    }
-    .message.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    .message.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            direction: rtl; /* لاتجاه النص من اليمين لليسار */
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ */
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        input[type="file"] {
+            padding: 8px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
-
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-<!--###################################################################################-->
-
     <div class="container">
         <h2>إضافة منتج جديد</h2>
         <form id="addProductForm">
@@ -130,60 +130,11 @@
                 <input type="file" id="product_image" name="product_image" accept="image/*">
             </div>
 
-            <button type="submit" class="submit">إضافة المنتج</button>
+            <button type="submit">إضافة المنتج</button>
         </form>
         <div id="message" class="message"></div>
     </div>
 
-
-
-<!--###################################################################################-->
-    <footer class="site-footer">
-        <div class="social-links">
-            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
-    </footer>
-    <nav class="bottom-nav">
-        <a href="./../../index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span data-translate-key="home">الرئيسية</span>
-        </a>
-        <a href="./../user/wishlist.html" class="nav-item" >
-            <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
-        </a>
-        <a href="./../user/cart.html" class="nav-item">
-            <i class="fas fa-shopping-basket"></i>
-            <span data-translate-key="cart">السلة</span>
-        </a>
-        <a href="./../user/view-products.html" class="nav-item">
-            <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
-        </a>
-        <button class="nav-item hamburger-menu-btn">
-            <i class="fas fa-bars"></i>
-            <span data-translate-key="menu">القائمة</span>
-        </button>
-    </nav>
-    <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
-        <br><br><br><br><br>
-        <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
-        <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
-    </div>
-<!--###################################################################################-->
-
-    <script src="./../../server/script.js"></script>
     <script>
         // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // مثال: https://script.google.com/macros/s/AKfycbz.../exec
