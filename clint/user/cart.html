@@ -7,36 +7,426 @@
     <title>قصر زهور الأماني - سلة الشراء</title>
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Shared variables - Make sure these match your main style.css or are defined globally */
+        :root {
+            --primary-color: #e7ad00; /* Pinkish-orange */
+            --secondary-color: #333;   /* Dark Grey */
+            --secondary-color2: #8c8c8c;    /* Medium Grey */
+            --light-grey: #f4f4f4; /* Light background */
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --card-button-bg-add: #35c528; /* Original green for add to cart */
+            --card-button-bg-wish: #ff4444; /* Primary color for wishlist */
+            --button-danger: #dc3545; /* Red for remove/clear */
+            --button-whatsapp: #25D366; /* WhatsApp green */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-grey);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            direction: rtl;
+            color: var(--secondary-color);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow-light);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Cart products container - Changed to flex column for stacking */
+        #cart-products-container {
+            display: flex; /* Changed from grid */
+            flex-direction: column; /* Stack vertically */
+            gap: 10px; /* Space between stacked items */
+            max-width: 600px; /* Constrain width for a list */
+            margin: 0 auto 20px auto; /* Center the list and add bottom margin */
+            padding: 10px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        /* Cart item card styling - Horizontal and very compact */
+        .cart-item-card {
+            display: flex; /* Arrange content horizontally */
+            align-items: center; /* Vertically align items */
+            justify-content: space-between; /* Space out content */
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 5px 8px; /* Reduced padding further */
+            box-shadow: 0 1px 5px var(--shadow-light); 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative; /* For absolute positioning of remove button if needed */
+        }
+
+        .cart-item-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px var(--shadow-medium);
+        }
+
+        .cart-item-card img {
+            width: 50px; /* Fixed width */
+            height: 50px; /* Fixed height */
+            object-fit: cover;
+            border-radius: 4px; 
+            margin-right: 8px; /* Space to the right of the image */
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+
+        .product-details {
+            display: flex;
+            align-items: center; /* Align image and info horizontally */
+            flex-grow: 1; /* Allow product details to take available space */
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow info to take available space */
+            text-align: right; /* Align text to the right for RTL */
+            margin-left: 8px; /* Space between info and controls */
+        }
+
+        .product-info h3 {
+            font-size: 0.9em; /* Smaller font for name */
+            color: var(--secondary-color);
+            margin: 0; /* Remove default margins */
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
+            max-width: 150px; /* Constrain name width */
+        }
+        
+        .product-info .current-price {
+            font-size: 0.8em; /* Smaller font for price */
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between quantity controls and remove button */
+        }
+
+        .cart-quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 3px; /* Very small gap for quantity buttons */
+            flex-shrink: 0; 
+        }
+        .cart-quantity-controls button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 20px; 
+            height: 20px; 
+            font-size: 0.8em; 
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            padding: 0; 
+        }
+        .cart-quantity-controls button:hover {
+            background-color: #d6a000; 
+        }
+        .cart-quantity-controls span {
+            font-size: 0.9em; 
+            font-weight: bold;
+            min-width: 18px; 
+            text-align: center;
+        }
+
+        .remove-from-cart-btn {
+            background-color: var(--button-danger);
+            color: var(--white);
+            padding: 4px 8px; /* Very small padding */
+            border: none;
+            border-radius: 6px; /* Small radius */
+            cursor: pointer;
+            font-size: 0.7em; /* Even smaller font */
+            transition: background-color 0.3s ease;
+            flex-shrink: 0; /* Prevent button from shrinking */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px; /* Match height of quantity controls area */
+            line-height: 1; /* Adjust text vertical alignment */
+        }
+        .remove-from-cart-btn i {
+            font-size: 0.8em; /* Smaller icon */
+        }
+        .remove-from-cart-btn:hover {
+            background-color: #bb2d3b; 
+        }
+
+        /* Empty message */
+        .empty-message {
+            text-align: center;
+            font-size: 1.3em;
+            color: var(--secondary-color2);
+            margin-top: 20px; 
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            max-width: 500px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cart Summary and Customer Info */
+        .cart-summary-and-form {
+            max-width: 600px;
+            margin: 40px auto 20px auto; /* Added back margin for centering */
+            padding: 25px; /* Added back padding */
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        .cart-summary {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-summary h3 { /* Changed h5 to h3 for consistency in styling */
+            font-size: 1.8em;
+            color: var(--secondary-color);
+        }
+        .cart-summary span {
+            color: var(--primary-color);
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .customer-info-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .customer-info-form label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 2px;
+            display: block;
+        }
+        .customer-info-form input[type="text"],
+        .customer-info-form input[type="tel"],
+        .customer-info-form textarea {
+            width: calc(100% - 20px); 
+            padding: 5px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .customer-info-form input:focus,
+        .customer-info-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(231, 173, 0, 0.2);
+        }
+        .customer-info-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkout-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+        }
+
+        .checkout-btn,
+        .clear-cart-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn {
+            background-color: var(--button-whatsapp); 
+            color: var(--white);
+        }
+        .checkout-btn:hover {
+            background-color: #1DA851; 
+            transform: translateY(-2px);
+        }
+
+        .clear-cart-btn {
+            background-color: var(--button-danger); 
+            color: var(--white);
+        }
+        .clear-cart-btn:hover {
+            background-color: #bb2d3b;
+            transform: translateY(-2px);
+        }
+
+        /* Toast message */
+        .toast-message {
+            visibility: hidden; 
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000; 
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px; 
+            font-size: 17px;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .toast-message.success {
+            background-color: #4CAF50; 
+        }
+
+        .toast-message.error {
+            background-color: #f44336; 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #cart-products-container {
+                max-width: 95%; 
+                padding: 8px;
+            }
+            .cart-item-card {
+                padding: 4px 6px; /* Even smaller padding */
+            }
+            .cart-item-card img {
+                width: 40px; 
+                height: 40px;
+            }
+            .product-info h3 {
+                font-size: 0.8em;
+                max-width: 120px; /* Constrain name width more */
+            }
+            .product-info .current-price {
+                font-size: 0.7em;
+            }
+            .cart-quantity-controls {
+                gap: 2px;
+            }
+            .cart-quantity-controls button {
+                width: 18px;
+                height: 18px;
+                font-size: 0.7em;
+            }
+            .cart-quantity-controls span {
+                font-size: 0.8em;
+                min-width: 15px;
+            }
+            .remove-from-cart-btn {
+                font-size: 0.6em;
+                padding: 2px 5px; /* Tiny padding */
+                height: 24px; /* Adjust height to match line */
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
-
-
-    <main class="content">
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<main class="content main-content">
         <section class="cart-section">
             <h2>سلة مشترياتك</h2>
-            <div id="cart-products-container" class="products-grid">
+            <div id="cart-products-container">
                 <p class="empty-message">سلتك فارغة.</p>
             </div>
-            <div class="cart-summary">
-                <h3>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
-                <button class="checkout-btn">إتمام الشراء</button>
+
+            <div class="cart-summary-and-form">
+                <div class="cart-summary">
+                    <h3>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
+                </div>
+
+                <div class="customer-info-form">
+                    <h3>ادخل البيانات المطلوبة لاكمال الطلب</h3>
+                    <label for="customer-name">الاسم بالكامل:</label>
+                    <input type="text" id="customer-name" placeholder="ادخل اسمك هنا" required>
+
+                    <label for="customer-phone">رقم الهاتف:</label>
+                    <input type="tel" id="customer-phone" placeholder="01xxxxxxxxx" required>
+
+                    <label for="customer-address">العنوان:</label>
+                    <input type="text" id="customer-address" placeholder="المنطقة، الشارع، رقم المنزل" required>
+
+                    <label for="customer-notes">ملاحظات إضافية (اختياري):</label>
+                    <textarea id="customer-notes" placeholder="أي تفاصيل للمساعدة في التوصيل"></textarea>
+                </div>
+
+                <div class="checkout-buttons">
+                    <button class="checkout-btn" id="send-whatsapp-order">
+                        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                    </button>
+                    <button class="clear-cart-btn" id="clear-cart">
+                        <i class="fas fa-trash-alt"></i> تفريغ السلة
+                    </button>
+                </div>
             </div>
         </section>
     </main>
 
-
-
-
-
-
-
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -79,46 +469,251 @@
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
-
+<div id="toastMessage" class="toast-message"></div>
 
     <script src="./../../server/script.js"></script>
 
     <script>
-        // JavaScript to load cart items from Local Storage
-        document.addEventListener('DOMContentLoaded', () => {
-            const cartContainer = document.getElementById('cart-products-container');
-            const cartTotalSpan = document.getElementById('cart-total');
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartContainer = document.getElementById('cart-products-container');
+        const cartTotalSpan = document.getElementById('cart-total');
+        const emptyMessage = cartContainer.querySelector('.empty-message');
+        const customerNameInput = document.getElementById('customer-name');
+        const customerPhoneInput = document.getElementById('customer-phone');
+        const customerAddressInput = document.getElementById('customer-address');
+        const customerNotesInput = document.getElementById('customer-notes');
+        const sendWhatsappOrderBtn = document.getElementById('send-whatsapp-order');
+        const clearCartBtn = document.getElementById('clear-cart');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // رقم الواتساب الذي سيتم إرسال الطلب إليه
+        const WHATSAPP_NUMBER = '201147182463'; 
+        // **الرابط الجديد لـ Google Apps Script Web App الخاص بك**
+        const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4s1Fanc7EID-Jvp5HREUbPHAu4rB6xJhEXAVUy3hJjmItbrD7FzAG-bPOF4514-k/exec";
+
+        // --- دالة لإظهار رسالة "Toast" ---
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toastMessage.className = `toast-message show ${type}`;
+            setTimeout(() => {
+                toastMessage.className = toastMessage.className.replace("show", "");
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // --- دالة لحساب وعرض الإجمالي ---
+        function updateCartTotal() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             let total = 0;
+            cart.forEach(product => {
+                const price = parseFloat(product.product_prise_1); 
+                const quantity = product.quantity || 1;
+                if (!isNaN(price)) {
+                    total += price * quantity;
+                } else {
+                    console.warn(`Invalid price for product ID: ${product.product_ID}`);
+                }
+            });
+            cartTotalSpan.textContent = total.toFixed(2); 
+            return total; 
+        }
+
+        // --- دالة لإزالة المنتج بالكامل من السلة (باستخدام المؤشر) ---
+        function removeFromCartByIndex(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (index >= 0 && index < cart.length) {
+                const removedProduct = cart.splice(index, 1); 
+                localStorage.setItem('cart', JSON.stringify(cart));
+                showToast(`تمت إزالة "${removedProduct[0].product_Name}" من السلة.`, 'success');
+                displayCartItems(); // إعادة عرض السلة بعد الحذف
+            } else {
+                showToast('حدث خطأ أثناء الإزالة.', 'error');
+            }
+        }
+
+        // --- دالة لتفريغ السلة بالكامل ---
+        function clearCart() {
+            if (confirm('هل أنت متأكد أنك تريد تفريغ السلة بالكامل؟')) {
+                localStorage.removeItem('cart');
+                displayCartItems(); // إعادة عرض السلة الفارغة
+                showToast('تم تفريغ السلة بنجاح.', 'success');
+            }
+        }
+
+        // --- دالة لعرض منتجات السلة (كل منتج منفصل، حجم صغير) ---
+        function displayCartItems() {
+            cartContainer.innerHTML = ''; 
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             if (cart.length === 0) {
-                cartContainer.querySelector('.empty-message').style.display = 'block';
+                emptyMessage.style.display = 'block';
+                document.querySelector('.cart-summary-and-form').style.display = 'none';
             } else {
-                cartContainer.querySelector('.empty-message').style.display = 'none';
-                cart.forEach(product => {
+                emptyMessage.style.display = 'none';
+                document.querySelector('.cart-summary-and-form').style.display = 'block';
+
+                cart.forEach((product, index) => { 
                     const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.dataset.productId = product.id;
+                    productCard.classList.add('cart-item-card'); 
+
+                    const imageUrl = product.product_image || 'https://via.placeholder.com/50?text=No+Image'; 
+
+                    const currentPrice = parseFloat(product.product_prise_1);
+                    const formattedPrice = !isNaN(currentPrice) ? `${currentPrice.toFixed(2)} جنيه` : 'غير متاح';
+
+                    product.quantity = product.quantity || 1; 
+
                     productCard.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p class="current-price">${product.currentPrice}</p>
-                        <div class="cart-quantity-controls">
-                            <button class="decrease-quantity-btn" data-product-id="${product.id}">-</button>
-                            <span>${product.quantity || 1}</span>
-                            <button class="increase-quantity-btn" data-product-id="${product.id}">+</button>
+                        <div class="product-details">
+                            <img src="${imageUrl}" alt="${product.product_Name}">
+                            <div class="product-info">
+                                <h3>${product.product_Name}</h3>
+                                <p class="current-price">${formattedPrice}</p>
+                            </div>
                         </div>
-                        <button class="remove-from-cart-btn"><i class="fas fa-trash"></i> إزالة</button>
-                    `;
+                        <div class="cart-controls">
+                            <div class="cart-quantity-controls">
+                                <button class="decrease-quantity-btn" data-index="${index}">-</button>
+                                <span class="product-quantity">${product.quantity}</span>
+                                <button class="increase-quantity-btn" data-index="${index}">+</button>
+                            </div>
+                            <button class="remove-from-cart-btn" data-index="${index}"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    `; 
                     cartContainer.appendChild(productCard);
-                    total += parseFloat(product.currentPrice) * (product.quantity || 1);
+
+                    // إضافة مستمعي الأحداث
+                    productCard.querySelector('.decrease-quantity-btn').addEventListener('click', () => {
+                        const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+                        if (currentCart[index] && currentCart[index].quantity > 1) {
+                            currentCart[index].quantity--;
+                            localStorage.setItem('cart', JSON.stringify(currentCart));
+                            showToast('تم تحديث الكمية.', 'success');
+                            displayCartItems(); 
+                        } else {
+                            removeFromCartByIndex(index);
+                        }
+                    });
+
+                    productCard.querySelector('.increase-quantity-btn').addEventListener('click', () => {
+                        const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+                        if (currentCart[index]) {
+                            currentCart[index].quantity = (currentCart[index].quantity || 1) + 1;
+                            localStorage.setItem('cart', JSON.stringify(currentCart));
+                            showToast('تم تحديث الكمية.', 'success');
+                            displayCartItems(); 
+                        }
+                    });
+
+                    productCard.querySelector('.remove-from-cart-btn').addEventListener('click', () => removeFromCartByIndex(index));
+                });
+            }
+            updateCartTotal(); 
+        }
+
+        // --- دالة لإعداد رسالة الواتساب وإرسالها + إرسال البيانات لجوجل شيت ---
+        async function sendOrderViaWhatsApp() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (cart.length === 0) {
+                showToast('سلة مشترياتك فارغة. الرجاء إضافة منتجات قبل إرسال الطلب.', 'error');
+                return;
+            }
+
+            const customerName = customerNameInput.value.trim();
+            const customerPhone = customerPhoneInput.value.trim();
+            const customerAddress = customerAddressInput.value.trim();
+            const customerNotes = customerNotesInput.value.trim();
+            const totalAmount = cartTotalSpan.textContent; // الإجمالي الكلي من العنصر مباشرة
+
+            if (!customerName || !customerPhone || !customerAddress) {
+                showToast('الرجاء ملء جميع الحقول المطلوبة (الاسم، رقم الهاتف، العنوان).', 'error');
+                return;
+            }
+
+            // 1. بناء رسالة الواتساب
+            let orderMessage = "أهلاً بك في قصر زهور الأماني!\n";
+            orderMessage += "لديك طلب جديد:\n\n";
+            
+            orderMessage += "--- المنتجات ---\n";
+            let productsForSheet = []; // لإنشاء سلسلة المنتجات لجوجل شيت
+            cart.forEach((product, index) => {
+                const price = parseFloat(product.product_prise_1);
+                const quantity = product.quantity || 1;
+                const itemTotal = price * quantity;
+
+                orderMessage += `(${index + 1}) ${product.product_Name}\n`;
+                orderMessage += `   الكمية: ${quantity}\n`;
+                orderMessage += `   السعر: ${price.toFixed(2)} جنيه\n`;
+                orderMessage += `   الإجمالي الجزئي: ${itemTotal.toFixed(2)} جنيه\n`;
+                orderMessage += `   النوع: ${product.product_type_2 || 'غير محدد'}\n`;
+                orderMessage += `   المناسبة: ${product.product_suitable || 'غير محدد'}\n\n`;
+                
+                productsForSheet.push(`${product.product_Name} (x${quantity}) - ${itemTotal.toFixed(2)} جنيه`);
+            });
+
+            orderMessage += `--- إجمالي الطلب ---\n`;
+            orderMessage += `الإجمالي الكلي: ${totalAmount} جنيه\n\n`;
+
+            orderMessage += "--- معلومات العميل ---\n";
+            orderMessage += `الاسم: ${customerName}\n`;
+            orderMessage += `رقم الهاتف: ${customerPhone}\n`;
+            orderMessage += `العنوان: ${customerAddress}\n`;
+            if (customerNotes) {
+                orderMessage += `ملاحظات: ${customerNotes}\n`;
+            }
+            
+            orderMessage += "\nشكرا لطلبك من قصر زهور الأماني!";
+
+            // 2. إرسال البيانات إلى Google Sheet
+            const formData = new FormData();
+            formData.append('name', customerName);
+            formData.append('number', customerPhone);
+            formData.append('address', customerAddress);
+            formData.append('notes', customerNotes);
+            formData.append('amount', totalAmount);
+            formData.append('order', productsForSheet.join(' | ')); // دمج المنتجات بسطر واحد
+
+            try {
+                console.log('Attempting to send data to Google Sheet...');
+                const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, { 
+                    method: "POST", 
+                    body: formData,
+                    mode: 'no-cors' // غالباً ما تحتاج 'no-cors' عند الإرسال لـ Apps Script من صفحات خارج نفس النطاق
                 });
 
-                // Add event listeners for quantity/remove buttons (would be handled in script.js)
+                // في وضع 'no-cors'، لا يمكننا قراءة استجابة (response) مباشرة.
+                // لذلك، نفترض النجاح إذا لم يحدث خطأ في الشبكة أو المتصفح.
+                console.log("Request sent to Google Sheet. Cannot verify response in 'no-cors' mode.");
+                showToast('تم إرسال الطلب وحفظ البيانات (الرجاء التحقق من جوجل شيت).', 'success');
+                
+                // 3. إرسال رسالة الواتساب بعد محاولة حفظ البيانات
+                const encodedMessage = encodeURIComponent(orderMessage);
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // مسح حقول النموذج بعد الإرسال
+                customerNameInput.value = '';
+                customerPhoneInput.value = '';
+                customerAddressInput.value = '';
+                customerNotesInput.value = '';
+                
+                // تفريغ السلة بعد إرسال الطلب بنجاح (اختياري، يمكنك إزالته إذا أردت الاحتفاظ بالمنتجات في السلة)
+                localStorage.removeItem('cart');
+                displayCartItems();
+
+            } catch (error) {
+                console.error('Error sending data to Google Sheet:', error);
+                showToast('حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.', 'error');
+                // في حالة فشل الإرسال لجوجل شيت، سيظل يفتح الواتساب لضمان وصول الطلب.
+                const encodedMessage = encodeURIComponent(orderMessage);
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
             }
-            cartTotalSpan.textContent = total.toFixed(2);
-        });
+        }
+
+        // --- إضافة مستمعي الأحداث ---
+        document.addEventListener('DOMContentLoaded', displayCartItems);
+        sendWhatsappOrderBtn.addEventListener('click', sendOrderViaWhatsApp);
+        clearCartBtn.addEventListener('click', clearCart);
     </script>
 </body>
 </html>
