@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
     <title>قصر زهور الأماني - سلة الشراء</title>
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
-    </header>
-        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!--###################################################################################-->
+    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!--###################################################################################-->
+
 
     <main class="content">
         <section class="cart-section">
@@ -27,38 +29,55 @@
         </section>
     </main>
 
+
+
+
+<!--###################################################################################-->
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
+    </footer>
     <nav class="bottom-nav">
-        <a href="./../index.html" class="nav-item">
+        <a href="./../../index.html" class="nav-item active">
             <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
+            <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="wishlist.html" class="nav-item">
+        <a href="./wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span>الإعجابات</span>
+            <span data-translate-key="likes">الإعجابات</span>
         </a>
-        <a href="cart.html" class="nav-item active">
+        <a href="./cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
-            <span>السلة</span>
+            <span data-translate-key="cart">السلة</span>
         </a>
-        <a href="admin-login.html" class="nav-item">
+        <a href="./../admin/admin-login.html" class="nav-item">
             <i class="fas fa-user-shield"></i>
-            <span>المدير</span>
+            <span data-translate-key="admin">المدير</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
-            <span>القائمة</span>
+            <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
-
     <div class="side-menu">
-        <button class="close-side-menu">&times;</button>
+        <h1>قصر زهور الأماني</h1>
+        <br><br><br><br><br>
         <ul>
-            <li><a href="#">من نحن</a></li>
-            <li><a href="#">اتصل بنا</a></li>
-            <li><a href="#">سياسة الخصوصية</a></li>
-            <li><a href="#">الأسئلة الشائعة</a></li>
-        </ul>
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="faq">قائمة المنتجات</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>        
+        <br><br><br><br><br>
+        <button class="close-side-menu">close</button>
     </div>
+<!--###################################################################################-->
+
 
     <script src="./../../server/script.js"></script>
 

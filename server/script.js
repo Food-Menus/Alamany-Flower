@@ -20,60 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Offers Slider Functionality ---
-    const offersSlider = document.querySelector('.offers-slider');
-    const offerItems = document.querySelectorAll('.offer-item');
-    const sliderDots = document.querySelectorAll('.slider-controls .dot');
-    let currentSlide = 0;
-    let slideInterval;
-
-    function showSlide(index) {
-        if (index >= offerItems.length) {
-            currentSlide = 0;
-        } else if (index < 0) {
-            currentSlide = offerItems.length - 1;
-        } else {
-            currentSlide = index;
-        }
-
-        offersSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-        // Update active dot
-        sliderDots.forEach((dot, i) => {
-            if (i === currentSlide) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    function startSlider() {
-        slideInterval = setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 3000); // Change slide every 3 seconds
-    }
-
-    function stopSlider() {
-        clearInterval(slideInterval);
-    }
-
-    // Manual slide control (dots)
-    sliderDots.forEach(dot => {
-        dot.addEventListener('click', (e) => {
-            stopSlider();
-            showSlide(parseInt(e.target.dataset.slide));
-            startSlider(); // Restart slider after manual control
-        });
+    
+    const categoryItems = document.querySelectorAll('.category-item');
+    categoryItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.classList.add('show'); // إضافة الكلاس show
+        }, index * 300); // تأخير الظهور لكل زر (300 مللي ثانية)
     });
-
-    // Initialize slider
-    showSlide(currentSlide);
-    startSlider();
-
-    // Pause on hover
-    offersSlider.addEventListener('mouseenter', stopSlider);
-    offersSlider.addEventListener('mouseleave', startSlider);
 
 
     // --- Local Storage for Cart and Wishlist ---

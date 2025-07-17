@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
     <title data-translate-key="adminPanelTitle">قصر زهور الأماني - لوحة تحكم المدير</title>
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
@@ -10,31 +11,32 @@
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
-    </header>
-        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!--###################################################################################-->
+    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!--###################################################################################-->
+
 
     <main class="content">
         <section class="data-display-section">
             <h2 data-translate-key="adminPanelTitle">لوحة تحكم المدير</h2>
             <div class="admin-controls-grid">
-                <a href="orders.html" class="admin-control-button">
+                <a href="./orders.html" class="admin-control-button">
                     <i class="fas fa-clipboard-list"></i>
                     <span data-translate-key="manageOrders">إدارة الطلبات</span>
                 </a>
-                <a href="view-products.html" class="admin-control-button">
+                <a href="./add-product.html" class="admin-control-button">
                     <i class="fas fa-boxes"></i>
-                    <span data-translate-key="manageProducts">إدارة المنتجات</span>
+                    <span data-translate-key="manageProducts">اضافه منتج</span>
                 </a>
-                <a href="../user/add-feedback.html" class="admin-control-button"> <i class="fas fa-comment-dots"></i>
-                    <span data-translate-key="addFeedback">إضافة تقييم</span>
+                <a href="./edit-product.html" class="admin-control-button"> <i class="fas fa-comment-dots"></i>
+                    <span data-translate-key="addFeedback">تعديل منتج</span>
                 </a>
-                <a href="view-feedback.html" class="admin-control-button">
+                <a href="./view-feedback.html" class="admin-control-button">
                     <i class="fas fa-star-half-alt"></i>
                     <span data-translate-key="viewAllFeedback">عرض كل التقييمات</span>
                 </a>
-                <a href="reports.html" class="admin-control-button">
+                <a href="./reports.html" class="admin-control-button">
                     <i class="fas fa-chart-line"></i>
                     <span data-translate-key="viewReports">عرض التقارير</span>
                 </a>
@@ -46,30 +48,37 @@
         </section>
     </main>
 
+
+
+
+
+
+
+
+<!--###################################################################################-->
     <footer class="site-footer">
         <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
-
     <nav class="bottom-nav">
-        <a href="../index.html" class="nav-item">
+        <a href="./../../index.html" class="nav-item active">
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="../clint/wishlist.html" class="nav-item">
+        <a href="./../user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
             <span data-translate-key="likes">الإعجابات</span>
         </a>
-        <a href="../clint/cart.html" class="nav-item">
+        <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
             <span data-translate-key="cart">السلة</span>
         </a>
-        <a href="admin-login.html" class="nav-item active">
+        <a href="./admin-login.html" class="nav-item">
             <i class="fas fa-user-shield"></i>
             <span data-translate-key="admin">المدير</span>
         </a>
@@ -78,17 +87,23 @@
             <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
-
     <div class="side-menu">
-        <button class="close-side-menu">×</button>
+        <h1>قصر زهور الأماني</h1>
+        <br><br><br><br><br>
         <ul>
-            <li><a href="../clint/about.html" data-translate-key="aboutUs">من نحن</a></li>
-            <li><a href="#" data-translate-key="contactUs">اتصل بنا</a></li>
-            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
-            <li><a href="#" data-translate-key="faq">الأسئلة الشائعة</a></li>
-            <li><a href="admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
-        </ul>
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="faq">قائمة المنتجات</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>        
+        <br><br><br><br><br>
+        <button class="close-side-menu">close</button>
     </div>
+<!--###################################################################################-->
+
+
+
+
 
     <script src="./../../server/script.js"></script>
      <script>
