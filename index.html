@@ -3,35 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قصر زهور الأماني - الصفحة الرئيسية</title>
+    <title>قصر زهور الأماني - الصفحة الرئيسية </title>
     <link rel="stylesheet" href="./server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .special-offers {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 20%;
+
+        }
+
+        .offers-carousel {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 8%;
+
+        }
+
+        .offer-slide {
+            min-width: 100%;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+
+        }
+
+        .offer-slide img {
+            width: 100%;
+            height: 300px; /* تقليل طول الصورة */
+            object-fit: cover;
+
+
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.321); /* خلفية مظللة للنص */
+            color: white;
+            text-align: center;
+        }
+
+        .carousel-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            cursor: pointer;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: gray;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+
+        .indicator.active {
+            background-color: black;
+        }
+        .offers-carousel {
+            position: relative; /* تعيينها على أنها نسبية */
+            width: 100%; /* ضمان أن العرض 100% */
+            height: 300px; /* تعيين ارتفاع مناسب */
+        }
+
+        .offer-slide {
+            position: absolute; /* تعيينها على أنها مطلقة */
+            width: 100%; /* ضمان أن العرض 100% */
+            height: 100%; /* ضمان أن الارتفاع 100% */
+            opacity: 0; /* البدء بالاختفاء */
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* تأثير الانتقال */
+        }
+
+        .offer-slide.active {
+            opacity: 1; /* جعل الشريحة النشطة مرئية */
+            transform: translateX(0); /* تعيين موضع الشريحة النشطة */
+        }
+
+        .offer-slide.slide-left {
+            transform: translateX(-100%); /* تحريك الشريحة نحو اليسار */
+        }
+
+        .offer-slide.slide-right {
+            transform: translateX(100%); /* تحريك الشريحة نحو اليمين */
+        }
+    </style>
 </head>
 <body>
 
-    <header class="navbar">
-
-        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
-    </header>
-        <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
 
     <main class="content">
-        <section class="offers-section">
-            <h2 data-translate-key="offersTitle">عروضنا المميزة</h2>
-                <div class="offers-slider">
 
-                <div class="offer-item active">
-                    <img  src="./server/static/images/2 copy.jpg" alt="زهور المناسبات">
-                    <h3 data-translate-key="eventFlowers">زهور المناسبات</h3>
-                    <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p>
-                    <button class="call-to-action" data-translate-key="clickHere">اضغط هنا</button>
+        <section class="special-offers">
+            <h2 data-translate-key="offersTitle">عروضنا المميزة</h2>
+            <div class="offers-carousel">
+
+                <div class="offer-slide active">
+                    <div class="overlay">
+                        <h3 data-translate-key="eventFlowers">زهور المناسبات</h3>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/2 copy.jpg" alt="زهور المناسبات">
                 </div>
+
+                <div class="offer-slide">
+                    <div class="overlay">
+                        <h3 data-translate-key="eventFlowers">زهور المناسبات</h3>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/1 copy.jpg" alt="زهور المناسبات">
                 </div>
-            <div class="slider-controls">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
+
+                <div class="offer-slide">
+                    <div class="overlay">
+                        <h3 data-translate-key="eventFlowers">زهور المناسبات</h3>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/3 copy.jpg" alt="زهور المناسبات">
                 </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
         </section>
 
         <section class="ads-section">
@@ -154,12 +265,12 @@
 
     <footer class="site-footer">
         <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="allRightsReserved">© 2025 قصر زهور الأماني. جميع الحقوق محفوظة.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
 
     <nav class="bottom-nav">
@@ -186,16 +297,62 @@
     </nav>
 
     <div class="side-menu">
-        <button class="close-side-menu">×</button>
+        <h1>قصر زهور الأماني</h1>
+        <br><br><br><br><br>
         <ul>
             <li><a href="./clint/user/about.html" data-translate-key="aboutUs">من نحن</a></li>
-            <li><a href="./clint/user/add-feedback.html" data-translate-key="contactUs">اتصل بنا</a></li>
-            <li><a href="#" data-translate-key="privacyPolicy">سياسة الخصوصية</a></li>
+            <li><a href="./clint/user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
             <li><a href="./clint/user/view-products.html" data-translate-key="faq">قائمة المنتجات</a></li>
             <li><a href="./clint/admin/admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
-        </ul>
+        </ul>        
+        <br><br><br><br><br>
+        <button class="close-side-menu">close</button>
     </div>
 
     <script src="./server/script.js"></script>
+    <script>
+        const indicators = document.querySelectorAll('.indicator');
+        const slides = document.querySelectorAll('.offer-slide');
+        let currentIndex = 0;
+        let autoSlide;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                    slide.style.transform = 'translateX(0)'; // إعادة الشريحة النشطة إلى موضعها
+                } else {
+                    slide.classList.remove('active');
+                    slide.style.transform = 'translateX(100%)'; // تحريك الشرائح غير النشطة خارج الشاشة
+                }
+            });
+        }
+        
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function startAutoSlide() {
+            autoSlide = setInterval(nextSlide, 3000); // تغيير كل 3 ثوانٍ
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlide);
+        }
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopAutoSlide();
+                currentIndex = index;
+                showSlide(currentIndex);
+                startAutoSlide();
+            });
+        });
+
+        // بدء التشغيل
+        startAutoSlide();
+    </script>
 </body>
 </html>
