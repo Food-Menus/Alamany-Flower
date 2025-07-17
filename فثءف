@@ -3,232 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إضافة منتج جديد</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            direction: rtl; /* لاتجاه النص من اليمين لليسار */
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ */
-        }
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        input[type="file"] {
-            padding: 8px 0;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .message {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+    <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
+    <title data-translate-key="viewProductsTitle">قصر زهور الأماني - عرض المنتجات</title>
+    <link rel="stylesheet" href="./../../server/static/css/style.css">
+    <link rel="stylesheet" href="./../../server/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h2>إضافة منتج جديد</h2>
-        <form id="addProductForm">
-            <div class="form-group">
-                <label for="product_Name">اسم المنتج:</label>
-                <input type="text" id="product_Name" name="product_Name" required>
-            </div>
 
-            <div class="form-group">
-                <label for="product_Details">تفاصيل المنتج:</label>
-                <textarea id="product_Details" name="product_Details"></textarea>
-            </div>
+<!--###################################################################################-->
+    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!--###################################################################################-->
 
-            <div class="form-group">
-                <label for="product_prise_1">السعر الأول:</label>
-                <input type="number" step="0.01" id="product_prise_1" name="product_prise_1" required>
+    <main class="content">
+        <section class="data-display-section">
+            <h2 data-translate-key="viewProductsTitle">عرض المنتجات</h2>
+            <div style="text-align: left; margin-bottom: 20px;">
+                <a href="add-product.html" class="action-button" data-translate-key="addNewProduct">
+                    <i class="fas fa-plus"></i> إضافة منتج جديد
+                </a>
             </div>
+            <div class="product-management-grid">
+                <div class="manage-product-card" data-product-id="1">
+                    <img src="../server/static/images/11.jpg" alt="باقة الورد الأحمر">
+                    <h3 data-translate-key="product1Title">باقة الورد الأحمر</h3>
+                    <p class="price"> <span data-translate-key="priceCurrent1">120 جنيه</span></p>
+                    <p data-translate-key="productStatus">الحالة: <span class="status-completed" data-translate-key="inStock">متوفر</span></p>
+                    <div class="actions">
+                        <a href="edit-product.html?id=1" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
+                        <button class="delete-btn" data-translate-key="delete">حذف</button>
+                    </div>
+                </div>
+                <div class="manage-product-card" data-product-id="2">
+                    <img src="../server/static/images/22.jpg" alt="تنسيقة زهور الربيع">
+                    <h3 data-translate-key="product2Title">تنسيقة زهور الربيع</h3>
+                    <p class="price"> <span data-translate-key="priceCurrent2">180 جنيه</span></p>
+                    <p data-translate-key="productStatus">الحالة: <span class="status-pending" data-translate-key="outOfStock">غير متوفر</span></p>
+                    <div class="actions">
+                        <a href="edit-product.html?id=2" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
+                        <button class="delete-btn" data-translate-key="delete">حذف</button>
+                    </div>
+                </div>
+                </div>
+        </section>
+    </main>
 
-            <div class="form-group">
-                <label for="product_prise_2">السعر الثاني:</label>
-                <input type="number" step="0.01" id="product_prise_2" name="product_prise_2">
-            </div>
 
-            <div class="form-group">
-                <label for="product_type_1">النوع الأول:</label>
-                <input type="text" id="product_type_1" name="product_type_1">
-            </div>
 
-            <div class="form-group">
-                <label for="product_type_2">النوع الثاني:</label>
-                <input type="text" id="product_type_2" name="product_type_2">
-            </div>
 
-            <div class="form-group">
-                <label for="product_suitable">مناسب لـ (فئات):</label>
-                <input type="text" id="product_suitable" name="product_suitable">
-            </div>
 
-            <div class="form-group">
-                <label for="product_image">صورة المنتج:</label>
-                <input type="file" id="product_image" name="product_image" accept="image/*">
-            </div>
-
-            <button type="submit">إضافة المنتج</button>
-        </form>
-        <div id="message" class="message"></div>
+<!--###################################################################################-->
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
+    </footer>
+    <nav class="bottom-nav">
+        <a href="./../../index.html" class="nav-item ">
+            <i class="fas fa-home"></i>
+            <span data-translate-key="home">الرئيسية</span>
+        </a>
+        <a href="./wishlist.html" class="nav-item" >
+            <i class="fas fa-heart"></i>
+            <span data-translate-key="likes">الإعجابات</span>
+        </a>
+        <a href="./cart.html" class="nav-item">
+            <i class="fas fa-shopping-basket"></i>
+            <span data-translate-key="cart">السلة</span>
+        </a>
+        <a href="./view-products.html" class="nav-item active">
+            <i class="fas fa-store"></i>
+            <span data-translate-key="admin">المتجر</span>
+        </a>
+        <button class="nav-item hamburger-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span data-translate-key="menu">القائمة</span>
+        </button>
+    </nav>
+    <div class="side-menu">
+        <h1>قصر زهور الأماني</h1>
+        <br><br><br><br><br>
+        <ul>
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن </a></li>
+            <li><a href="./add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
+        </ul>        
+        <br><br><br><br><br>
+        <button class="close-side-menu">close</button>
     </div>
+<!--###################################################################################-->
+
+    <script src="./../../server/script.js"></script>
 
     <script>
-        // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // مثال: https://script.google.com/macros/s/AKfycbz.../exec
-
-        document.getElementById('addProductForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // منع الإرسال الافتراضي للنموذج
-
-            const form = event.target;
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = ''; // مسح أي رسائل سابقة
-            messageDiv.className = 'message'; // مسح فئات الرسائل السابقة
-
-            // جمع البيانات من النموذج يدويًا لضمان التحكم في القيم
-            const productName = document.getElementById('product_Name').value;
-            const productDetails = document.getElementById('product_Details').value;
-            // معالجة حقول الأرقام: تحويلها إلى أرقام، أو 0 إذا كانت فارغة أو غير صالحة
-            const productPrise1 = parseFloat(document.getElementById('product_prise_1').value) || 0;
-            const productPrise2 = parseFloat(document.getElementById('product_prise_2').value) || 0;
-            const productType1 = document.getElementById('product_type_1').value;
-            const productType2 = document.getElementById('product_type_2').value;
-            const productSuitable = document.getElementById('product_suitable').value;
-            const productImageInput = document.getElementById('product_image');
-
-            // إنشاء FormData يدويًا لإضافة القيم المعدلة
-            const formData = new FormData();
-            formData.append('action', 'add'); // تحديد العملية
-            formData.append('product_Name', productName);
-            formData.append('product_Details', productDetails);
-            formData.append('product_prise_1', productPrise1);
-            formData.append('product_prise_2', productPrise2);
-            formData.append('product_type_1', productType1);
-            formData.append('product_type_2', productType2);
-            formData.append('product_suitable', productSuitable);
-
-            // معالجة الصورة إذا تم اختيارها
-            if (productImageInput.files.length > 0) {
-                const file = productImageInput.files[0];
-                const reader = new FileReader();
-
-                reader.onloadend = async function() {
-                    // التأكد من أن base64 يبدأ بـ data:image/...;base64,
-                    // ثم أخذ الجزء المشفر فقط بعد الفاصلة
-                    const base64Image = reader.result.split(',')[1];
-                    if (base64Image) {
-                        formData.append('product_image', base64Image);
-                        await sendFormData(formData, messageDiv);
-                    } else {
-                        messageDiv.textContent = 'حدث خطأ في ترميز ملف الصورة.';
-                        messageDiv.classList.add('error');
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.manage-product-card .delete-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.closest('.manage-product-card').dataset.productId;
+                    if (confirm(`هل أنت متأكد من حذف المنتج رقم ${productId}؟`)) {
+                        console.log(`Deleting product with ID: ${productId}`);
+                        // هنا يمكنك إضافة منطق لحذف المنتج من قاعدة البيانات/Local Storage
+                        event.target.closest('.manage-product-card').remove(); // Remove from DOM
+                        alert(translations[localStorage.getItem('preferredLang') || 'ar'].productRemovedSuccess || "تم حذف المنتج بنجاح!");
                     }
-                };
-
-                reader.onerror = function() {
-                    messageDiv.textContent = 'حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.';
-                    messageDiv.classList.add('error');
-                    console.error('FileReader error:', reader.error);
-                };
-
-                reader.readAsDataURL(file); // قراءة الملف كـ Data URL
-            } else {
-                // إرسال البيانات بدون صورة إذا لم يتم اختيار صورة
-                await sendFormData(formData, messageDiv);
-            }
-        });
-
-        async function sendFormData(formData, messageDiv) {
-            try {
-                // استخدام Fetch API لإرسال البيانات
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: formData // Fetch API يتعامل مع FormData بشكل تلقائي
                 });
-
-                if (!response.ok) {
-                    const errorText = await response.text(); // حاول الحصول على نص الخطأ الخام
-                    throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
-                }
-
-                const result = await response.json();
-
-                if (result.success) {
-                    messageDiv.textContent = result.message;
-                    messageDiv.classList.add('success');
-                    document.getElementById('addProductForm').reset(); // مسح حقول النموذج بعد النجاح
-                } else {
-                    messageDiv.textContent = 'فشل: ' + (result.message || 'خطأ غير معروف من الخادم.');
-                    messageDiv.classList.add('error');
-                }
-            } catch (error) {
-                messageDiv.textContent = 'حدث خطأ أثناء الاتصال بالخادم: ' + error.message;
-                messageDiv.classList.add('error');
-                console.error('Error sending data:', error);
-            }
-        }
+            });
+        });
     </script>
 </body>
 </html>

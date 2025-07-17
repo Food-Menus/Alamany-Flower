@@ -8,50 +8,434 @@
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <style>
+        :root {
+            --primary-color: #e7ad00; /* Pinkish-orange */
+            --secondary-color: #333;   /* Dark Grey */
+            --secondary-color2: #8c8c8c;    /* Medium Grey */
+            --light-grey: #f4f4f4; /* Light background */
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --card-button-bg-add: #28a745; /* Original green for add to cart */
+            --card-button-bg-wish: var(--primary-color); /* Primary color for wishlist */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-grey);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            direction: rtl;
+            color: var(--secondary-color);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow-light);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* --- Filters Container --- */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; /* Reduced gap */
+            margin-bottom: 40px;
+            padding: 15px; /* Reduced padding */
+            background-color: var(--light-grey);
+            border-radius: 10px;
+            justify-content: center;
+            align-items: center; /* Align items to center */
+            box-shadow: 0 2px 10px var(--shadow-light);
+            max-width: 800px; /* Max width for filter section */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-group {
+            display: flex; /* Make it a flex container */
+            align-items: center; /* Align label and input/select vertically */
+            gap: 10px; /* Space between label and control */
+            flex: 1;
+            min-width: 250px; /* Adjusted minimum width for better layout */
+            max-width: 45%; /* Limit width to prevent overstretching */
+            padding: 0 5px; /* Reduced internal padding */
+            justify-content: center; /* Center content within group */
+        }
+
+        /* Override for the first filter group (radio buttons) */
+        .filter-group:first-of-type {
+            flex-direction: row; /* Keep radio buttons in a row */
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px; /* Smaller gap for radio buttons */
+            min-width: 100%; /* Allow radio buttons to take full width */
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .filters-container {
+                gap: 10px; /* Even smaller gap on mobile */
+                padding: 10px;
+            }
+            .filter-group {
+                min-width: 100%; /* Force stacking on smaller screens */
+                max-width: 100%;
+                margin-bottom: 10px; /* Space between filter groups */
+            }
+            .filter-group:last-child {
+                margin-bottom: 0;
+            }
+            .filter-group:first-of-type {
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .filter-group label {
+            /* flex-shrink: 0; */ /* Prevent label from shrinking */
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1em; /* Slightly smaller font */
+            margin-bottom: 0; /* Remove bottom margin as it's now inline */
+        }
+
+        .filter-group select {
+            flex-grow: 1; /* Allow select to take remaining space */
+            padding: 10px 15px; /* Reduced padding */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95em; /* Slightly smaller font */
+            box-sizing: border-box;
+            background-color: var(--white);
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%238c8c8c%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.5%2C4.5-10.6%2C6.7-16.7%2C6.7s-12.2-2.2-16.7-6.7L5.4%2C114.7c-9-9-9-23.5%2C0-32.5s23.5-9%2C32.5%2C0l118%2C118l118-118c9-9%2C23.5-9%2C32.5%2C0S295.9%2C105.7%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: left 12px center; /* Adjusted position */
+            background-size: 10px; /* Smaller arrow */
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(231, 173, 0, 0.2);
+        }
+
+        /* Custom Radio Buttons */
+        .filter-group input[type="radio"] {
+            display: none;
+        }
+
+        .filter-group input[type="radio"] + label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px; /* Reduced padding */
+            margin: 0 5px; /* Smaller margin between options */
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            background-color: var(--white);
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            font-size: 0.9em; /* Slightly smaller font */
+            color: var(--secondary-color2);
+            min-width: 70px; /* Slightly smaller min-width */
+            flex-grow: 1;
+        }
+
+        .filter-group input[type="radio"]:checked + label {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(231, 173, 0, 0.3);
+        }
+
+        .filter-group input[type="radio"] + label:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+            opacity: 0.9;
+        }
+
+        /* --- Products Grid --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; 
+            justify-items: center;
+            max-width: 700px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px var(--shadow-light);
+            text-align: center;
+            /* تم التعديل: تقليل الـ padding لتقصير الكارت */
+            padding: 3px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 380px; /* Ensure max width is appropriate for two columns */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px var(--shadow-medium);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            /* تم التعديل: تقليل ارتفاع الصورة لتقصير الكارت */
+            height: 180px; 
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .product-card h3 {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+        
+        .product-card p {
+            font-size: 1em;
+            color: var(--secondary-color);
+            /* min-height: 50px; // لا نحتاجها هنا إذا كان هناك وصف مفصل */
+            margin: 2px;
+        }
+
+        /* Product details (description) */
+        .product-card p:not(.old-price):not(.current-price) {
+            font-size: 0.9em; /* تم التعديل: تصغير حجم الخط قليلاً */
+            color: var(--secondary-color2);
+            /* تم التعديل: تقليل الارتفاع الأدنى وعدد الأسطر */
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+
+        /* Product Meta (Type and Suitable) */
+        .product-meta {
+            font-size: 0.9em; 
+            color: var(--secondary-color); 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* تم التعديل: تقليل المسافة بين عناصر الميتا */
+            gap: 3px 6px; 
+            /* إضافة هامش علوي وسفلي لضبط المسافة */
+            margin-top: 5px; 
+            margin-bottom: 10px; 
+        }
+        .product-meta span {
+            background-color: var(--white); 
+            border: 1px solid var(--border-color); 
+            border-radius: 5px;
+            font-weight: normal; 
+        }
+
+        /* Actions group for cart/wishlist buttons */
+        .actions {
+            display: flex;
+            /* تم التعديل: تقليل المسافة بين الأزرار */
+            gap: 8px; 
+            /* إضافة padding علوي لتبعد الأزرار عن المحتوى قليلًا */
+            padding-top: 0px; 
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--card-button-bg-add);
+            color: var(--white);
+            /* تم التعديل: تقليل الـ padding لتقليل ارتفاع الأزرار */
+            padding: 10px 12px; 
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em; /* تم التعديل: تقليل حجم الخط داخل الأزرار */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-grow: 1;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .add-to-cart-btn i {
+            font-size: 1.1em;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .add-to-wishlist-btn {
+            background-color: var(--card-button-bg-wish);
+            color: var(--white);
+            /* تم التعديل: تقليل الـ padding لتقليل ارتفاع الأزرار */
+            padding: 10px; 
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05em; /* تم التعديل: تصغير حجم الخط قليلاً */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .add-to-wishlist-btn:hover {
+            background-color: darken(var(--card-button-bg-wish), 10%);
+            transform: translateY(-2px);
+        }
+
+        .no-products-message {
+            text-align: center;
+            font-size: 1.4em;
+            color: var(--secondary-color2);
+            margin-top: 50px;
+            grid-column: 1 / -1;
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .loading-spinner {
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 60px auto;
+            display: block;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .message.error {
+            background-color: #fcebeb;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+        }
+        /* Styles for old price and new price */
+        .old-price {
+            text-decoration: line-through;
+            color: var(--secondary-color2);
+            font-size: 0.9em;
+            margin-left: 10px; /* مسافة بين السعر القديم والجديد */
+            white-space: nowrap; /* منع انقسام السعر */
+        }
+
+        .current-price {
+            font-size: 1.3em;
+            color: var(--primary-color);
+            font-weight: bold;
+            white-space: nowrap; /* منع انقسام السعر */
+        }
+
+        /* تم التعديل: لجعل الأسعار تظهر جنبًا إلى جنب */
+        .prices-container {
+            display: flex; /* تحويلها إلى فليكس بوكس */
+            flex-direction: row; /* جعل العناصر تظهر في صف واحد */
+            justify-content: center; /* توسيط الأسعار */
+            align-items: baseline; /* محاذاة الأسعار على نفس الخط الأساسي (للسماح باختلاف الأحجام) */
+            padding: 0px 0; /* إضافة padding بسيط */
+        }
+        @media (min-width: 681px) { 
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+    </style>
 </head>
 <body>
-
 <!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
 <!--###################################################################################-->
 
-    <main class="content">
-        <section class="data-display-section">
-            <h2 data-translate-key="viewProductsTitle">عرض المنتجات</h2>
-            <div style="text-align: left; margin-bottom: 20px;">
-                <a href="add-product.html" class="action-button" data-translate-key="addNewProduct">
-                    <i class="fas fa-plus"></i> إضافة منتج جديد
-                </a>
+
+    <div class="main-content">
+        <h2>منتجاتنا</h2>
+
+        <div class="filters-container">
+            <div class="filter-group">
+                <label>نوع المنتج:</label>
+                <input type="radio" id="filter_all" name="product_type_1_filter" value="all" checked>
+                <label for="filter_all">الكل</label>
+                <input type="radio" id="filter_flowers" name="product_type_1_filter" value="ورد">
+                <label for="filter_flowers">ورد فقط</label>
+                <input type="radio" id="filter_accessories" name="product_type_1_filter" value="اكسسوارات">
+                <label for="filter_accessories">اكسسوارات فقط</label>
             </div>
-            <div class="product-management-grid">
-                <div class="manage-product-card" data-product-id="1">
-                    <img src="../server/static/images/11.jpg" alt="باقة الورد الأحمر">
-                    <h3 data-translate-key="product1Title">باقة الورد الأحمر</h3>
-                    <p class="price"> <span data-translate-key="priceCurrent1">120 جنيه</span></p>
-                    <p data-translate-key="productStatus">الحالة: <span class="status-completed" data-translate-key="inStock">متوفر</span></p>
-                    <div class="actions">
-                        <a href="edit-product.html?id=1" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
-                        <button class="delete-btn" data-translate-key="delete">حذف</button>
-                    </div>
-                </div>
-                <div class="manage-product-card" data-product-id="2">
-                    <img src="../server/static/images/22.jpg" alt="تنسيقة زهور الربيع">
-                    <h3 data-translate-key="product2Title">تنسيقة زهور الربيع</h3>
-                    <p class="price"> <span data-translate-key="priceCurrent2">180 جنيه</span></p>
-                    <p data-translate-key="productStatus">الحالة: <span class="status-pending" data-translate-key="outOfStock">غير متوفر</span></p>
-                    <div class="actions">
-                        <a href="edit-product.html?id=2" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
-                        <button class="delete-btn" data-translate-key="delete">حذف</button>
-                    </div>
-                </div>
-                </div>
-        </section>
-    </main>
 
+            <div class="filter-group">
+                <label for="product_type_2_filter">أنواع الورد:</label>
+                <select id="product_type_2_filter">
+                    <option value="all">كل الأنواع</option>
+                </select>
+            </div>
 
+            <div class="filter-group">
+                <label for="product_suitable_filter">المناسبات:</label>
+                <select id="product_suitable_filter">
+                    <option value="all">كل المناسبات</option>
+                </select>
+            </div>
+        </div>
 
-
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <div id="message" class="message"></div>
+        <div class="products-grid" id="productsGrid">
+            </div>
+    </div>
 
 <!--###################################################################################-->
     <footer class="site-footer">
@@ -68,7 +452,7 @@
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item" >
+        <a href="./wishlist.html" class="nav-item " >
             <i class="fas fa-heart"></i>
             <span data-translate-key="likes">الإعجابات</span>
         </a>
@@ -100,21 +484,170 @@
 <!--###################################################################################-->
 
     <script src="./../../server/script.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.manage-product-card .delete-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productId = event.target.closest('.manage-product-card').dataset.productId;
-                    if (confirm(`هل أنت متأكد من حذف المنتج رقم ${productId}؟`)) {
-                        console.log(`Deleting product with ID: ${productId}`);
-                        // هنا يمكنك إضافة منطق لحذف المنتج من قاعدة البيانات/Local Storage
-                        event.target.closest('.manage-product-card').remove(); // Remove from DOM
-                        alert(translations[localStorage.getItem('preferredLang') || 'ar'].productRemovedSuccess || "تم حذف المنتج بنجاح!");
-                    }
-                });
+        // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec';
+
+        const productsGrid = document.getElementById('productsGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const messageDiv = document.getElementById('message');
+        const productType1Filters = document.querySelectorAll('input[name="product_type_1_filter"]');
+        const productType2Filter = document.getElementById('product_type_2_filter');
+        const productSuitableFilter = document.getElementById('product_suitable_filter');
+
+        let allProducts = []; // لتخزين جميع المنتجات التي تم جلبها من Google Sheet
+
+        // دوال مساعدة لإظهار/إخفاء Spinner والرسائل
+        function showSpinner() {
+            loadingSpinner.style.display = 'block';
+            productsGrid.innerHTML = ''; // مسح المنتجات عند التحميل
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+        }
+
+        function hideSpinner() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+
+        // --- جلب جميع المنتجات من Google Sheet ---
+        async function fetchProducts() {
+            showSpinner();
+            try {
+                const response = await fetch(WEB_APP_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                allProducts = data; // تخزين جميع المنتجات
+
+                populateFilters(allProducts); // ملء القوائم المنسدلة بناءً على البيانات
+                displayProducts(allProducts); // عرض جميع المنتجات مبدئياً
+
+            } catch (error) {
+                showMessage('فشل في جلب المنتجات: ' + error.message, 'error');
+                console.error('Error fetching products:', error);
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // --- ملء القوائم المنسدلة بالفلاتر ---
+        function populateFilters(products) {
+            const types2 = new Set(); // لـ product_type_2 (أنواع الورد)
+            const suitableTypes = new Set(); // لـ product_suitable (المناسبات)
+
+            products.forEach(product => {
+                if (product.product_type_2) {
+                    types2.add(product.product_type_2.trim());
+                }
+                if (product.product_suitable) {
+                    suitableTypes.add(product.product_suitable.trim());
+                }
             });
+
+            // ملء قائمة أنواع الورد (product_type_2)
+            productType2Filter.innerHTML = '<option value="all">كل الأنواع</option>';
+            Array.from(types2).sort().forEach(type => {
+                if (type) { // تأكد من أن القيمة ليست فارغة
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type;
+                    productType2Filter.appendChild(option);
+                }
+            });
+
+            // ملء قائمة المناسبات (product_suitable)
+            productSuitableFilter.innerHTML = '<option value="all">كل المناسبات</option>';
+            Array.from(suitableTypes).sort().forEach(type => {
+                if (type) { // تأكد من أن القيمة ليست فارغة
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type;
+                    productSuitableFilter.appendChild(option);
+                }
+            });
+        }
+
+        // --- عرض المنتجات بناءً على الفلاتر المختارة ---
+        function displayProducts() {
+            productsGrid.innerHTML = ''; // مسح المنتجات المعروضة حالياً
+            messageDiv.textContent = ''; // مسح رسائل الخطأ/التحميل
+
+            // الحصول على قيم الفلاتر الحالية
+            let selectedProductType1 = document.querySelector('input[name="product_type_1_filter"]:checked').value;
+            let selectedProductType2 = productType2Filter.value;
+            let selectedProductSuitable = productSuitableFilter.value;
+
+            const filteredProducts = allProducts.filter(product => {
+                // فلتر نوع المنتج (ورد، اكسسوارات، الكل) - product_type_1
+                const matchesType1 = selectedProductType1 === 'all' ||
+                                     product.product_type_1 === selectedProductType1;
+
+                // فلتر أنواع الورد (product_type_2)
+                const matchesType2 = selectedProductType2 === 'all' ||
+                                     product.product_type_2 === selectedProductType2;
+
+                // فلتر المناسبات (product_suitable)
+                const matchesSuitable = selectedProductSuitable === 'all' ||
+                                        product.product_suitable === selectedProductSuitable;
+
+                return matchesType1 && matchesType2 && matchesSuitable;
+            });
+
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products-message">لا توجد منتجات مطابقة للفلاتر المختارة.</p>';
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                const imageUrl = product.product_image || 'https://via.placeholder.com/200?text=No+Image'; // صورة افتراضية
+
+                // Check for existence of product_prise_1 and product_prise_2 to decide on price display
+                // If product_prise_2 exists, it's the old price (strikethrough)
+                // product_prise_1 is always the current price
+                let pricesHtml = '';
+                // تم التعديل: لعرض السعرين جنبًا إلى جنب
+                if (product.product_prise_2 && product.product_prise_1) {
+                    pricesHtml += `<p class="old-price">${product.product_prise_2}</p>`;
+                    pricesHtml += `<p class="current-price">${product.product_prise_1}</p>`;
+                } else if (product.product_prise_1) {
+                    pricesHtml += `<p class="current-price">${product.product_prise_1}</p>`;
+                }
+
+
+                productCard.innerHTML = `
+                    <img src="${imageUrl}" alt="${product.product_Name}">
+                    <h3>${product.product_Name}</h3>
+                    <p style="font-size: 0.6em;">${product.product_type_2 || 'لا توجد تفاصيل.'} || ${product.product_suitable || 'لا توجد تفاصيل.'}</p>
+                    <div class="prices-container">
+                        ${pricesHtml}
+                    </div>
+                    <div class="actions">
+                        <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i>اضافة</button>
+                        <button class="add-to-wishlist-btn"><i class="fas fa-heart"></i>اعجبني</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // --- إضافة مستمعي الأحداث للفلاتر ---
+        productType1Filters.forEach(radio => {
+            radio.addEventListener('change', displayProducts);
         });
+        productType2Filter.addEventListener('change', displayProducts);
+        productSuitableFilter.addEventListener('change', displayProducts);
+
+        // --- جلب المنتجات عند تحميل الصفحة ---
+        document.addEventListener('DOMContentLoaded', fetchProducts);
     </script>
 </body>
 </html>
