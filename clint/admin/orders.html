@@ -8,75 +8,184 @@
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* إضافة سلوك التمرير السلس للصفحة بأكملها */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* CSS لتنسيق الكروت بدلاً من الجدول */
+        .orders-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            /* لجعل الكروت في المنتصف */
+            justify-content: center; /* لمحاذاة العناصر داخل الشبكة */
+            max-width: 1200px; /* تحديد أقصى عرض للحاوية */
+            margin: 0 auto; /* لمحاذاة الحاوية نفسها في المنتصف */
+        }
+        .order-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            direction: rtl; /* ضمان الاتجاه من اليمين لليسار للمحتوى العربي */
+            text-align: right; /* محاذاة النص لليمين */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* يدفع الأزرار للأسفل */
+        }
+        .order-card h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .order-card p {
+            margin-bottom: 5px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .card-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end; /* محاذاة الأزرار لليمين */
+            flex-wrap: wrap; /* للسماح للأزرار بالنزول لسطر جديد إذا كانت الشاشة صغيرة */
+        }
+        .card-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* منع تقسيم النص داخل الزر */
+        }
+        .card-actions .view-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .card-actions .complete-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .card-actions .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .card-actions button:hover {
+            opacity: 0.9;
+        }
+
+        /* إخفاء الجدول الأصلي لأنه سيتم استبداله بالكروت */
+        .data-table {
+            display: none;
+        }
+
+        /* تعديلات على الرسالة عند عدم وجود طلبات */
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        /* لتنظيم محتوى قسم الطلبات */
+        .data-display-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+
+        /* تنسيق مربعات الاختيار */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column; /* جعل مربعات الاختيار تظهر تحت بعضها */
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #444;
+            font-weight: bold;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-left: 8px; /* مسافة بين المربع والنص */
+            transform: scale(1.2); /* تكبير حجم مربع الاختيار قليلاً */
+            accent-color: #007bff; /* لتغيير لون مربع الاختيار */
+        }
+
+        /* تنسيق زر "أحدث الطلبات" */
+        .scroll-to-orders-btn {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .scroll-to-orders-btn:hover {
+            background-color: #005f7a;
+        }
+
+        /* تنسيق زر التحديث في الأسفل */
+        .refresh-btn {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
 
+    <a href="#refresh-page-btn" class="scroll-to-orders-btn" data-translate-key="latestOrdersBtn">احدث الطلبات  </a>
 
-    <main class="content">
-        <section class="data-display-section">
+<main class="content">
+        <section class="data-display-section" id="orders-section">
             <h2 data-translate-key="ordersTitle">الطلبات الواردة</h2>
             <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th data-translate-key="orderId">رقم الطلب</th>
-                            <th data-translate-key="customerName">اسم العميل</th>
-                            <th data-translate-key="orderDate">تاريخ الطلب</th>
-                            <th data-translate-key="orderTotal">الإجمالي</th>
-                            <th data-translate-key="orderStatus">الحالة</th>
-                            <th data-translate-key="actions">الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#1001</td>
-                            <td>أحمد محمد</td>
-                            <td>2025-07-15</td>
-                            <td>350 جنيه</td>
-                            <td class="status-pending" data-translate-key="statusPending">معلق</td>
-                            <td class="action-buttons">
-                                <button data-translate-key="viewOrder">عرض</button>
-                                <button class="complete-btn" data-translate-key="completeOrder">إتمام</button>
-                                <button class="delete-btn" data-translate-key="cancelOrder">إلغاء</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#1002</td>
-                            <td>فاطمة علي</td>
-                            <td>2025-07-14</td>
-                            <td>120 جنيه</td>
-                            <td class="status-completed" data-translate-key="statusCompleted">مكتمل</td>
-                            <td class="action-buttons">
-                                <button data-translate-key="viewOrder">عرض</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#1003</td>
-                            <td>محمد السيد</td>
-                            <td>2025-07-13</td>
-                            <td>500 جنيه</td>
-                            <td class="status-processing" data-translate-key="statusProcessing">قيد المعالجة</td>
-                            <td class="action-buttons">
-                                <button data-translate-key="viewOrder">عرض</button>
-                                <button class="complete-btn" data-translate-key="completeOrder">إتمام</button>
-                                <button class="delete-btn" data-translate-key="cancelOrder">إلغاء</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                </table>
                 <p class="empty-message" style="display: none;" data-translate-key="noOrders">لا توجد طلبات حالياً.</p>
             </div>
         </section>
     </main>
 
+        <button id="refresh-page-btn" class="refresh-btn" data-translate-key="refreshPage">تحديث الصفحة</button>
 
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -115,12 +224,121 @@
             <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
             <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
             <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
+        </ul>
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
 
     <script src="./../../server/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/1T41JPsQbGid-ivYA06oAS_RyGdvuJE39EOdJQ_mfLH8/gviz/tq?tqx=out:json';
+            const tableContainer = document.querySelector('.table-container');
+            const emptyMessage = document.querySelector('.empty-message');
+            const refreshButton = document.getElementById('refresh-page-btn');
+
+            // Function to save checkbox states
+            function saveCheckboxStates(orderId, checkboxType, isChecked) {
+                let states = JSON.parse(localStorage.getItem('orderCheckboxStates')) || {};
+                if (!states[orderId]) {
+                    states[orderId] = {};
+                }
+                states[orderId][checkboxType] = isChecked;
+                localStorage.setItem('orderCheckboxStates', JSON.stringify(states));
+            }
+
+            // Function to load checkbox states
+            function loadCheckboxState(orderId, checkboxType) {
+                let states = JSON.parse(localStorage.getItem('orderCheckboxStates')) || {};
+                return states[orderId] ? states[orderId][checkboxType] : false;
+            }
+
+            // Function to fetch and display data
+            async function fetchAndDisplayOrders() {
+                try {
+                    const response = await fetch(sheetUrl);
+                    const text = await response.text();
+                    const jsonString = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+                    const data = JSON.parse(jsonString);
+
+                    const rows = data.table.rows;
+
+                    if (rows.length === 0) {
+                        emptyMessage.style.display = 'block';
+                        tableContainer.innerHTML = '';
+                        return;
+                    }
+
+                    emptyMessage.style.display = 'none';
+                    tableContainer.innerHTML = '';
+
+                    const cardsContainer = document.createElement('div');
+                    cardsContainer.classList.add('orders-cards-container');
+
+                    rows.forEach((row, index) => {
+                        const orderId = `order_${index}`;
+
+                        if (row.c && row.c.length >= 5) {
+                            const name = row.c[0]?.v || 'غير متوفر';
+                            const number = row.c[1]?.v || 'غير متوفر';
+                            const address = row.c[2]?.v || 'غير متوفر';
+                            const notesa = row.c[3]?.v || 'لا يوجد ملاحظات';
+                            const mountorder = row.c[4]?.v || 'غير متوفر';
+
+                            const orderCard = document.createElement('div');
+                            orderCard.classList.add('order-card');
+
+                            orderCard.innerHTML = `
+                                <h3>اسم العميل: ${name}</h3>
+                                <p><strong>رقم الهاتف:</strong> ${number}</p>
+                                <p><strong>العنوان:</strong> ${address}</p>
+                                <p><strong>قيمة الطلب:</strong> ${mountorder}</p>
+                                <p><strong>ملاحظات:</strong> ${notesa}</p>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" class="order-checkbox" data-order-id="${orderId}" data-checkbox-type="received">
+                                        تم الاستلام
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="order-checkbox" data-order-id="${orderId}" data-checkbox-type="preparing">
+                                        قيد التحضير
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="order-checkbox" data-order-id="${orderId}" data-checkbox-type="delivered">
+                                        تم التسليم
+                                    </label>
+                                </div>
+                            `;
+                            cardsContainer.appendChild(orderCard);
+                        }
+                    });
+                    tableContainer.appendChild(cardsContainer);
+
+                    document.querySelectorAll('.order-checkbox').forEach(checkbox => {
+                        const orderId = checkbox.dataset.orderId;
+                        const checkboxType = checkbox.dataset.checkboxType;
+
+                        checkbox.checked = loadCheckboxState(orderId, checkboxType);
+
+                        checkbox.addEventListener('change', (event) => {
+                            saveCheckboxStates(orderId, checkboxType, event.target.checked);
+                        });
+                    });
+
+                } catch (error) {
+                    console.error('حدث خطأ أثناء جلب أو تحليل البيانات:', error);
+                    emptyMessage.style.display = 'block';
+                    emptyMessage.textContent = 'حدث خطأ أثناء تحميل الطلبات.';
+                    tableContainer.innerHTML = '';
+                }
+            }
+
+            fetchAndDisplayOrders();
+
+            refreshButton.addEventListener('click', () => {
+                location.reload();
+            });
+        });
+    </script>
 </body>
 </html>

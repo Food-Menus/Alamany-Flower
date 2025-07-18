@@ -4,54 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
-    <title data-translate-key="reportsTitle">قصر زهور الأماني - التقارير</title>
+    <title data-translate-key="reportsTitle">قصر زهور الأماني - التقارير والإحصائيات</title>
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom CSS for Reports Page */
+        .data-display-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: right;
+        }
+
+        .data-display-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2.2em;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: #eef;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .stat-card h3 {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color-dark);
+        }
+
+        .chart-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .chart-container h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .loading-message, .error-message {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.2em;
+            color: #777;
+        }
+        .error-message {
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
-
-
-    <main class="content">
+<main class="content">
         <section class="data-display-section">
-            <h2 data-translate-key="reportsTitle">التقارير</h2>
+            <h2 data-translate-key="reportsTitle">التقارير والإحصائيات</h2>
 
-            <div class="report-card">
-                <h3 data-translate-key="bestSellingProducts">المنتجات الأكثر مبيعاً</h3>
-                <ul>
-                    <li><span data-translate-key="product1Title">باقة الورد الأحمر</span> - <span class="percentage">30%</span></li>
-                    <li><span data-translate-key="product2Title">تنسيقة زهور الربيع</span> - <span class="percentage">25%</span></li>
-                    <li><span data-translate-key="product3Title">باقة زفاف بيضاء</span> - <span class="percentage">20%</span></li>
-                    <li><span data-translate-key="product4Title">صندوق هدايا زهور</span> - <span class="percentage">15%</span></li>
-                    <li><span data-translate-key="product5Title">ورد جوري مميز</span> - <span class="percentage">10%</span></li>
-                </ul>
-            </div>
+            <div class="loading-message" data-translate-key="loadingReports">جاري تحميل التقارير...</div>
+            <div class="error-message" style="display: none;" data-translate-key="reportsError">حدث خطأ أثناء تحميل التقارير. الرجاء التأكد من اتصالك بالإنترنت ومن إعدادات جداول البيانات.</div>
 
-            <div class="report-card">
-                <h3 data-translate-key="totalRevenue">إجمالي الأرباح</h3>
-                <p style="font-size: 1.5em; font-weight: bold; color: var(--color2);">15,000 جنيه</p>
-                <p><span data-translate-key="totalOrdersCount">إجمالي عدد الطلبات:</span> 150</p>
-                <p><span data-translate-key="productsCount">عدد المنتجات:</span> 25</p>
-            </div>
-
-            <div class="report-card">
-                <h3 data-translate-key="customerSatisfaction">رضا العملاء</h3>
-                <p><span data-translate-key="averageRating">متوسط التقييم:</span> 4.7 / 5</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 94%;">94%</div>
+            <div class="stats-grid" id="mainStats">
+                <div class="stat-card">
+                    <h3 data-translate-key="totalOrders">إجمالي الطلبات</h3>
+                    <p id="totalOrdersCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3 data-translate-key="totalSales">إجمالي المبيعات</h3>
+                    <p id="totalSalesAmount">0 جنيه</p>
+                </div>
+                <div class="stat-card">
+                    <h3 data-translate-key="totalFeedback">إجمالي التقييمات</h3>
+                    <p id="totalFeedbackCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3 data-translate-key="averageRating">متوسط التقييم</h3>
+                    <p id="averageRatingValue">0 / 5</p>
                 </div>
             </div>
+
+            <div class="chart-container">
+                <h3 data-translate-key="mostSoldProducts">المنتجات الأكثر مبيعاً</h3>
+                <canvas id="mostSoldProductsChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 data-translate-key="ratingDistribution">توزيع التقييمات (النجوم)</h3>
+                <canvas id="ratingDistributionChart"></canvas>
+            </div>
+
             </section>
     </main>
 
 
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -94,8 +176,196 @@
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
+<script src="./../../server/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // URLs for Google Sheets API (gviz/tq endpoint)
+            // تأكد من أن كل جدول منشور على الويب "Anyone with the link can view"
+            const ORDERS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1T41JPsQbGid-ivYA06oAS_RyGdvuJE39EOdJQ_mfLH8/gviz/tq?tqx=out:json&gid=0';
+            const FEEDBACK_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1N7nZM-WcjNp7AeCurTap58_I84RljQ87xCv9j5X6vxo/gviz/tq?tqx=out:json&gid=0';
+            const PRODUCTS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/14oJqb0sZuuL9vf53hj4a5e9gKPvgaW21Kp8-Q7fTRKs/gviz/tq?tqx=out:json&gid=0';
 
-    <script src="./../../server/script.js"></script>
- </body>
+            const loadingMessage = document.querySelector('.loading-message');
+            const errorMessage = document.querySelector('.error-message');
+            const mainStatsDiv = document.getElementById('mainStats');
+
+            // Hide stats and charts initially
+            mainStatsDiv.style.display = 'none';
+            document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
+
+            // Helper function to fetch and parse Google Sheet data
+            async function fetchSheetData(url) {
+                try {
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    const jsonString = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+                    const data = JSON.parse(jsonString);
+                    return data.table.rows;
+                } catch (error) {
+                    console.error(`Error fetching data from ${url}:`, error);
+                    throw error; // Re-throw to be caught by the main function
+                }
+            }
+
+            // Function to display error message
+            function showErrorMessage() {
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+
+            // Main function to load all data and render reports
+            async function loadReports() {
+                try {
+                    const [ordersData, feedbackData, productsData] = await Promise.all([
+                        fetchSheetData(ORDERS_SHEET_URL),
+                        fetchSheetData(FEEDBACK_SHEET_URL),
+                        fetchSheetData(PRODUCTS_SHEET_URL)
+                    ]);
+
+                    loadingMessage.style.display = 'none';
+                    mainStatsDiv.style.display = 'grid'; // Show stats grid
+                    document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'block'); // Show chart containers
+
+                    // --- Process Orders Data ---
+                    let totalOrders = ordersData.length;
+                    let totalSales = 0;
+                    const productSales = {}; // To count sales of each product
+
+                    ordersData.forEach(row => {
+                        // Assuming 'amount' is at index 4 (0-indexed)
+                        const amount = parseFloat(row.c[4]?.v) || 0;
+                        totalSales += amount;
+
+                        // Assuming 'order' column (index 5) contains product names, possibly comma-separated
+                        const orderString = row.c[5]?.v || ''; // Assuming 'order' column is at index 5
+                        const productsInOrder = orderString.split(',').map(p => p.trim()).filter(p => p);
+
+                        productsInOrder.forEach(product => {
+                            productSales[product] = (productSales[product] || 0) + 1;
+                        });
+                    });
+
+                    document.getElementById('totalOrdersCount').textContent = totalOrders;
+                    document.getElementById('totalSalesAmount').textContent = `${totalSales.toFixed(2)} جنيه`;
+
+                    // --- Process Feedback Data ---
+                    let totalFeedback = feedbackData.length;
+                    let totalRatingSum = 0;
+                    const ratingCounts = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
+
+                    feedbackData.forEach(row => {
+                        // Assuming 'rating' is at index 4 (0-indexed)
+                        const rating = parseInt(row.c[3]?.v) || 0;
+                        if (rating >= 1 && rating <= 5) {
+                            totalRatingSum += rating;
+                            ratingCounts[rating.toString()]++;
+                        }
+                    });
+
+                    const averageRating = totalFeedback > 0 ? (totalRatingSum / totalFeedback).toFixed(1) : 0;
+
+                    document.getElementById('totalFeedbackCount').textContent = totalFeedback;
+                    document.getElementById('averageRatingValue').textContent = `${averageRating} / 5`;
+
+                    // --- Render Charts ---
+
+                    // Chart 1: Most Sold Products
+                    const sortedProducts = Object.entries(productSales).sort(([, a], [, b]) => b - a);
+                    const topProductsLabels = sortedProducts.slice(0, 10).map(([product]) => product); // Top 10
+                    const topProductsData = sortedProducts.slice(0, 10).map(([, count]) => count);
+
+                    new Chart(document.getElementById('mostSoldProductsChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: topProductsLabels,
+                            datasets: [{
+                                label: 'عدد المبيعات',
+                                data: topProductsData,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false // Hide legend if only one dataset
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'المنتجات الأكثر مبيعاً (عدد الطلبات)',
+                                    font: { size: 16 }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'عدد الطلبات'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'المنتج'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Chart 2: Rating Distribution
+                    const ratingLabels = ['1 نجمة', '2 نجوم', '3 نجوم', '4 نجوم', '5 نجوم'];
+                    const ratingData = Object.values(ratingCounts);
+
+                    new Chart(document.getElementById('ratingDistributionChart'), {
+                        type: 'pie',
+                        data: {
+                            labels: ratingLabels,
+                            datasets: [{
+                                label: 'عدد التقييمات',
+                                data: ratingData,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.6)', // 1 star
+                                    'rgba(255, 159, 64, 0.6)', // 2 stars
+                                    'rgba(255, 205, 86, 0.6)', // 3 stars
+                                    'rgba(75, 192, 192, 0.6)', // 4 stars
+                                    'rgba(54, 162, 235, 0.6)'  // 5 stars
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 205, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(54, 162, 235, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'توزيع تقييمات العملاء',
+                                    font: { size: 16 }
+                                }
+                            }
+                        }
+                    });
+
+                } catch (error) {
+                    showErrorMessage();
+                }
+            }
+
+            loadReports();
+        });
+    </script>
+</body>
 </html>

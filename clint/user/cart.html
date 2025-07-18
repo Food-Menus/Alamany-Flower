@@ -18,10 +18,10 @@
             --border-color: #e0e0e0;
             --shadow-light: rgba(0, 0, 0, 0.05);
             --shadow-medium: rgba(0, 0, 0, 0.1);
-            --card-button-bg-add: #35c528; /* Original green for add to cart */
+            --card-button-bg-add: #289a1d; /* Original green for add to cart */
             --card-button-bg-wish: #ff4444; /* Primary color for wishlist */
-            --button-danger: #dc3545; /* Red for remove/clear */
-            --button-whatsapp: #25D366; /* WhatsApp green */
+            --button-danger: #d9162a; /* Red for remove/clear */
+            --button-whatsapp: #19ad06; /* WhatsApp green */
         }
 
         body {
@@ -387,7 +387,7 @@
 <body>
 
 <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-<main class="content main-content">
+    <main class="content main-content">
         <section class="cart-section">
             <h2>سلة مشترياتك</h2>
             <div id="cart-products-container">
@@ -396,11 +396,11 @@
 
             <div class="cart-summary-and-form">
                 <div class="cart-summary">
-                    <h3>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
+                    <h4>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
                 </div>
 
                 <div class="customer-info-form">
-                    <h3>ادخل البيانات المطلوبة لاكمال الطلب</h3>
+                    <h3>ادخل بياناتك لاكمال الطلب</h3>
                     <label for="customer-name">الاسم بالكامل:</label>
                     <input type="text" id="customer-name" placeholder="ادخل اسمك هنا" required>
 
@@ -416,7 +416,7 @@
 
                 <div class="checkout-buttons">
                     <button class="checkout-btn" id="send-whatsapp-order">
-                        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                        <i class="fab fa-whatsapp"></i> إرسال الطلب 
                     </button>
                     <button class="clear-cart-btn" id="clear-cart">
                         <i class="fas fa-trash-alt"></i> تفريغ السلة

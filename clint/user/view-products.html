@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   <style>
+    <style>
+        /* (احتفظ بنفس تنسيقات CSS التي كانت في الكود السابق) */
         :root {
             --primary-color: #e7ad00; /* Pinkish-orange */
             --secondary-color: #333;   /* Dark Grey */
@@ -234,7 +235,6 @@
             color: var(--secondary-color);
             overflow: hidden;
             text-overflow: ellipsis;
-
         }
         
         .product-card p {
@@ -251,7 +251,6 @@
             /* تم التعديل: تقليل الارتفاع الأدنى وعدد الأسطر */
             overflow: hidden;
             text-overflow: ellipsis;
-
         }
 
         /* Product Meta (Type and Suitable) */
@@ -525,14 +524,13 @@
         const productType1Filters = document.querySelectorAll('input[name="product_type_1_filter"]');
         const productType2Filter = document.getElementById('product_type_2_filter');
         const productSuitableFilter = document.getElementById('product_suitable_filter');
-        const toastMessage = document.getElementById('toastMessage'); // Get the toast message div
+        const toastMessage = document.getElementById('toastMessage');
 
-        let allProducts = []; // لتخزين جميع المنتجات التي تم جلبها من Google Sheet
+        let allProducts = [];
 
-        // دوال مساعدة لإظهار/إخفاء Spinner والرسائل
         function showSpinner() {
             loadingSpinner.style.display = 'block';
-            productsGrid.innerHTML = ''; // مسح المنتجات عند التحميل
+            productsGrid.innerHTML = '';
             messageDiv.textContent = '';
             messageDiv.className = 'message';
         }
@@ -546,7 +544,31 @@
             messageDiv.className = `message ${type}`;
         }
 
-        // --- جلب جميع المنتجات من Google Sheet ---
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toastMessage.className = `toast-message show ${type}`;
+            setTimeout(() => {
+                toastMessage.className = toastMessage.className.replace("show", "");
+            }, 3000);
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const productToAdd = { ...product, quantity: 1 };
+            cart.push(productToAdd);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showToast(`تمت إضافة "${product.product_Name}" إلى السلة بنجاح!`, 'success');
+            console.log('Cart:', cart);
+        }
+
+        function addToWishlist(product) {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            wishlist.push(product);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            showToast(`تمت إضافة "${product.product_Name}" إلى قائمة الأمنيات بنجاح!`, 'success');
+            console.log('Wishlist:', wishlist);
+        }
+
         async function fetchProducts() {
             showSpinner();
             try {
@@ -555,10 +577,65 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                allProducts = data; // تخزين جميع المنتجات
+                allProducts = data;
 
-                populateFilters(allProducts); // ملء القوائم المنسدلة بناءً على البيانات
-                displayProducts(allProducts); // عرض جميع المنتجات مبدئياً
+                populateFilters(allProducts);
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const initialOccasion = urlParams.get('occasion');
+                const initialProductType1 = urlParams.get('productType1'); 
+                const initialProductType2 = urlParams.get('productType2'); 
+
+                // 1. ضبط فلتر "نوع المنتج" (الـ radio buttons)
+                let type1FoundInUrl = false;
+                if (initialProductType1) {
+                     const type1Radio = document.querySelector(`input[name="product_type_1_filter"][value="${initialProductType1}"]`);
+                     if (type1Radio) {
+                         type1Radio.checked = true;
+                         type1FoundInUrl = true;
+                         console.log('Set product_type_1 filter to:', initialProductType1);
+                     } else {
+                        console.warn(`Product type 1 "${initialProductType1}" from URL did not match any radio option. Defaulting to 'all'.`);
+                     }
+                }
+                // إذا لم يتم تحديد قيمة من الـ URL، أو لم يتم العثور عليها، تأكد أن 'الكل' هو المحدد
+                if (!type1FoundInUrl) {
+                    document.getElementById('filter_all').checked = true;
+                    console.log('Defaulting product_type_1 filter to: all');
+                }
+
+
+                // 2. ضبط فلتر "أنواع الورد" (product_type_2)
+                if (initialProductType2) {
+                    const type2Option = Array.from(productType2Filter.options).find(option => option.value.trim() === initialProductType2.trim());
+                    if (type2Option) {
+                        productType2Filter.value = initialProductType2;
+                        console.log('Set product_type_2 filter to:', initialProductType2);
+                    } else {
+                        console.warn(`Product type 2 "${initialProductType2}" from URL did not match any filter option. Defaulting to 'all'.`);
+                        productType2Filter.value = 'all'; // Default if not found
+                    }
+                } else {
+                    productType2Filter.value = 'all'; // Default if no param
+                    console.log('Defaulting product_type_2 filter to: all');
+                }
+
+                // 3. ضبط فلتر "المناسبات" (product_suitable)
+                if (initialOccasion) {
+                    const suitableOption = Array.from(productSuitableFilter.options).find(option => option.value.trim() === initialOccasion.trim());
+                    if (suitableOption) {
+                        productSuitableFilter.value = initialOccasion;
+                        console.log('Set product_suitable_filter to:', initialOccasion);
+                    } else {
+                        console.warn(`Occasion "${initialOccasion}" from URL did not match any filter option in product_suitable. Defaulting to 'all'.`);
+                        productSuitableFilter.value = 'all'; // Default if not found
+                    }
+                } else {
+                    productSuitableFilter.value = 'all'; // Default if no param
+                    console.log('Defaulting product_suitable_filter to: all');
+                }
+                
+                displayProducts(); // عرض المنتجات بعد ضبط الفلاتر الأولية
 
             } catch (error) {
                 showMessage('فشل في جلب المنتجات: ' + error.message, 'error');
@@ -568,10 +645,9 @@
             }
         }
 
-        // --- ملء القوائم المنسدلة بالفلاتر ---
         function populateFilters(products) {
-            const types2 = new Set(); // لـ product_type_2 (أنواع الورد)
-            const suitableTypes = new Set(); // لـ product_suitable (المناسبات)
+            const types2 = new Set();
+            const suitableTypes = new Set();
 
             products.forEach(product => {
                 if (product.product_type_2) {
@@ -582,10 +658,12 @@
                 }
             });
 
-            // ملء قائمة أنواع الورد (product_type_2)
+            console.log('Populated Product Types 2 (أنواع الورد):', Array.from(types2));
+            console.log('Populated Suitable Occasions (المناسبات):', Array.from(suitableTypes));
+
             productType2Filter.innerHTML = '<option value="all">كل الأنواع</option>';
             Array.from(types2).sort().forEach(type => {
-                if (type) { // تأكد من أن القيمة ليست فارغة
+                if (type) {
                     const option = document.createElement('option');
                     option.value = type;
                     option.textContent = type;
@@ -593,10 +671,9 @@
                 }
             });
 
-            // ملء قائمة المناسبات (product_suitable)
             productSuitableFilter.innerHTML = '<option value="all">كل المناسبات</option>';
             Array.from(suitableTypes).sort().forEach(type => {
-                if (type) { // تأكد من أن القيمة ليست فارغة
+                if (type) {
                     const option = document.createElement('option');
                     option.value = type;
                     option.textContent = type;
@@ -605,65 +682,32 @@
             });
         }
 
-        // --- دالة لإظهار رسالة "Toast" ---
-        function showToast(message, type = 'success') {
-            toastMessage.textContent = message;
-            toastMessage.className = `toast-message show ${type}`;
-            setTimeout(() => {
-                toastMessage.className = toastMessage.className.replace("show", "");
-            }, 3000); // Hide after 3 seconds
-        }
-
-        // --- دالة لإضافة المنتج إلى السلة ---
-        function addToCart(product) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // إنشاء نسخة جديدة من المنتج مع كمية 1
-            // (هذا يسمح بإضافة نفس المنتج عدة مرات كعناصر منفصلة، كل منها بكمية 1)
-            const productToAdd = { ...product, quantity: 1 }; 
-            cart.push(productToAdd);
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            showToast(`تمت إضافة "${product.product_Name}" إلى السلة بنجاح!`, 'success');
-            console.log('Cart:', cart);
-        }
-
-
-        // --- دالة لإضافة المنتج إلى قائمة الأمنيات (المفضلة) ---
-        function addToWishlist(product) {
-            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-            
-            // ببساطة أضف المنتج إلى القائمة دون التحقق من وجوده مسبقًا
-            // هذا يسمح بإضافة نفس المنتج عدة مرات
-            wishlist.push(product);
-            
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            showToast(`تمت إضافة "${product.product_Name}" إلى قائمة الأمنيات بنجاح!`, 'success');
-            console.log('Wishlist:', wishlist);
-        }
-
-        // --- عرض المنتجات بناءً على الفلاتر المختارة ---
         function displayProducts() {
-            productsGrid.innerHTML = ''; // مسح المنتجات المعروضة حالياً
-            messageDiv.textContent = ''; // مسح رسائل الخطأ/التحميل
+            productsGrid.innerHTML = '';
+            messageDiv.textContent = '';
 
-            // الحصول على قيم الفلاتر الحالية
             let selectedProductType1 = document.querySelector('input[name="product_type_1_filter"]:checked').value;
             let selectedProductType2 = productType2Filter.value;
             let selectedProductSuitable = productSuitableFilter.value;
 
+            console.log("Current Filters:", {
+                type1: selectedProductType1,
+                type2: selectedProductType2,
+                suitable: selectedProductSuitable
+            });
+
             const filteredProducts = allProducts.filter(product => {
                 // فلتر نوع المنتج (ورد، اكسسوارات، الكل) - product_type_1
                 const matchesType1 = selectedProductType1 === 'all' ||
-                                     product.product_type_1 === selectedProductType1;
+                                     (product.product_type_1 && product.product_type_1.trim() === selectedProductType1);
 
                 // فلتر أنواع الورد (product_type_2)
                 const matchesType2 = selectedProductType2 === 'all' ||
-                                     product.product_type_2 === selectedProductType2;
+                                     (product.product_type_2 && product.product_type_2.trim() === selectedProductType2);
 
                 // فلتر المناسبات (product_suitable)
                 const matchesSuitable = selectedProductSuitable === 'all' ||
-                                        product.product_suitable === selectedProductSuitable;
+                                        (product.product_suitable && product.product_suitable.trim() === selectedProductSuitable);
 
                 return matchesType1 && matchesType2 && matchesSuitable;
             });
@@ -677,7 +721,7 @@
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
 
-                const imageUrl = product.product_image || 'https://via.placeholder.com/200?text=No+Image'; // صورة افتراضية
+                const imageUrl = product.product_image || 'https://via.placeholder.com/200?text=No+Image';
 
                 let pricesHtml = '';
                 if (product.product_prise_2 && product.product_prise_1) {
@@ -687,11 +731,22 @@
                     pricesHtml += `<p class="current-price">${product.product_prise_1}</p>`;
                 }
 
+                let metaInfo = '';
+                const pType2 = product.product_type_2 ? product.product_type_2.trim() : '';
+                const pSuitable = product.product_suitable ? product.product_suitable.trim() : '';
 
+                if (pType2 && pSuitable) {
+                    metaInfo = `${pType2} || ${pSuitable}`;
+                } else if (pType2) {
+                    metaInfo = pType2;
+                } else if (pSuitable) {
+                    metaInfo = pSuitable;
+                }
+                
                 productCard.innerHTML = `
                     <img src="${imageUrl}" alt="${product.product_Name}">
                     <h3>${product.product_Name}</h3>
-                    <p style="font-size: 0.6em;">${product.product_type_2 || 'لا توجد تفاصيل.'} || ${product.product_suitable || 'لا توجد تفاصيل.'}</p>
+                    <p style="font-size: 0.6em;">${metaInfo || 'لا توجد تفاصيل.'}</p>
                     <div class="prices-container">
                         ${pricesHtml}
                     </div>
@@ -701,7 +756,6 @@
                     </div>
                 `;
                 
-                // Attach event listeners to the buttons after they are created
                 const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
                 const addToWishlistBtn = productCard.querySelector('.add-to-wishlist-btn');
 
@@ -719,7 +773,6 @@
         productType2Filter.addEventListener('change', displayProducts);
         productSuitableFilter.addEventListener('change', displayProducts);
 
-        // --- جلب المنتجات عند تحميل الصفحة ---
         document.addEventListener('DOMContentLoaded', fetchProducts);
     </script>
 </body>

@@ -4,53 +4,524 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
-    <title data-translate-key="viewProductsTitle">قصر زهور الأماني - عرض المنتجات</title>
-    <link rel="stylesheet" href="./../../server/static/css/style.css">
-    <link rel="stylesheet" href="./../../server/static/style.css">
+    <title>قصر زهور الأماني - الصفحة الرئيسية </title>
+    <link rel="stylesheet" href="./server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e7ad00; /* Pinkish-orange */
+            --secondary-color: #333;   /* Dark Grey */
+            --secondary-color2: #8c8c8c;    /* Medium Grey */
+            --light-grey: #f4f4f4; /* Light background */
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --card-button-bg-add: #35c528; /* Original green for add to cart */
+            --card-button-bg-wish:#ff4444; /* Primary color for wishlist */
+        }
+        .special-offers {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 20%;
+
+        }
+
+        .offers-carousel {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 8%;
+
+        }
+
+        .offer-slide {
+            min-width: 100%;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+
+        }
+
+        .offer-slide img {
+            width: 100%;
+            height: 300px; /* تقليل طول الصورة */
+            object-fit: cover;
+
+
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.321); /* خلفية مظللة للنص */
+            color: white;
+            text-align: center;
+        }
+
+        .carousel-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            cursor: pointer;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: gray;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+
+        .indicator.active {
+            background-color: black;
+        }
+        .offers-carousel {
+            position: relative; /* تعيينها على أنها نسبية */
+            width: 100%; /* ضمان أن العرض 100% */
+            height: 300px; /* تعيين ارتفاع مناسب */
+        }
+
+        .offer-slide {
+            position: absolute; /* تعيينها على أنها مطلقة */
+            width: 100%; /* ضمان أن العرض 100% */
+            height: 100%; /* ضمان أن الارتفاع 100% */
+            opacity: 0; /* البدء بالاختفاء */
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* تأثير الانتقال */
+        }
+
+        .offer-slide.active {
+            opacity: 1; /* جعل الشريحة النشطة مرئية */
+            transform: translateX(0); /* تعيين موضع الشريحة النشطة */
+        }
+
+        .offer-slide.slide-left {
+            transform: translateX(-100%); /* تحريك الشريحة نحو اليسار */
+        }
+
+        .offer-slide.slide-right {
+            transform: translateX(100%); /* تحريك الشريحة نحو اليمين */
+        }
+
+
+
+        .category-item {
+            opacity: 0; /* البدء بالاختفاء */
+            transform: translateY(20px); /* تحريك الزر للأسفل */
+            transition: opacity 1s ease, transform 1s ease; /* تأثير الانتقال */
+        }
+
+        .category-item.show {
+            opacity: 1; /* جعل الزر مرئي */
+            transform: translateY(0); /* إعادة الزر إلى موضعه */
+        }
+
+
+
+
+
+
+
+
+               /* حاوية رئيسية للعرض الخاص */
+        /* حاوية رئيسية للعرض الخاص */
+        .special-products-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto; /* توسيط القسم */
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow-light);
+            text-align: center; /* لتوسيط العنوان */
+        }
+
+        .special-products-section h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            position: relative;
+        }
+        .special-products-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* --- Products Grid (تأكد من 2 عمود على الشاشات الكبيرة) --- */
+        .products-grid {
+            display: grid;
+            /* افتراضيا لعمودين على الشاشات المتوسطة والكبيرة */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px; /* مسافة بين الكروت */
+            justify-items: center;
+            max-width: 800px; /* عرض أقصى للشبكة لـ 2x2 بشكل مثالي */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+        }
+
+        /* على الشاشات الصغيرة جداً، عمود واحد */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr; /* عمود واحد على الشاشات الصغيرة */
+                padding: 5px;
+            }
+            .product-card {
+                max-width: 95%; /* السماح للكروت بأخذ عرض أكبر */
+            }
+            .special-products-section {
+                padding: 10px;
+                margin: 10px auto;
+            }
+        }
+
+
+        .product-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px; /* حواف أكثر نعومة */
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow-light); /* ظل ناعم */
+            text-align: center;
+            padding: 15px; /* زيادة الهامش الداخلي */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 380px; /* عرض أقصى متناسق للكروت */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 180px; /* ارتفاع ثابت للصورة */
+            object-fit: cover;
+            border-radius: 8px; /* حواف الصورة ناعمة */
+            box-shadow: 0 2px 6px var(--shadow-light);
+            margin-bottom: 10px; /* مسافة أسفل الصورة */
+        }
+
+        .product-card h3 {
+            font-size: 1.2em; /* عنوان أكبر قليلاً */
+            color: var(--secondary-color);
+            margin-bottom: 8px; /* مسافة أسفل العنوان */
+            min-height: 40px; /* ضمان ارتفاع متناسق للعناوين */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .product-card p {
+            font-size: 0.95em;
+            color: var(--secondary-color2);
+            margin-bottom: 5px; /* مسافة أسفل الوصف */
+            min-height: 40px; /* ضمان ارتفاع متناسق للوصف */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* الأسعار */
+        .prices-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 15px; /* مسافة أسفل الأسعار */
+            padding: 5px 0;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--secondary-color2);
+            font-size: 0.9em;
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+
+        .current-price {
+            font-size: 1.4em; /* سعر حالي أكبر قليلاً */
+            color: var(--primary-color);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* أزرار الإجراءات */
+        .actions {
+            display: flex;
+            gap: 10px; /* مسافة أكبر بين الأزرار */
+            margin-top: auto; /* دفع الأزرار لأسفل الكارت */
+            padding-top: 10px; /* هامش علوي فوق الأزرار */
+        }
+
+        .add-to-cart-btn,
+        .add-to-wishlist-btn { 
+            color: var(--white);
+            padding: 10px 15px; 
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-grow: 1;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--card-button-bg-add);
+        }
+        .add-to-cart-btn:hover {
+            background-color: #218838; 
+            transform: translateY(-2px);
+        }
+
+        .add-to-wishlist-btn {
+            background-color: var(--card-button-bg-wish);
+        }
+        .add-to-wishlist-btn:hover {
+            background-color: #cc3333; 
+            transform: translateY(-2px);
+        }
+        .add-to-cart-btn i,
+        .add-to-wishlist-btn i {
+            font-size: 1.1em;
+        }
+
+        .no-products-message {
+            text-align: center;
+            font-size: 1.3em;
+            color: var(--secondary-color2);
+            margin-top: 50px;
+            grid-column: 1 / -1; 
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .loading-spinner {
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 60px auto;
+            display: block;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .message.error {
+            background-color: #fcebeb;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+        }
+        
+        /* CSS for the success/error toast message */
+        .toast-message {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000; 
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px; 
+            font-size: 17px;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .toast-message.success {
+            background-color: #4CAF50; 
+        }
+
+        .toast-message.error {
+            background-color: #f44336; 
+        }
+    </style>
 </head>
 <body>
-
 <!--###################################################################################-->
     <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
 <!--###################################################################################-->
 
+
     <main class="content">
-        <section class="data-display-section">
-            <h2 data-translate-key="viewProductsTitle">عرض المنتجات</h2>
-            <div style="text-align: left; margin-bottom: 20px;">
-                <a href="add-product.html" class="action-button" data-translate-key="addNewProduct">
-                    <i class="fas fa-plus"></i> إضافة منتج جديد
-                </a>
+
+        <section class="special-offers">
+            <h2 data-translate-key="offersTitle">عروضنا المميزة</h2>
+            <div class="offers-carousel">
+
+                <div class="offer-slide active">
+                    <div class="overlay">
+                        <h1 data-translate-key="eventFlowers">زهور المناسبات</h1><br>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p><br>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/2 copy.jpg" alt="زهور المناسبات">
+                </div>
+
+                <div class="offer-slide">
+                    <div class="overlay">
+                        <h1 data-translate-key="eventFlowers">زهور المناسبات</h1><br>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p><br>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/1 copy.jpg" alt="زهور المناسبات">
+                </div>
+
+                <div class="offer-slide">
+                    <div class="overlay">
+                        <h1 data-translate-key="eventFlowers">زهور المناسبات</h1><br>
+                        <p data-translate-key="eventFlowersDesc">تشكيلة واسعة من الزهور لكل مناسبة.</p><br>
+                        <button class="action-button" data-translate-key="clickHere">اضغط هنا</button>
+                    </div>
+                    <img src="./server/static/images/3 copy.jpg" alt="زهور المناسبات">
+                </div>
             </div>
-            <div class="product-management-grid">
-                <div class="manage-product-card" data-product-id="1">
-                    <img src="../server/static/images/11.jpg" alt="باقة الورد الأحمر">
-                    <h3 data-translate-key="product1Title">باقة الورد الأحمر</h3>
-                    <p class="price"> <span data-translate-key="priceCurrent1">120 جنيه</span></p>
-                    <p data-translate-key="productStatus">الحالة: <span class="status-completed" data-translate-key="inStock">متوفر</span></p>
-                    <div class="actions">
-                        <a href="edit-product.html?id=1" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
-                        <button class="delete-btn" data-translate-key="delete">حذف</button>
-                    </div>
-                </div>
-                <div class="manage-product-card" data-product-id="2">
-                    <img src="../server/static/images/22.jpg" alt="تنسيقة زهور الربيع">
-                    <h3 data-translate-key="product2Title">تنسيقة زهور الربيع</h3>
-                    <p class="price"> <span data-translate-key="priceCurrent2">180 جنيه</span></p>
-                    <p data-translate-key="productStatus">الحالة: <span class="status-pending" data-translate-key="outOfStock">غير متوفر</span></p>
-                    <div class="actions">
-                        <a href="edit-product.html?id=2" class="edit-btn action-button" data-translate-key="edit">تعديل</a>
-                        <button class="delete-btn" data-translate-key="delete">حذف</button>
-                    </div>
-                </div>
+            
+            <div class="carousel-controls">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
+        </section>
+
+        <section class="ads-section">
+            <h2 data-translate-key="adsTitle">إعلانات</h2>
+            <div class="ad-container">
+                <img src="./server/static/images/Cover Image.png" alt="إعلان 1">
+                <img src="./server/static/images/Cover Image.png" alt="إعلان 2">
                 </div>
         </section>
+
+        <section class="categories-section">
+            <h2 data-translate-key="categoriesTitle">أنواع الزهور</h2>
+            <div class="categories-grid">
+                <button class="category-item" onclick="redirectToProducts('ورد صناعي')">
+                    <i class="fas fa-leaf"></i>
+                    <span data-translate-key="artificialRoses">ورد صناعي</span>
+                </button>
+                <button class="category-item" onclick="redirectToProducts('ورد طبيعي')">
+                    <i class="fas fa-seedling"></i>
+                    <span data-translate-key="naturalRoses">ورد طبيعي</span>
+                </button>
+                <button class="category-item" onclick="redirectToProducts('هدايا')">
+                    <i class="fas fa-gift"></i>
+                    <span data-translate-key="gifts">هدايا</span>
+                </button>
+                <button class="category-item" onclick="redirectToProducts('تنسيقات خاصة')">
+                    <i class="fas fa-palette"></i>
+                    <span data-translate-key="specialArrangements">تنسيقات خاصة</span>
+                </button>
+                <button class="category-item" onclick="redirectToProducts('مستلزمات')">
+                    <i class="fas fa-store"></i>
+                    <span data-translate-key="supplies">مستلزمات</span>
+                </button>
+                <button class="category-item" onclick="redirectToProducts('أشجار')">
+                    <i class="fas fa-tree"></i>
+                    <span data-translate-key="trees">أشجار</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="best-sellers-section">
+            <h2 data-translate-key="bestSellersTitle">الأكثر مبيعًا</h2>
+            <div class="special-products-section">
+                
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <div id="message" class="message"></div>
+                <div class="products-grid" id="productsGrid">
+                    </div>
+            </div>
+
+            <div id="toastMessage" class="toast-message"></div>
+
+        </section>
+
+        <!-- 
+                <section class="suggestions-section">
+                    <h2 data-translate-key="suggestionsTitle">اقتراحات لك</h2>
+                    <div class="suggestions-slider">
+                        <div class="product-card suggestion-item" data-product-id="5">
+                            <img src="./server/static/images/1.jpg"alt="اقتراح 1">
+                            <h3 data-translate-key="product5Title">ورد جوري مميز</h3>
+                            <p class="old-price" data-translate-key="priceOld5">90 جنيه</p>
+                            <p class="current-price" data-translate-key="priceCurrent5">75 جنيه</p>
+                            <div class="actions">
+                                <button class="add-to-cart-btn" data-translate-key="addToCart" style=" background-color: var(--color2); color: var(--white);"><i class="fas fa-shopping-cart"></i> أضف للسلة</button>
+                                <button class="add-to-wishlist-btn" data-translate-key="addToWishlist" style=" background-color: var(--color1); color: var(--white);"><i class="fas fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card suggestion-item" data-product-id="6">
+                            <img src="./server/static/images/2.jpg" alt="اقتراح 2">
+                            <h3 data-translate-key="product6Title">باقة توليب ملونة</h3>
+                            <p class="old-price" data-translate-key="priceOld6">180 جنيه</p>
+                            <p class="current-price" data-translate-key="priceCurrent6">160 جنيه</p>
+                            <div class="actions">
+                                <button class="add-to-cart-btn" data-translate-key="addToCart" tyle=" background-color: var(--color2); color: var(--white);"><i class="fas fa-shopping-cart"></i> أضف للسلة</button>
+                                <button class="add-to-wishlist-btn" data-translate-key="addToWishlist" style=" background-color: var(--color1); color: var(--white);"><i class="fas fa-heart"></i></button>
+                            </div>
+                        </div>
+                        </div>
+                </section> -->
+
+        <!-- <section class="location-section">
+            <h2 data-translate-key="locationTitle">موقعنا</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.6496880018597!2d31.2338279150796!3d30.044419581881944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458390c5c6f0e7d%3A0x6b2e1f4b3a6c9d7!2sCairo%2C%20Egypt!5e0!3m2!1sen!2seg!4v1678888888888!5m2!1sen!2seg" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section> -->
     </main>
-
-
-
 
 
 <!--###################################################################################-->
@@ -64,19 +535,19 @@
         <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
-        <a href="./../../index.html" class="nav-item ">
+        <a href="index.html" class="nav-item active">
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item" >
+        <a href="./clint/user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
             <span data-translate-key="likes">الإعجابات</span>
         </a>
-        <a href="./cart.html" class="nav-item">
+        <a href="./clint/user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
             <span data-translate-key="cart">السلة</span>
         </a>
-        <a href="./view-products.html" class="nav-item active">
+        <a href="./clint/user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
             <span data-translate-key="admin">المتجر</span>
         </a>
@@ -89,32 +560,262 @@
         <h1>قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
+            <li><a href="./clint/user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./clint/user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
+            <li><a href="./clint/user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
+            <li><a href="./clint/admin/admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
         </ul>        
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
 <!--###################################################################################-->
-
-    <script src="./../../server/script.js"></script>
-
+    <script src="./server/script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.manage-product-card .delete-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productId = event.target.closest('.manage-product-card').dataset.productId;
-                    if (confirm(`هل أنت متأكد من حذف المنتج رقم ${productId}؟`)) {
-                        console.log(`Deleting product with ID: ${productId}`);
-                        // هنا يمكنك إضافة منطق لحذف المنتج من قاعدة البيانات/Local Storage
-                        event.target.closest('.manage-product-card').remove(); // Remove from DOM
-                        alert(translations[localStorage.getItem('preferredLang') || 'ar'].productRemovedSuccess || "تم حذف المنتج بنجاح!");
-                    }
-                });
+        const indicators = document.querySelectorAll('.indicator');
+        const slides = document.querySelectorAll('.offer-slide');
+        let currentIndex = 0;
+        let autoSlide;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                    slide.style.transform = 'translateX(0)'; // إعادة الشريحة النشطة إلى موضعها
+                } else {
+                    slide.classList.remove('active');
+                    slide.style.transform = 'translateX(100%)'; // تحريك الشرائح غير النشطة خارج الشاشة
+                }
+            });
+        }
+        
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function startAutoSlide() {
+            autoSlide = setInterval(nextSlide, 3000); // تغيير كل 3 ثوانٍ
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlide);
+        }
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopAutoSlide();
+                currentIndex = index;
+                showSlide(currentIndex);
+                startAutoSlide();
             });
         });
+
+        // بدء التشغيل
+        startAutoSlide();
+    </script>
+    <script>
+        // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec';
+
+        const productsGrid = document.getElementById('productsGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const messageDiv = document.getElementById('message');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // دوال مساعدة لإظهار/إخفاء Spinner والرسائل
+        function showSpinner() {
+            loadingSpinner.style.display = 'block';
+            productsGrid.innerHTML = ''; // مسح المنتجات عند التحميل
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+        }
+
+        function hideSpinner() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+
+        // --- دالة لإظهار رسالة "Toast" ---
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toastMessage.className = `toast-message show ${type}`;
+            setTimeout(() => {
+                toastMessage.className = toastMessage.className.replace("show", "");
+            }, 3000); // إخفاء بعد 3 ثوانٍ
+        }
+
+        // --- دالة لإضافة المنتج إلى السلة ---
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProductIndex = cart.findIndex(item => item.product_ID === product.product_ID);
+
+            if (existingProductIndex > -1) {
+                cart[existingProductIndex].quantity = (cart[existingProductIndex].quantity || 1) + 1;
+                showToast(`تم تحديث كمية "${product.product_Name}" في السلة!`, 'success');
+            } else {
+                // التأكد من أن المنتج له ID فريد (إذا كان مفقودًا من مصدر البيانات)
+                if (!product.product_ID) {
+                    product.product_ID = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+                }
+                product.quantity = 1;
+                cart.push(product);
+                showToast(`تمت إضافة "${product.product_Name}" إلى السلة بنجاح!`, 'success');
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            console.log('Cart:', cart);
+        }
+
+        // --- دالة لإضافة المنتج إلى قائمة الأمنيات (المفضلة) ---
+        function addToWishlist(product) {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            
+            const existingProductIndex = wishlist.findIndex(item => item.product_ID === product.product_ID);
+
+            if (existingProductIndex === -1) { 
+                if (!product.product_ID) {
+                    product.product_ID = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+                }
+                wishlist.push(product);
+                showToast(`تمت إضافة "${product.product_Name}" إلى قائمة الأمنيات بنجاح!`, 'success');
+            } else {
+                showToast(`"${product.product_Name}" موجود بالفعل في قائمة الأمنيات.`, 'info'); 
+            }
+            
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            console.log('Wishlist:', wishlist);
+        }
+
+        // --- جلب جميع المنتجات من Google Sheet وفرزها واختيار الأربعة المطلوبة ---
+        async function fetchAndDisplaySpecialProducts() {
+            showSpinner();
+            try {
+                const response = await fetch(WEB_APP_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // فلترة المنتجات التي تحتوي على سعر صالح (product_prise_1)
+                const validProducts = data.filter(p => !isNaN(parseFloat(p.product_prise_1)));
+
+                if (validProducts.length < 4) {
+                    showMessage('لا توجد منتجات كافية بأسعار صالحة لعرض المنتجات المميزة (يجب توفر 4 منتجات على الأقل).', 'error');
+                    return;
+                }
+
+                // فرز المنتجات حسب السعر (product_prise_1) تصاعدياً
+                validProducts.sort((a, b) => parseFloat(a.product_prise_1) - parseFloat(b.product_prise_1));
+
+                // الحصول على أرخص منتجين
+                const cheapestTwo = validProducts.slice(0, 2);
+                
+                // الحصول على أغلى منتجين
+                // يجب فرزهم تنازلياً إذا أردنا التأكد من أنهم "الأغلى" بعد الأرخص
+                const sortedByPriceDesc = [...validProducts].sort((a, b) => parseFloat(b.product_prise_1) - parseFloat(a.product_prise_1));
+                const mostExpensiveTwo = sortedByPriceDesc.slice(0, 2);
+
+                // دمجهم في مصفوفة واحدة، مع التأكد من عدم تكرار المنتجات
+                const specialProducts = [];
+
+                cheapestTwo.forEach(p => specialProducts.push(p));
+                
+                mostExpensiveTwo.forEach(p => {
+                    // التحقق إذا كان المنتج موجودًا بالفعل بناءً على product_ID
+                    if (!specialProducts.some(sp => sp.product_ID === p.product_ID)) {
+                        specialProducts.push(p);
+                    }
+                });
+
+                // في حالة وجود أقل من 4 منتجات فريدة (مثلاً لو أغلى 2 هما نفسهم أرخص 2 بسبب قلة البيانات)
+                // يمكننا إضافة المزيد من المنتجات حتى نصل إلى 4 (اختياري)
+                let finalProducts = specialProducts.slice(0, 4); // نأخذ أول 4 منتجات تم تجميعها
+
+                // إذا كان العدد أقل من 4، يمكن إضافة منتجات عشوائية
+                let i = 0;
+                while (finalProducts.length < 4 && i < validProducts.length) {
+                    const product = validProducts[i];
+                    if (!finalProducts.some(fp => fp.product_ID === product.product_ID)) {
+                        finalProducts.push(product);
+                    }
+                    i++;
+                }
+
+                displaySelectedProducts(finalProducts); // عرض المنتجات الأربعة المختارة
+                
+            } catch (error) {
+                showMessage('فشل في جلب المنتجات المميزة: ' + error.message, 'error');
+                console.error('Error fetching special products:', error);
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // --- عرض المنتجات المختارة ---
+        function displaySelectedProducts(productsToDisplay) {
+            productsGrid.innerHTML = ''; // مسح المنتجات المعروضة حالياً
+            messageDiv.textContent = ''; // مسح رسائل الخطأ/التحميل
+
+            if (productsToDisplay.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products-message">لا توجد منتجات مميزة لعرضها.</p>';
+                return;
+            }
+
+            productsToDisplay.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                const imageUrl = product.product_image || 'https://via.placeholder.com/200?text=No+Image'; 
+
+                let pricesHtml = '';
+                if (product.product_prise_2 && product.product_prise_1) {
+                    pricesHtml += `<p class="old-price">${product.product_prise_2}</p>`;
+                    pricesHtml += `<p class="current-price">${product.product_prise_1}</p>`;
+                } else if (product.product_prise_1) {
+                    pricesHtml += `<p class="current-price">${product.product_prise_1}</p>`;
+                }
+
+                productCard.innerHTML = `
+                    <img src="${imageUrl}" alt="${product.product_Name}">
+                    <h3>${product.product_Name}</h3>
+                    <p style="font-size: 0.6em;">${product.product_type_2 || 'لا توجد تفاصيل.'} || ${product.product_suitable || 'لا توجد تفاصيل.'}</p>
+                    <div class="prices-container">
+                        ${pricesHtml}
+                    </div>
+                    <div class="actions">
+                        <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> أضف للسلة</button>
+                        <button class="add-to-wishlist-btn"><i class="fas fa-heart"></i> أعجبني</button>
+                    </div>
+                `;
+                
+                // إضافة مستمعي الأحداث للأزرار بعد إنشائها
+                const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
+                const addToWishlistBtn = productCard.querySelector('.add-to-wishlist-btn');
+
+                addToCartBtn.addEventListener('click', () => addToCart(product));
+                addToWishlistBtn.addEventListener('click', () => addToWishlist(product));
+
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // --- عند تحميل الصفحة، جلب وعرض المنتجات المميزة فقط ---
+        document.addEventListener('DOMContentLoaded', fetchAndDisplaySpecialProducts);
+    </script>
+    <script>
+        function redirectToProducts(category) {
+            // 1. حفظ قيمة الفئة في Local Storage
+            localStorage.setItem('selectedCategory', category);
+
+            // 2. التوجيه إلى صفحة عرض المنتجات (بدون معاملات استعلام)
+            // تأكد من المسار الصحيح لصفحة category-products.html
+            window.location.href = './clint/user/category-products.html'; 
+            // إذا كانت صفحة category-products.html في نفس المجلد مثل index.html، استخدم './category-products.html'
+        }
     </script>
 </body>
 </html>

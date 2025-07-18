@@ -8,47 +8,100 @@
     <link rel="stylesheet" href="./../../server/static/css/style.css">
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* تنسيقات عامة لقسم التقييمات */
+        .data-display-section {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: right; /* محاذاة كل المحتوى لليمين */
+        }
+
+        .data-display-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2em;
+        }
+
+        #feedbackList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minminmax(300px, 1fr));
+            gap: 25px;
+            padding: 0 10px; /* لتوفير بعض الهامش على الجوانب */
+        }
+
+        .feedback-card {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease-in-out;
+            direction: rtl; /* ضمان الاتجاه من اليمين لليسار */
+            text-align: right;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feedback-card .rating {
+            margin-bottom: 15px;
+            direction: ltr; /* لجعل النجوم تظهر من اليسار لليمين */
+            text-align: right; /* لمحاذاة مجموعة النجوم لليمين داخل الكارت */
+        }
+
+        .feedback-card .rating i {
+            font-size: 1.5em;
+            color: #FFD700; /* لون ذهبي للنجوم الممتلئة */
+            margin-left: 2px; /* مسافة بين النجوم */
+        }
+
+        .feedback-card p {
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .feedback-card .feedback-meta {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.3em;
+            color: #999;
+            grid-column: 1 / -1; /* لجعل الرسالة تأخذ عرض الشبكة بالكامل */
+        }
+    </style>
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
-
-
-    <main class="content">
+<main class="content">
         <section class="data-display-section">
             <h2 data-translate-key="viewFeedbackTitle">تقييمات العملاء</h2>
             <div id="feedbackList">
-                <div class="feedback-card">
-                    <div class="rating" style="direction: ltr;"> <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                    </div>
-                    <p>هذا المتجر رائع جداً! الزهور طازجة وجميلة والخدمة ممتازة.</p>
-                    <p class="feedback-meta" data-translate-key="feedbackBy">بواسطة: أحمد علي <span data-translate-key="onDate">بتاريخ</span> 2025-07-10</p>
-                </div>
-                <div class="feedback-card">
-                    <div class="rating" style="direction: ltr;">
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="fas fa-star" style="color: var(--primary-color);"></i>
-                        <i class="far fa-star" style="color: #ccc;"></i> </div>
-                    <p>توصيل سريع ومنتجات ذات جودة عالية. أنصح به!</p>
-                    <p class="feedback-meta" data-translate-key="feedbackBy">بواسطة: سارة محمود <span data-translate-key="onDate">بتاريخ</span> 2025-07-08</p>
-                </div>
                 <p class="empty-message" style="display: none;" data-translate-key="noFeedback">لا توجد تقييمات لعرضها بعد.</p>
             </div>
         </section>
     </main>
 
 
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -91,9 +144,104 @@
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
+<script src="./../../server/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // رابط Google Sheet API لجمع البيانات. تأكد من أنه "Anyone with the link can view".
+            // هذا الرابط يأتي من: File > Share > Publish to web > Embed > Publish.
+            // ثم يمكنك استبدال `/htmlview` بـ `/gviz/tq?tqx=out:json` وإضافة `&gid=0` إذا كان الشيت الأول.
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/1N7nZM-WcjNp7AeCurTap58_I84RljQ87xCv9j5X6vxo/gviz/tq?tqx=out:json&gid=0'; // &gid=0 for the first sheet
 
+            const feedbackListContainer = document.getElementById('feedbackList');
+            const emptyMessage = feedbackListContainer.querySelector('.empty-message');
 
-    <script src="./../../server/script.js"></script>
+            // دالة لإنشاء نجوم التقييم
+            function createRatingStars(rating) {
+                const ratingDiv = document.createElement('div');
+                ratingDiv.classList.add('rating');
+                // لجعل النجوم تظهر من اليسار لليمين (خاصة مع rtl للصفحة)
+                ratingDiv.style.direction = 'ltr';
+                ratingDiv.style.textAlign = 'right'; // لمحاذاة النجوم لليمين داخل div
+
+                // النجوم الممتلئة
+                for (let i = 0; i < rating; i++) {
+                    const star = document.createElement('i');
+                    star.classList.add('fas', 'fa-star');
+                    ratingDiv.appendChild(star);
+                }
+                // النجوم الفارغة (إذا كان التقييم أقل من 5)
+                for (let i = rating; i < 5; i++) {
+                    const star = document.createElement('i');
+                    star.classList.add('far', 'fa-star'); // far for outline star
+                    star.style.color = '#ccc'; // لون رمادي للنجوم الفارغة
+                    ratingDiv.appendChild(star);
+                }
+                return ratingDiv;
+            }
+
+            // دالة لجلب وعرض التقييمات
+            async function fetchAndDisplayFeedback() {
+                try {
+                    const response = await fetch(sheetUrl);
+                    const text = await response.text();
+
+                    // Google Sheets API returns a JSONP-like response, so we need to parse it
+                    const jsonString = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+                    const data = JSON.parse(jsonString);
+
+                    const rows = data.table.rows;
+
+                    // إزالة الرسالة "لا توجد تقييمات" إذا كانت هناك بيانات
+                    emptyMessage.style.display = 'none';
+                    feedbackListContainer.innerHTML = ''; // مسح أي محتوى سابق (مثل الكروت الافتراضية)
+                    feedbackListContainer.appendChild(emptyMessage); // إعادة إضافة الرسالة لتبقى في النهاية
+
+                    if (rows.length === 0) {
+                        emptyMessage.style.display = 'block';
+                        return;
+                    }
+
+                    // Loop through rows in reverse order to show latest feedback first
+                    for (let i = rows.length - 1; i >= 0; i--) {
+                        const row = rows[i];
+                        // تأكد من أن row.c موجود ويحتوي على عناصر كافية
+                        // يجب أن تتطابق الفهارس مع ترتيب الأعمدة في Google Sheet
+                        // (name, feedback, number, condition, rating, timestamp)
+                        const name = row.c[0]?.v || 'مجهول'; // العمود الأول
+                        const feedbackText = row.c[1]?.v || 'لا يوجد تعليق.'; // العمود الثاني
+                        const rating = parseInt(row.c[3]?.v) || 0; // العمود الخامس (التقييم)
+                        const timestamp = row.c[5]?.v; // العمود السادس (التاريخ)
+
+                        const feedbackCard = document.createElement('div');
+                        feedbackCard.classList.add('feedback-card');
+
+                        // عرض النجوم
+                        feedbackCard.appendChild(createRatingStars(rating));
+
+                        // عرض التعليق
+                        const pComments = document.createElement('p');
+                        pComments.textContent = feedbackText;
+                        feedbackCard.appendChild(pComments);
+
+                        // عرض اسم المقيّم والتاريخ
+                        const pMeta = document.createElement('p');
+                        pMeta.classList.add('feedback-meta');
+                        const datePart = timestamp ? new Date(timestamp).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : 'تاريخ غير متوفر';
+                        pMeta.innerHTML = `${translations[localStorage.getItem('preferredLang') || 'ar']?.feedbackBy || 'بواسطة:'} ${name}`;
+                        feedbackCard.appendChild(pMeta);
+
+                        feedbackListContainer.appendChild(feedbackCard);
+                    }
+
+                } catch (error) {
+                    console.error('حدث خطأ أثناء جلب أو تحليل البيانات:', error);
+                    emptyMessage.style.display = 'block';
+                    emptyMessage.textContent = 'حدث خطأ أثناء تحميل التقييمات.';
+                }
+            }
+
+            fetchAndDisplayFeedback();
+        });
+    </script>
 </body>
 </html>
