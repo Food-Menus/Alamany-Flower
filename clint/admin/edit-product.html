@@ -432,5 +432,15 @@
         document.addEventListener('DOMContentLoaded', fetchProducts);
 
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const Token = localStorage.getItem('Token');
+            if (!Token) {
+                window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
+            } else {
+                document.getElementById('Token').textContent = Token;
+            }
+        });
+    </script>
 </body>
 </html>

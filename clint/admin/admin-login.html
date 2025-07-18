@@ -7,16 +7,83 @@
     <title>قصر زهور الأماني - تسجيل دخول المدير</title>
     <link rel="stylesheet" href="./../../server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* إضافة بعض التنسيقات لرسالة الخطأ/النجاح */
+        .admin-login-section {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .admin-login-section h2 {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right; /* محاذاة لليمين للنصوص داخل الفورم */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ والحدود */
+        }
+
+        .login-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color-dark);
+        }
+
+        #login-message {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
-
-
-    <main class="content">
+<main class="content">
         <section class="admin-login-section">
             <h2>تسجيل دخول المدير</h2>
             <form class="login-form">
@@ -30,18 +97,17 @@
                 </div>
                 <button type="submit" class="login-btn">تسجيل الدخول</button>
             </form>
-            <p id="login-message" class="error-message"></p>
+            <p id="login-message"></p>
         </section>
     </main>
 
 
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/20112172235"><i class="fab fa-whatsapp"></i></a>
         </div>
         <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
@@ -79,31 +145,103 @@
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
-
-    <script src="./../../server/script.js"></script>
+<script src="./../../server/script.js"></script>
 
     <script>
-        // JavaScript for admin login (simple example, not secure for production)
+        // التحقق من وجود توكن عند تحميل الصفحة وإعادة التوجيه إذا كان موجودًا
         document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('Token');
+            if (token) {
+                const loginMessage = document.getElementById('login-message');
+                loginMessage.textContent = 'تم تسجيل الدخول مسبقًا. جاري التوجيه...';
+                loginMessage.classList.add('success-message');
+                setTimeout(() => {
+                    window.location.href = './admin-dashboard.html';
+                }, 1000);
+            }
+
             const loginForm = document.querySelector('.login-form');
             const loginMessage = document.getElementById('login-message');
 
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const username = loginForm.username.value;
-                const password = loginForm.password.value;
+            // تأكد من أن هذا الرابط صحيح وأن جدول البيانات منشور على الويب
+            const ADMIN_CREDENTIALS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1xog21haN9jDYzgoL0I2djxUKpeBVO1Ak-PciUm85Z6Y/gviz/tq?tqx=out:json&gid=0';
 
-                // Simple hardcoded credentials for demonstration
-                if (username === 'admin' && password === 'password123') {
+            async function fetchSheetData(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const text = await response.text();
+                    // استخراج سلسلة JSON من استجابة gviz/tq
+                    const jsonString = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+                    const data = JSON.parse(jsonString);
+                    return data.table.rows;
+                } catch (error) {
+                    console.error('Error fetching admin credentials:', error);
+                    loginMessage.textContent = 'حدث خطأ أثناء الاتصال بالخادم. الرجاء المحاولة مرة أخرى.';
+                    loginMessage.classList.remove('success-message');
+                    loginMessage.classList.add('error-message');
+                    return null;
+                }
+            }
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const usernameInput = loginForm.username.value.trim();
+                const passwordInput = loginForm.password.value.trim();
+
+                loginMessage.textContent = 'جاري التحقق...';
+                loginMessage.classList.remove('error-message', 'success-message');
+
+                const credentials = await fetchSheetData(ADMIN_CREDENTIALS_SHEET_URL);
+
+                if (!credentials) {
+                    return; // الخطأ تم التعامل معه بالفعل في fetchSheetData
+                }
+
+                let isAuthenticated = false;
+                let usernameExists = false;
+
+                for (let i = 0; i < credentials.length; i++) {
+                    const row = credentials[i];
+                    // التأكد من وجود الخلايا واستخراج قيمها، وإزالة أي مسافات بيضاء زائدة
+                    const sheetUsername = row.c[0]?.v ? String(row.c[0].v).trim() : '';
+                    const sheetPassword = row.c[1]?.v ? String(row.c[1].v).trim() : '';
+
+                    // يمكنك إلغاء التعليق عن السطور التالية لتصحيح الأخطاء ورؤية القيم الفعلية من الشيت
+                    // console.log(`Input Username: '${usernameInput}', Input Password: '${passwordInput}'`);
+                    // console.log(`Sheet Username: '${sheetUsername}', Sheet Password: '${sheetPassword}'`);
+
+                    if (sheetUsername === usernameInput) {
+                        usernameExists = true; // تم العثور على اسم المستخدم
+                        if (sheetPassword === passwordInput) {
+                            isAuthenticated = true; // اسم المستخدم وكلمة المرور متطابقان
+                            break; // تم العثور على التطابق، يمكن الخروج من الحلقة
+                        }
+                    }
+                }
+
+                if (isAuthenticated) {
                     loginMessage.textContent = 'تم تسجيل الدخول بنجاح! جاري التوجيه...';
-                    loginMessage.style.color = 'green';
+                    loginMessage.classList.remove('error-message');
+                    loginMessage.classList.add('success-message');
+                    localStorage.setItem('Token', usernameInput); // تخزين اسم المستخدم كرمز Token
+
                     setTimeout(() => {
-                        window.location.href = 'admin-dashboard.html'; // Redirect to admin dashboard
+                        window.location.href = 'admin-dashboard.html';
                     }, 1500);
+                } else if (usernameExists) {
+                    // اسم المستخدم موجود ولكن كلمة المرور غير صحيحة
+                    loginMessage.textContent = 'كلمة المرور غير صحيحة.';
+                    loginMessage.classList.remove('success-message');
+                    loginMessage.classList.add('error-message');
                 } else {
-                    loginMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
-                    loginMessage.style.color = 'red';
+                    // اسم المستخدم غير موجود على الإطلاق
+                    loginMessage.textContent = 'اسم المستخدم غير موجود.';
+                    loginMessage.classList.remove('success-message');
+                    loginMessage.classList.add('error-message');
                 }
             });
         });

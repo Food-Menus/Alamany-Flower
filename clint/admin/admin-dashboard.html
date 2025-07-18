@@ -29,7 +29,7 @@
                     <i class="fas fa-boxes"></i>
                     <span data-translate-key="manageProducts">اضافه منتج</span>
                 </a>
-                <a href="./edit-product.html" class="admin-control-button"> <i class="fas fa-comment-dots"></i>
+                <a href="./edit-product.html" class="admin-control-button"> <i class="fas fa-edit"></i>
                     <span data-translate-key="addFeedback">تعديل منتج</span>
                 </a>
                 <a href="./view-feedback.html" class="admin-control-button">
@@ -107,11 +107,29 @@
      <script>
         document.addEventListener('DOMContentLoaded', () => {
             const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', () => {
-                    alert(translations[localStorage.getItem('preferredLang') || 'ar'].logout);
-                    window.location.href = 'admin-login.html'; // Redirect to login page
-                });
+
+                if (logoutBtn) { // تأكد أن الزر موجود قبل محاولة إضافة مستمع الحدث له
+                    logoutBtn.addEventListener('click', () => {
+                        // حذف التوكين من Local Storage
+                        localStorage.removeItem('Token');
+
+                        // إظهار رسالة للمستخدم (اختياري)
+                        alert('تم تسجيل الخروج بنجاح!');
+
+                        // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول أو الصفحة الرئيسية
+                        // اختر إحدى الصفحات بناءً على تصميم تطبيقك
+                        window.location.href = './admin-login.html'; // أو './index.html'
+                    });
+                }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const Token = localStorage.getItem('Token');
+            if (!Token) {
+                window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
+            } else {
+                document.getElementById('Token').textContent = Token;
             }
         });
     </script>

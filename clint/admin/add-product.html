@@ -34,13 +34,14 @@
     }
     input[type="text"],
     input[type="number"],
-    textarea {
+    textarea,
+    select { /* أضفنا select هنا لتطبيق نفس التنسيق */
         width: calc(100% - 20px);
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 16px;
-        box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ */
+        box-sizing: border-box;
     }
     textarea {
         resize: vertical;
@@ -83,11 +84,8 @@
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-<!--###################################################################################-->
-
-    <div class="container">
+<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+<div class="container">
         <h2>إضافة منتج جديد</h2>
         <form id="addProductForm">
             <div class="form-group">
@@ -112,19 +110,35 @@
 
             <div class="form-group">
                 <label for="product_type_1">النوع الأول:</label>
-                <input type="text" id="product_type_1" name="product_type_1">
+                <select id="product_type_1" name="product_type_1" required>
+                    <option value="">اختر النوع الأول</option>
+                    <option value="ورد">ورد</option>
+                    <option value="اكسسوارات">اكسسوارات</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="product_type_2">النوع الثاني:</label>
-                <input type="text" id="product_type_2" name="product_type_2">
+                <select id="product_type_2" name="product_type_2" required disabled>
+                    <option value="">اختر النوع الثاني</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="product_suitable">مناسب لـ (فئات):</label>
-                <input type="text" id="product_suitable" name="product_suitable">
+                <select id="product_suitable" name="product_suitable" required>
+                    <option value="">اختر المناسبة</option>
+                    <option value="افتتاح">افتتاح</option>
+                    <option value="حب">حب</option>
+                    <option value="تخرج">تخرج</option>
+                    <option value="عيد ميلاد">عيد ميلاد</option>
+                    <option value="مولود جديد">مولود جديد</option>
+                    <option value="الف مبروك">الف مبروك</option>
+                    <option value="ذكرى سنوية">ذكرى سنوية</option>
+                    <option value="قراءة فاتحة">قراءة فاتحة</option>
+                    <option value="خطوبة">خطوبة</option>
+                </select>
             </div>
-
             <div class="form-group">
                 <label for="product_image">صورة المنتج:</label>
                 <input type="file" id="product_image" name="product_image" accept="image/*">
@@ -137,8 +151,7 @@
 
 
 
-<!--###################################################################################-->
-    <footer class="site-footer">
+<footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -177,107 +190,201 @@
             <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
             <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
             <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
+            <button class="admin-control-button" id="logoutBtn" style="margin-top: 20px; width: 80%; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-translate-key="logout">تسجيل الخروج</span>
+            </button>
         </ul>        
         <br><br><br><br><br>
         <button class="close-side-menu">close</button>
     </div>
-<!--###################################################################################-->
-
     <script src="./../../server/script.js"></script>
     <script>
         // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // مثال: https://script.google.com/macros/s/AKfycbz.../exec
 
-        document.getElementById('addProductForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. منطق التحقق من التوكن وإعادة التوجيه (أصبح مستقلًا ومعدّل)
+            const Token = localStorage.getItem('Token');
+            if (!Token) {
+                window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
+                return; // مهم: وقف تنفيذ بقية السكريبت إذا لم يكن هناك توكن
+            }
+            // لا حاجة لـ document.getElementById('Token').textContent = Token; لأن ليس لديك عنصر بهذا الـ ID
 
-            const form = event.target;
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = ''; // مسح أي رسائل سابقة
-            messageDiv.className = 'message'; // مسح فئات الرسائل السابقة
 
-            // جمع البيانات من النموذج يدويًا لضمان التحكم في القيم
-            const productName = document.getElementById('product_Name').value;
-            const productDetails = document.getElementById('product_Details').value;
-            // معالجة حقول الأرقام: تحويلها إلى أرقام، أو 0 إذا كانت فارغة أو غير صالحة
-            const productPrise1 = parseFloat(document.getElementById('product_prise_1').value) || 0;
-            const productPrise2 = parseFloat(document.getElementById('product_prise_2').value) || 0;
-            const productType1 = document.getElementById('product_type_1').value;
-            const productType2 = document.getElementById('product_type_2').value;
-            const productSuitable = document.getElementById('product_suitable').value;
-            const productImageInput = document.getElementById('product_image');
+            // 2. منطق القوائم المنسدلة الديناميكية
+            const productType1 = document.getElementById('product_type_1');
+            const productType2 = document.getElementById('product_type_2');
 
-            // إنشاء FormData يدويًا لإضافة القيم المعدلة
-            const formData = new FormData();
-            formData.append('action', 'add'); // تحديد العملية
-            formData.append('product_Name', productName);
-            formData.append('product_Details', productDetails);
-            formData.append('product_prise_1', productPrise1);
-            formData.append('product_prise_2', productPrise2);
-            formData.append('product_type_1', productType1);
-            formData.append('product_type_2', productType2);
-            formData.append('product_suitable', productSuitable);
+            // تعريف الخيارات لكل نوع
+            const productType2Options = {
+                'ورد': [
+                    { value: 'ورد طبيعي', text: 'ورد طبيعي' },
+                    { value: 'ورد صناعي', text: 'ورد صناعي' },
+                    { value: 'ورد ساتان', text: 'ورد ساتان' },
+                    { value: 'مجففات', text: 'مجففات' },
+                    { value: 'جيفتات', text: 'جيفتات' },
+                    { value: 'ورد فراشات', text: 'ورد فراشات' }
+                ],
+                'اكسسوارات': [
+                    { value: 'بوكس هدايا', text: 'بوكس هدايا' },
+                    { value: 'دباديب', text: 'دباديب' },
+                    { value: 'هدايا', text: 'هدايا' },
+                    { value: 'شنط هدايا', text: 'شنط هدايا' },
+                    { value: 'كاسات', text: 'كاسات' },
+                    { value: 'بالونات', text: 'بالونات' },
+                    { value: 'بوكس ورد وشوكولاتة', text: 'بوكس ورد وشوكولاتة' },
+                    { value: 'باقة ورد', text: 'باقة ورد' },
+                    { value: 'بوكس ورد شوكولاتة', text: 'بوكس ورد شوكولاتة' }
+                ]
+            };
 
-            // معالجة الصورة إذا تم اختيارها
-            if (productImageInput.files.length > 0) {
-                const file = productImageInput.files[0];
-                const reader = new FileReader();
+            // دالة لتحديث خيارات القائمة المنسدلة الثانية
+            function updateProductType2Options() {
+                const selectedType1 = productType1.value;
+                productType2.innerHTML = '<option value="">اختر النوع الثاني</option>'; // تفريغ الخيارات الحالية وإضافة الخيار الافتراضي
+                productType2.disabled = true; // تعطيل القائمة الثانية افتراضياً
 
-                reader.onloadend = async function() {
-                    // التأكد من أن base64 يبدأ بـ data:image/...;base64,
-                    // ثم أخذ الجزء المشفر فقط بعد الفاصلة
-                    const base64Image = reader.result.split(',')[1];
-                    if (base64Image) {
-                        formData.append('product_image', base64Image);
-                        await sendFormData(formData, messageDiv);
+                if (selectedType1 && productType2Options[selectedType1]) {
+                    productType2Options[selectedType1].forEach(option => {
+                        const newOption = document.createElement('option');
+                        newOption.value = option.value;
+                        newOption.textContent = option.text;
+                        productType2.appendChild(newOption);
+                    });
+                    productType2.disabled = false; // تفعيل القائمة الثانية إذا كان هناك اختيار صالح في الأولى
+                }
+            }
+
+            // إضافة مستمع حدث لتغيير القائمة المنسدلة الأولى
+            productType1.addEventListener('change', updateProductType2Options);
+
+            // استدعاء الدالة عند تحميل الصفحة للتأكد من الحالة الأولية الصحيحة
+            updateProductType2Options();
+
+
+            // 3. منطق إرسال النموذج (الخاص بإضافة المنتج)
+            document.getElementById('addProductForm').addEventListener('submit', async function(event) {
+                event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+                const form = event.target;
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = ''; // مسح أي رسائل سابقة
+                messageDiv.className = 'message'; // مسح فئات الرسائل السابقة
+
+                // جمع البيانات من النموذج يدويًا لضمان التحكم في القيم
+                const productName = document.getElementById('product_Name').value;
+                const productDetails = document.getElementById('product_Details').value;
+                const productPrise1 = parseFloat(document.getElementById('product_prise_1').value) || 0;
+                const productPrise2 = parseFloat(document.getElementById('product_prise_2').value) || 0;
+                const productType1_val = document.getElementById('product_type_1').value; // استخدام متغير جديد لتجنب تضارب الاسم
+                const productType2_val = document.getElementById('product_type_2').value; // استخدام متغير جديد لتجنب تضارب الاسم
+                const productSuitable = document.getElementById('product_suitable').value;
+                const productImageInput = document.getElementById('product_image');
+
+                // تحقق من أن القوائم المنسدلة المطلوبة تم اختيارها
+                if (!productType1_val) {
+                    messageDiv.textContent = 'الرجاء اختيار النوع الأول للمنتج.';
+                    messageDiv.classList.add('error');
+                    return;
+                }
+                if (!productType2_val && !productType2.disabled) { // تحقق فقط إذا لم تكن القائمة الثانية معطلة
+                    messageDiv.textContent = 'الرجاء اختيار النوع الثاني للمنتج.';
+                    messageDiv.classList.add('error');
+                    return;
+                }
+                if (!productSuitable) {
+                    messageDiv.textContent = 'الرجاء اختيار المناسبة للمنتج.';
+                    messageDiv.classList.add('error');
+                    return;
+                }
+
+
+                // إنشاء FormData يدويًا لإضافة القيم المعدلة
+                const formData = new FormData();
+                formData.append('action', 'add'); // تحديد العملية
+                formData.append('product_Name', productName);
+                formData.append('product_Details', productDetails);
+                formData.append('product_prise_1', productPrise1);
+                formData.append('product_prise_2', productPrise2);
+                formData.append('product_type_1', productType1_val); // استخدام المتغير الجديد
+                formData.append('product_type_2', productType2_val); // استخدام المتغير الجديد
+                formData.append('product_suitable', productSuitable);
+
+                // معالجة الصورة إذا تم اختيارها
+                if (productImageInput.files.length > 0) {
+                    const file = productImageInput.files[0];
+                    const reader = new FileReader();
+
+                    reader.onloadend = async function() {
+                        const base64Image = reader.result.split(',')[1];
+                        if (base64Image) {
+                            formData.append('product_image', base64Image);
+                            await sendFormData(formData, messageDiv);
+                        } else {
+                            messageDiv.textContent = 'حدث خطأ في ترميز ملف الصورة.';
+                            messageDiv.classList.add('error');
+                        }
+                    };
+
+                    reader.onerror = function() {
+                        messageDiv.textContent = 'حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.';
+                        messageDiv.classList.add('error');
+                        console.error('FileReader error:', reader.error);
+                    };
+
+                    reader.readAsDataURL(file); // قراءة الملف كـ Data URL
+                } else {
+                    // إرسال البيانات بدون صورة إذا لم يتم اختيار صورة
+                    await sendFormData(formData, messageDiv);
+                }
+            });
+
+            // الدالة المساعدة لإرسال بيانات النموذج
+            async function sendFormData(formData, messageDiv) {
+                try {
+                    const response = await fetch(WEB_APP_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        messageDiv.textContent = result.message;
+                        messageDiv.classList.add('success');
+                        document.getElementById('addProductForm').reset();
+                        // إعادة تعيين القوائم المنسدلة بعد إعادة تعيين النموذج
+                        updateProductType2Options(); // لإعادة product_type_2 إلى حالتها الأولية المعطلة
                     } else {
-                        messageDiv.textContent = 'حدث خطأ في ترميز ملف الصورة.';
+                        messageDiv.textContent = 'فشل: ' + (result.message || 'خطأ غير معروف من الخادم.');
                         messageDiv.classList.add('error');
                     }
-                };
-
-                reader.onerror = function() {
-                    messageDiv.textContent = 'حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.';
+                } catch (error) {
+                    messageDiv.textContent = 'حدث خطأ أثناء الاتصال بالخادم: ' + error.message;
                     messageDiv.classList.add('error');
-                    console.error('FileReader error:', reader.error);
-                };
-
-                reader.readAsDataURL(file); // قراءة الملف كـ Data URL
-            } else {
-                // إرسال البيانات بدون صورة إذا لم يتم اختيار صورة
-                await sendFormData(formData, messageDiv);
+                    console.error('Error sending data:', error);
+                }
             }
-        });
 
-        async function sendFormData(formData, messageDiv) {
-            try {
-                // استخدام Fetch API لإرسال البيانات
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: formData // Fetch API يتعامل مع FormData بشكل تلقائي
+
+            // 4. منطق زر تسجيل الخروج
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('Token');
+                    alert('تم تسجيل الخروج بنجاح!');
+                    window.location.href = './admin-login.html';
                 });
-
-                if (!response.ok) {
-                    const errorText = await response.text(); // حاول الحصول على نص الخطأ الخام
-                    throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
-                }
-
-                const result = await response.json();
-
-                if (result.success) {
-                    messageDiv.textContent = result.message;
-                    messageDiv.classList.add('success');
-                    document.getElementById('addProductForm').reset(); // مسح حقول النموذج بعد النجاح
-                } else {
-                    messageDiv.textContent = 'فشل: ' + (result.message || 'خطأ غير معروف من الخادم.');
-                    messageDiv.classList.add('error');
-                }
-            } catch (error) {
-                messageDiv.textContent = 'حدث خطأ أثناء الاتصال بالخادم: ' + error.message;
-                messageDiv.classList.add('error');
-                console.error('Error sending data:', error);
             }
-        }
+
+        });
     </script>
 </body>
 </html>

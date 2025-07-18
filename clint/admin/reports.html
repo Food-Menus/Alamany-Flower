@@ -133,7 +133,7 @@
     </main>
 
 
-<footer class="site-footer">
+    <footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -365,6 +365,16 @@
             }
 
             loadReports();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const Token = localStorage.getItem('Token');
+            if (!Token) {
+                window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
+            } else {
+                document.getElementById('Token').textContent = Token;
+            }
         });
     </script>
 </body>
