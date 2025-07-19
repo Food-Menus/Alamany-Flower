@@ -432,34 +432,35 @@
     </style>
 </head>
 <body>
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
 
-
-     <div class="main-content">
-        <h2>منتجاتنا</h2>
+    <div class="main-content">
+        <h2 data-translate-key="ourProducts">منتجاتنا</h2>
 
         <div class="filters-container">
             <div class="filter-group">
-                <label>نوع المنتج:</label>
+                <label data-translate-key="productTypeLabel">نوع المنتج:</label>
                 <input type="radio" id="filter_all" name="product_type_1_filter" value="all" checked>
-                <label for="filter_all">الكل</label>
+                <label for="filter_all" data-translate-key="all">الكل</label>
                 <input type="radio" id="filter_flowers" name="product_type_1_filter" value="ورد">
-                <label for="filter_flowers">ورد فقط</label>
+                <label for="filter_flowers" data-translate-key="flowersOnly">ورد فقط</label>
                 <input type="radio" id="filter_accessories" name="product_type_1_filter" value="اكسسوارات">
-                <label for="filter_accessories">اكسسوارات فقط</label>
+                <label for="filter_accessories" data-translate-key="accessoriesOnly">اكسسوارات فقط</label>
             </div>
 
             <div class="filter-group">
-                <label for="product_type_2_filter">أنواع الورد:</label>
+                <label for="product_type_2_filter" data-translate-key="flowerTypesLabel">أنواع الورد:</label>
                 <select id="product_type_2_filter">
-                    <option value="all">كل الأنواع</option>
+                    <option value="all" data-translate-key="allTypes">كل الأنواع</option>
                 </select>
             </div>
 
             <div class="filter-group">
-                <label for="product_suitable_filter">المناسبات:</label>
+                <label for="product_suitable_filter" data-translate-key="occasionsLabel">المناسبات:</label>
                 <select id="product_suitable_filter">
-                    <option value="all">كل المناسبات</option>
+                    <option value="all" data-translate-key="allOccasions">كل المناسبات</option>
                 </select>
             </div>
         </div>
@@ -477,48 +478,47 @@
             <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
             <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="">© 2025 Techno Scince. All rights reserved.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
         <a href="./../../index.html" class="nav-item ">
             <i class="fas fa-home"></i>
-            <span data-translate-key="">الرئيسية</span>
+            <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item" >
+        <a href="./wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
-            <span data-translate-key="">السلة</span>
+            <span data-translate-key="cart">السلة</span>
         </a>
         <a href="./view-products.html" class="nav-item active">
             <i class="fas fa-store"></i>
-            <span data-translate-key="">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
-            <span data-translate-key="">القائمة</span>
+            <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./about.html" data-translate-key="">من نحن </a></li>
-            <li><a href="./add-feedback.html" data-translate-key="">شاركنا برأيك</a></li>
-            <li><a href="./view-products.html" data-translate-key="">اكمل طلبك</a></li>
-            <li><a href="./../admin/admin-dashboard.html" data-translate-key="">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
 
-
-<div id="toastMessage" class="toast-message"></div>
+    <div id="toastMessage" class="toast-message"></div>
 
     <script src="./../../server/script.js"></script>
-    <script>
+    <script src="./../../server/translate.js"></script> <script>
         // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec';
 
@@ -532,6 +532,18 @@
 
         let allProducts = [];
 
+        // دالة مساعدة للحصول على نص مترجم، مع دعم المتغيرات
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar';
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
+
         function showSpinner() {
             loadingSpinner.style.display = 'block';
             productsGrid.innerHTML = '';
@@ -543,12 +555,16 @@
             loadingSpinner.style.display = 'none';
         }
 
-        function showMessage(text, type) {
-            messageDiv.textContent = text;
+        // تم تعديل showMessage لاستخدام الترجمة
+        function showMessage(key, type, replacements = {}) {
+            const message = getTranslatedText(key, replacements);
+            messageDiv.textContent = message;
             messageDiv.className = `message ${type}`;
         }
 
-        function showToast(message, type = 'success') {
+        // تم تعديل showToast لاستخدام الترجمة
+        function showToast(key, type = 'success', replacements = {}) {
+            const message = getTranslatedText(key, replacements);
             toastMessage.textContent = message;
             toastMessage.className = `toast-message show ${type}`;
             setTimeout(() => {
@@ -558,18 +574,39 @@
 
         function addToCart(product) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const productToAdd = { ...product, quantity: 1 };
-            cart.push(productToAdd);
+            const existingProductIndex = cart.findIndex(item => item.product_ID === product.product_ID);
+
+            if (existingProductIndex > -1) {
+                cart[existingProductIndex].quantity = (cart[existingProductIndex].quantity || 1) + 1;
+                showToast('productQuantityUpdated', 'success', { productName: product.product_Name });
+            } else {
+                if (!product.product_ID) {
+                    product.product_ID = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+                }
+                product.quantity = 1;
+                cart.push(product);
+                showToast('productAddedToCart', 'success', { productName: product.product_Name });
+            }
             localStorage.setItem('cart', JSON.stringify(cart));
-            showToast(`تمت إضافة "${product.product_Name}" إلى السلة بنجاح!`, 'success');
             console.log('Cart:', cart);
         }
 
+
         function addToWishlist(product) {
             let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-            wishlist.push(product);
+            const existingProductIndex = wishlist.findIndex(item => item.product_ID === product.product_ID);
+
+            if (existingProductIndex === -1) {
+                if (!product.product_ID) {
+                    product.product_ID = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+                }
+                wishlist.push(product);
+                showToast('productAddedToWishlist', 'success', { productName: product.product_Name });
+            } else {
+                showToast('productAlreadyInWishlist', 'info', { productName: product.product_Name });
+            }
+
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            showToast(`تمت إضافة "${product.product_Name}" إلى قائمة الأمنيات بنجاح!`, 'success');
             console.log('Wishlist:', wishlist);
         }
 
@@ -587,8 +624,8 @@
 
                 const urlParams = new URLSearchParams(window.location.search);
                 const initialOccasion = urlParams.get('occasion');
-                const initialProductType1 = urlParams.get('productType1'); 
-                const initialProductType2 = urlParams.get('productType2'); 
+                const initialProductType1 = urlParams.get('productType1');
+                const initialProductType2 = urlParams.get('productType2');
 
                 // 1. ضبط فلتر "نوع المنتج" (الـ radio buttons)
                 let type1FoundInUrl = false;
@@ -638,11 +675,11 @@
                     productSuitableFilter.value = 'all'; // Default if no param
                     console.log('Defaulting product_suitable_filter to: all');
                 }
-                
+
                 displayProducts(); // عرض المنتجات بعد ضبط الفلاتر الأولية
 
             } catch (error) {
-                showMessage('فشل في جلب المنتجات: ' + error.message, 'error');
+                showMessage('failedToFetchProducts', 'error', { errorMessage: error.message }); // استخدام مفتاح الترجمة
                 console.error('Error fetching products:', error);
             } finally {
                 hideSpinner();
@@ -665,22 +702,23 @@
             console.log('Populated Product Types 2 (أنواع الورد):', Array.from(types2));
             console.log('Populated Suitable Occasions (المناسبات):', Array.from(suitableTypes));
 
-            productType2Filter.innerHTML = '<option value="all">كل الأنواع</option>';
+            // تحديث نص الخيارات ليكون مترجمًا
+            productType2Filter.innerHTML = `<option value="all">${getTranslatedText('allTypes')}</option>`;
             Array.from(types2).sort().forEach(type => {
                 if (type) {
                     const option = document.createElement('option');
                     option.value = type;
-                    option.textContent = type;
+                    option.textContent = type; // قيمة الخيار تبقى كما هي من البيانات
                     productType2Filter.appendChild(option);
                 }
             });
 
-            productSuitableFilter.innerHTML = '<option value="all">كل المناسبات</option>';
+            productSuitableFilter.innerHTML = `<option value="all">${getTranslatedText('allOccasions')}</option>`;
             Array.from(suitableTypes).sort().forEach(type => {
                 if (type) {
                     const option = document.createElement('option');
                     option.value = type;
-                    option.textContent = type;
+                    option.textContent = type; // قيمة الخيار تبقى كما هي من البيانات
                     productSuitableFilter.appendChild(option);
                 }
             });
@@ -717,7 +755,7 @@
             });
 
             if (filteredProducts.length === 0) {
-                productsGrid.innerHTML = '<p class="no-products-message">لا توجد منتجات مطابقة للفلاتر المختارة.</p>';
+                productsGrid.innerHTML = `<p class="no-products-message">${getTranslatedText('noMatchingProducts')}</p>`; // استخدام مفتاح الترجمة
                 return;
             }
 
@@ -746,20 +784,20 @@
                 } else if (pSuitable) {
                     metaInfo = pSuitable;
                 }
-                
+
                 productCard.innerHTML = `
                     <img src="${imageUrl}" alt="${product.product_Name}">
                     <h3>${product.product_Name}</h3>
-                    <p style="font-size: 0.6em;">${metaInfo || 'لا توجد تفاصيل.'}</p>
+                    <p style="font-size: 0.6em;">${metaInfo || getTranslatedText('noDetails')}</p>
                     <div class="prices-container">
                         ${pricesHtml}
                     </div>
                     <div class="actions">
-                        <button class="add-to-cart-btn" data-translate-key="addToCart" ><i class="fas fa-shopping-cart"></i>أضافة</button>
-                        <button class="add-to-wishlist-btn" data-translate-key="addToWishlist"><i class="fas fa-heart"></i>أعجبني</button>
+                        <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> ${getTranslatedText('addToCart')}</button>
+                        <button class="add-to-wishlist-btn"><i class="fas fa-heart"></i> ${getTranslatedText('addToWishlist')}</button>
                     </div>
                 `;
-                
+
                 const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
                 const addToWishlistBtn = productCard.querySelector('.add-to-wishlist-btn');
 

@@ -276,19 +276,18 @@
     </style>
 </head>
 <body>
-
-
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-<main class="content main-content">
-    <section class="wishlist-section">
-        <h2>منتجاتك المفضلة</h2>
-        <button id="clearAllWishlistBtn" class="clear-all-btn">مسح كل المنتجات</button>
-        <div id="wishlist-products-container" class="products-grid">
-            <p class="empty-message">لا توجد منتجات في قائمة الإعجابات.</p>
-        </div>
-    </section>
-</main>
-
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
+    <main class="content main-content">
+        <section class="wishlist-section">
+            <h2 data-translate-key="yourFavoriteProducts">منتجاتك المفضلة</h2>
+            <button id="clearAllWishlistBtn" class="clear-all-btn" data-translate-key="clearAllProducts">مسح جميع المنتجات</button>
+            <div id="wishlist-products-container" class="products-grid">
+                <p class="empty-message" data-translate-key="noProductsInWishlist">لا توجد منتجات في قائمة الإعجابات.</p>
+            </div>
+        </section>
+    </main>
 
     <footer class="site-footer">
         <div class="social-links">
@@ -297,56 +296,68 @@
             <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
             <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="">© 2025 Techno Scince. All rights reserved.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
         <a href="./../../index.html" class="nav-item ">
             <i class="fas fa-home"></i>
-            <span data-translate-key="">الرئيسية</span>
+            <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item active" >
+        <a href="./wishlist.html" class="nav-item active">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
-            <span data-translate-key="">السلة</span>
+            <span data-translate-key="cart">السلة</span>
         </a>
         <a href="./view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
-            <span data-translate-key="">القائمة</span>
+            <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./about.html" data-translate-key="">من نحن </a></li>
-            <li><a href="./add-feedback.html" data-translate-key="">شاركنا برأيك</a></li>
-            <li><a href="./view-products.html" data-translate-key="">اكمل طلبك</a></li>
-            <li><a href="./../admin/admin-dashboard.html" data-translate-key="">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
 
-
-<div id="toastMessage" class="toast-message"></div>
+    <div id="toastMessage" class="toast-message"></div>
 
     <script src="./../../server/script.js"></script>
-
+    <script src="./../../server/translate.js"></script>
     <script>
+        // تأكد أن هذا الكود يأتي بعد تحميل translations.js
         const wishlistContainer = document.getElementById('wishlist-products-container');
         const toastMessage = document.getElementById('toastMessage');
         const clearAllWishlistBtn = document.getElementById('clearAllWishlistBtn');
 
+        // دالة مساعدة للحصول على نص مترجم، مع دعم المتغيرات
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar'; // استخدم اللغة الحالية المحفوظة
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key; // ارجع المفتاح لو لم توجد ترجمة
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
 
         // --- دالة لإظهار رسالة "Toast" ---
-        function showToast(message, type = 'success') {
+        function showToast(key, type = 'success', replacements = {}) {
+            const message = getTranslatedText(key, replacements);
             toastMessage.textContent = message;
             toastMessage.className = `toast-message show ${type}`;
             setTimeout(() => {
@@ -361,11 +372,11 @@
 
             if (existingProductIndex > -1) {
                 cart[existingProductIndex].quantity = (cart[existingProductIndex].quantity || 1) + 1;
-                showToast(`تم تحديث كمية "${product.product_Name}" في السلة!`, 'success');
+                showToast('productQuantityUpdated', 'success', { productName: product.product_Name });
             } else {
                 product.quantity = 1;
                 cart.push(product);
-                showToast(`تمت إضافة "${product.product_Name}" إلى السلة بنجاح!`, 'success');
+                showToast('productAddedToCart', 'success', { productName: product.product_Name });
             }
             localStorage.setItem('cart', JSON.stringify(cart));
             console.log('Cart:', cart);
@@ -377,18 +388,18 @@
             if (index >= 0 && index < wishlist.length) {
                 const removedProduct = wishlist.splice(index, 1); // حذف العنصر باستخدام splice
                 localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                showToast(`تمت إزالة "${removedProduct[0].product_Name}" من قائمة الإعجابات بنجاح.`, 'success');
+                showToast('productRemovedFromWishlist', 'success', { productName: removedProduct[0].product_Name });
                 displayWishlistItems(); // إعادة عرض القائمة بعد الحذف
             } else {
-                showToast('حدث خطأ أثناء الإزالة: المنتج غير موجود.', 'error');
+                showToast('errorRemovingProduct', 'error');
             }
         }
 
         // --- دالة جديدة لمسح كل المنتجات من قائمة الإعجابات ---
         function clearAllWishlist() {
-            if (confirm('هل أنت متأكد أنك تريد مسح كل المنتجات من قائمة الإعجابات؟')) {
+            if (confirm(getTranslatedText('confirmClearWishlist'))) {
                 localStorage.removeItem('wishlist'); // مسح كل المنتجات بمجرد حذف المفتاح
-                showToast('تم مسح جميع المنتجات من قائمة الإعجابات.', 'success');
+                showToast('allWishlistCleared', 'success');
                 displayWishlistItems(); // إعادة عرض القائمة (ستظهر رسالة "لا توجد منتجات")
             }
         }
@@ -401,7 +412,7 @@
             if (wishlist.length === 0) {
                 const emptyMessage = document.createElement('p');
                 emptyMessage.classList.add('empty-message');
-                emptyMessage.textContent = 'لا توجد منتجات في قائمة الإعجابات.';
+                emptyMessage.textContent = getTranslatedText('noProductsInWishlist');
                 wishlistContainer.appendChild(emptyMessage);
                 clearAllWishlistBtn.style.display = 'none'; // إخفاء زر "مسح الكل" لو القائمة فاضية
             } else {
@@ -409,8 +420,6 @@
                 wishlist.forEach((product, index) => { // تمرير index هنا
                     const productCard = document.createElement('div');
                     productCard.classList.add('product-card');
-                    // لم نعد بحاجة إلى dataset.productId للحذف الفردي، ولكن يمكن تركه للمعلومات
-                    // productCard.dataset.productId = product.product_ID; 
 
                     const imageUrl = product.product_image || 'https://via.placeholder.com/200?text=No+Image';
 
@@ -425,13 +434,13 @@
                     productCard.innerHTML = `
                         <img src="${imageUrl}" alt="${product.product_Name}">
                         <h3>${product.product_Name}</h3>
-                        <p style="font-size: 0.6em;">${product.product_type_2 || ''} || ${product.product_suitable || ''}</p>
+                        <p style="font-size: 0.6em;">${product.product_type_2 || getTranslatedText('noDetails')} || ${product.product_suitable || getTranslatedText('noDetails')}</p>
                         <div class="prices-container">
                             ${pricesHtml}
                         </div>
                         <div class="actions">
-                            <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> أضف للسلة</button>
-                            <button class="remove-from-wishlist-btn"><i class="fas fa-times"></i> إزالة</button>
+                            <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> ${getTranslatedText('addToCart')}</button>
+                            <button class="remove-from-wishlist-btn"><i class="fas fa-times"></i> ${getTranslatedText('remove')}</button>
                         </div>
                     `;
                     wishlistContainer.appendChild(productCard);

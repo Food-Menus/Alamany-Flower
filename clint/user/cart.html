@@ -386,40 +386,42 @@
 </head>
 <body>
 
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <main class="content main-content">
         <section class="cart-section">
-            <h2>سلة مشترياتك</h2>
+            <h2 data-translate-key="yourCart">سلة مشترياتك</h2>
             <div id="cart-products-container">
-                <p class="empty-message">سلتك فارغة.</p>
+                <p class="empty-message" data-translate-key="cartEmpty">سلتك فارغة.</p>
             </div>
 
             <div class="cart-summary-and-form">
                 <div class="cart-summary">
-                    <h4>إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
+                    <h4 data-translate-key="cartTotal">إجمالي السلة: <span id="cart-total">0.00</span> جنيه</h3>
                 </div>
 
                 <div class="customer-info-form">
-                    <h3>ادخل بياناتك لاكمال الطلب</h3>
-                    <label for="customer-name">الاسم بالكامل:</label>
-                    <input type="text" id="customer-name" placeholder="ادخل اسمك هنا" required>
+                    <h3 data-translate-key="enterInfoToCompleteOrder">ادخل بياناتك لإكمال الطلب</h3>
+                    <label for="customer-name" data-translate-key="fullName">الاسم بالكامل:</label>
+                    <input type="text" id="customer-name" data-translate-key="enterYourNameHerePlaceholder" placeholder="ادخل اسمك هنا" required>
 
-                    <label for="customer-phone">رقم الهاتف:</label>
+                    <label for="customer-phone" data-translate-key="phoneNumber">رقم الهاتف:</label>
                     <input type="tel" id="customer-phone" placeholder="01xxxxxxxxx" required>
 
-                    <label for="customer-address">العنوان:</label>
-                    <input type="text" id="customer-address" placeholder="المنطقة، الشارع، رقم المنزل" required>
+                    <label for="customer-address" data-translate-key="address">العنوان:</label>
+                    <input type="text" id="customer-address" data-translate-key="addressPlaceholder" placeholder="المنطقة، الشارع، رقم المنزل" required>
 
-                    <label for="customer-notes">ملاحظات إضافية (اختياري):</label>
-                    <textarea id="customer-notes" placeholder="أي تفاصيل للمساعدة في التوصيل"></textarea>
+                    <label for="customer-notes" data-translate-key="additionalNotesOptional">ملاحظات إضافية (اختياري):</label>
+                    <textarea id="customer-notes" data-translate-key="notesPlaceholder" placeholder="أي تفاصيل للمساعدة في التوصيل"></textarea>
                 </div>
 
                 <div class="checkout-buttons">
                     <button class="checkout-btn" id="send-whatsapp-order">
-                        <i class="fab fa-whatsapp"></i> إرسال الطلب 
+                        <i class="fab fa-whatsapp"></i> <span data-translate-key="sendOrder">إرسال الطلب</span>
                     </button>
                     <button class="clear-cart-btn" id="clear-cart">
-                        <i class="fas fa-trash-alt"></i> تفريغ السلة
+                        <i class="fas fa-trash-alt"></i> <span data-translate-key="emptyCart">تفريغ السلة</span>
                     </button>
                 </div>
             </div>
@@ -433,47 +435,47 @@
             <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
             <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="">© 2025 Techno Scince. All rights reserved.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
         <a href="./../../index.html" class="nav-item ">
             <i class="fas fa-home"></i>
-            <span data-translate-key="">الرئيسية</span>
+            <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item" >
+        <a href="./wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./cart.html" class="nav-item active">
             <i class="fas fa-shopping-basket"></i>
-            <span data-translate-key="">السلة</span>
+            <span data-translate-key="cart">السلة</span>
         </a>
         <a href="./view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
-            <span data-translate-key="">القائمة</span>
+            <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./about.html" data-translate-key="">من نحن </a></li>
-            <li><a href="./add-feedback.html" data-translate-key="">شاركنا برأيك</a></li>
-            <li><a href="./view-products.html" data-translate-key="">اكمل طلبك</a></li>
-            <li><a href="./../admin/admin-dashboard.html" data-translate-key="">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
 
-<div id="toastMessage" class="toast-message"></div>
+    <div id="toastMessage" class="toast-message"></div>
 
     <script src="./../../server/script.js"></script>
-
+    <script src="./../../server/translate.js"></script>
     <script>
         const cartContainer = document.getElementById('cart-products-container');
         const cartTotalSpan = document.getElementById('cart-total');
@@ -487,12 +489,25 @@
         const toastMessage = document.getElementById('toastMessage');
 
         // رقم الواتساب الذي سيتم إرسال الطلب إليه
-        const WHATSAPP_NUMBER = '201147182463'; 
+        const WHATSAPP_NUMBER = '201147182463';
         // **الرابط الجديد لـ Google Apps Script Web App الخاص بك**
         const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4s1Fanc7EID-Jvp5HREUbPHAu4rB6xJhEXAVUy3hJjmItbrD7FzAG-bPOF4514-k/exec";
 
+        // دالة مساعدة للحصول على نص مترجم، مع دعم المتغيرات
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar';
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
+
         // --- دالة لإظهار رسالة "Toast" ---
-        function showToast(message, type = 'success') {
+        function showToast(key, type = 'success', replacements = {}) {
+            const message = getTranslatedText(key, replacements);
             toastMessage.textContent = message;
             toastMessage.className = `toast-message show ${type}`;
             setTimeout(() => {
@@ -505,7 +520,7 @@
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             let total = 0;
             cart.forEach(product => {
-                const price = parseFloat(product.product_prise_1); 
+                const price = parseFloat(product.product_prise_1);
                 const quantity = product.quantity || 1;
                 if (!isNaN(price)) {
                     total += price * quantity;
@@ -513,35 +528,35 @@
                     console.warn(`Invalid price for product ID: ${product.product_ID}`);
                 }
             });
-            cartTotalSpan.textContent = total.toFixed(2); 
-            return total; 
+            cartTotalSpan.textContent = total.toFixed(2);
+            return total;
         }
 
         // --- دالة لإزالة المنتج بالكامل من السلة (باستخدام المؤشر) ---
         function removeFromCartByIndex(index) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             if (index >= 0 && index < cart.length) {
-                const removedProduct = cart.splice(index, 1); 
+                const removedProduct = cart.splice(index, 1);
                 localStorage.setItem('cart', JSON.stringify(cart));
-                showToast(`تمت إزالة "${removedProduct[0].product_Name}" من السلة.`, 'success');
+                showToast('productRemovedFromCart', 'success', { productName: removedProduct[0].product_Name });
                 displayCartItems(); // إعادة عرض السلة بعد الحذف
             } else {
-                showToast('حدث خطأ أثناء الإزالة.', 'error');
+                showToast('errorRemovingItem', 'error');
             }
         }
 
         // --- دالة لتفريغ السلة بالكامل ---
         function clearCart() {
-            if (confirm('هل أنت متأكد أنك تريد تفريغ السلة بالكامل؟')) {
+            if (confirm(getTranslatedText('confirmClearCart'))) {
                 localStorage.removeItem('cart');
                 displayCartItems(); // إعادة عرض السلة الفارغة
-                showToast('تم تفريغ السلة بنجاح.', 'success');
+                showToast('cartClearedSuccessfully', 'success');
             }
         }
 
         // --- دالة لعرض منتجات السلة (كل منتج منفصل، حجم صغير) ---
         function displayCartItems() {
-            cartContainer.innerHTML = ''; 
+            cartContainer.innerHTML = '';
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             if (cart.length === 0) {
@@ -551,16 +566,16 @@
                 emptyMessage.style.display = 'none';
                 document.querySelector('.cart-summary-and-form').style.display = 'block';
 
-                cart.forEach((product, index) => { 
+                cart.forEach((product, index) => {
                     const productCard = document.createElement('div');
-                    productCard.classList.add('cart-item-card'); 
+                    productCard.classList.add('cart-item-card');
 
-                    const imageUrl = product.product_image || 'https://via.placeholder.com/50?text=No+Image'; 
+                    const imageUrl = product.product_image || 'https://via.placeholder.com/50?text=No+Image';
 
                     const currentPrice = parseFloat(product.product_prise_1);
-                    const formattedPrice = !isNaN(currentPrice) ? `${currentPrice.toFixed(2)} جنيه` : 'غير متاح';
+                    const formattedPrice = !isNaN(currentPrice) ? `${currentPrice.toFixed(2)} ${getTranslatedText('egp')}` : getTranslatedText('notAvailable'); // استخدام مفتاح الترجمة
 
-                    product.quantity = product.quantity || 1; 
+                    product.quantity = product.quantity || 1;
 
                     productCard.innerHTML = `
                         <div class="product-details">
@@ -578,7 +593,7 @@
                             </div>
                             <button class="remove-from-cart-btn" data-index="${index}"><i class="fas fa-trash-alt"></i></button>
                         </div>
-                    `; 
+                    `;
                     cartContainer.appendChild(productCard);
 
                     // إضافة مستمعي الأحداث
@@ -587,8 +602,8 @@
                         if (currentCart[index] && currentCart[index].quantity > 1) {
                             currentCart[index].quantity--;
                             localStorage.setItem('cart', JSON.stringify(currentCart));
-                            showToast('تم تحديث الكمية.', 'success');
-                            displayCartItems(); 
+                            showToast('quantityUpdated', 'success'); // استخدام مفتاح الترجمة
+                            displayCartItems();
                         } else {
                             removeFromCartByIndex(index);
                         }
@@ -599,23 +614,23 @@
                         if (currentCart[index]) {
                             currentCart[index].quantity = (currentCart[index].quantity || 1) + 1;
                             localStorage.setItem('cart', JSON.stringify(currentCart));
-                            showToast('تم تحديث الكمية.', 'success');
-                            displayCartItems(); 
+                            showToast('quantityUpdated', 'success'); // استخدام مفتاح الترجمة
+                            displayCartItems();
                         }
                     });
 
                     productCard.querySelector('.remove-from-cart-btn').addEventListener('click', () => removeFromCartByIndex(index));
                 });
             }
-            updateCartTotal(); 
+            updateCartTotal();
         }
 
         // --- دالة لإعداد رسالة الواتساب وإرسالها + إرسال البيانات لجوجل شيت ---
         async function sendOrderViaWhatsApp() {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
+
             if (cart.length === 0) {
-                showToast('سلة مشترياتك فارغة. الرجاء إضافة منتجات قبل إرسال الطلب.', 'error');
+                showToast('cartEmptyMessage', 'error'); // استخدام مفتاح الترجمة
                 return;
             }
 
@@ -626,15 +641,15 @@
             const totalAmount = cartTotalSpan.textContent; // الإجمالي الكلي من العنصر مباشرة
 
             if (!customerName || !customerPhone || !customerAddress) {
-                showToast('الرجاء ملء جميع الحقول المطلوبة (الاسم، رقم الهاتف، العنوان).', 'error');
+                showToast('fillAllRequiredFields', 'error'); // استخدام مفتاح الترجمة
                 return;
             }
 
             // 1. بناء رسالة الواتساب
-            let orderMessage = "أهلاً بك في قصر زهور الأماني!\n";
-            orderMessage += "لديك طلب جديد:\n\n";
-            
-            orderMessage += "--- المنتجات ---\n";
+            let orderMessage = `${getTranslatedText('welcomeMessage')}\n`;
+            orderMessage += `${getTranslatedText('newOrderMessage')}\n\n`;
+
+            orderMessage += `${getTranslatedText('productsSection')}\n`;
             let productsForSheet = []; // لإنشاء سلسلة المنتجات لجوجل شيت
             cart.forEach((product, index) => {
                 const price = parseFloat(product.product_prise_1);
@@ -642,27 +657,27 @@
                 const itemTotal = price * quantity;
 
                 orderMessage += `(${index + 1}) ${product.product_Name}\n`;
-                orderMessage += `   الكمية: ${quantity}\n`;
-                orderMessage += `   السعر: ${price.toFixed(2)} جنيه\n`;
-                orderMessage += `   الإجمالي الجزئي: ${itemTotal.toFixed(2)} جنيه\n`;
-                orderMessage += `   النوع: ${product.product_type_2 || 'غير محدد'}\n`;
-                orderMessage += `   المناسبة: ${product.product_suitable || 'غير محدد'}\n\n`;
-                
-                productsForSheet.push(`${product.product_Name} (x${quantity}) - ${itemTotal.toFixed(2)} جنيه`);
+                orderMessage += `   ${getTranslatedText('quantity')}: ${quantity}\n`;
+                orderMessage += `   ${getTranslatedText('price')}: ${price.toFixed(2)} ${getTranslatedText('egp')}\n`;
+                orderMessage += `   ${getTranslatedText('subtotal')}: ${itemTotal.toFixed(2)} ${getTranslatedText('egp')}\n`;
+                orderMessage += `   ${getTranslatedText('type')}: ${product.product_type_2 || getTranslatedText('notSpecified')}\n`;
+                orderMessage += `   ${getTranslatedText('occasion')}: ${product.product_suitable || getTranslatedText('notSpecified')}\n\n`;
+
+                productsForSheet.push(`${product.product_Name} (x${quantity}) - ${itemTotal.toFixed(2)} ${getTranslatedText('egp')}`);
             });
 
-            orderMessage += `--- إجمالي الطلب ---\n`;
-            orderMessage += `الإجمالي الكلي: ${totalAmount} جنيه\n\n`;
+            orderMessage += `${getTranslatedText('orderTotalSection')}\n`;
+            orderMessage += `${getTranslatedText('grandTotal')}: ${totalAmount} ${getTranslatedText('egp')}\n\n`;
 
-            orderMessage += "--- معلومات العميل ---\n";
-            orderMessage += `الاسم: ${customerName}\n`;
-            orderMessage += `رقم الهاتف: ${customerPhone}\n`;
-            orderMessage += `العنوان: ${customerAddress}\n`;
+            orderMessage += `${getTranslatedText('customerInfoSection')}\n`;
+            orderMessage += `${getTranslatedText('name')}: ${customerName}\n`;
+            orderMessage += `${getTranslatedText('phoneNumber')}: ${customerPhone}\n`;
+            orderMessage += `${getTranslatedText('address')}: ${customerAddress}\n`;
             if (customerNotes) {
-                orderMessage += `ملاحظات: ${customerNotes}\n`;
+                orderMessage += `${getTranslatedText('notes')}: ${customerNotes}\n`;
             }
-            
-            orderMessage += "\nشكرا لطلبك من قصر زهور الأماني!";
+
+            orderMessage += `\n${getTranslatedText('thanksForOrder')}`;
 
             // 2. إرسال البيانات إلى Google Sheet
             const formData = new FormData();
@@ -675,8 +690,8 @@
 
             try {
                 console.log('Attempting to send data to Google Sheet...');
-                const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, { 
-                    method: "POST", 
+                const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
+                    method: "POST",
                     body: formData,
                     mode: 'no-cors' // غالباً ما تحتاج 'no-cors' عند الإرسال لـ Apps Script من صفحات خارج نفس النطاق
                 });
@@ -684,26 +699,26 @@
                 // في وضع 'no-cors'، لا يمكننا قراءة استجابة (response) مباشرة.
                 // لذلك، نفترض النجاح إذا لم يحدث خطأ في الشبكة أو المتصفح.
                 console.log("Request sent to Google Sheet. Cannot verify response in 'no-cors' mode.");
-                showToast('تم إرسال الطلب وحفظ البيانات (الرجاء التحقق من جوجل شيت).', 'success');
-                
+                showToast('orderSentAndSaved', 'success'); // استخدام مفتاح الترجمة
+
                 // 3. إرسال رسالة الواتساب بعد محاولة حفظ البيانات
                 const encodedMessage = encodeURIComponent(orderMessage);
                 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
                 window.open(whatsappUrl, '_blank');
-                
+
                 // مسح حقول النموذج بعد الإرسال
                 customerNameInput.value = '';
                 customerPhoneInput.value = '';
                 customerAddressInput.value = '';
                 customerNotesInput.value = '';
-                
+
                 // تفريغ السلة بعد إرسال الطلب بنجاح (اختياري، يمكنك إزالته إذا أردت الاحتفاظ بالمنتجات في السلة)
                 localStorage.removeItem('cart');
                 displayCartItems();
 
             } catch (error) {
                 console.error('Error sending data to Google Sheet:', error);
-                showToast('حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.', 'error');
+                showToast('errorSavingOrder', 'error'); // استخدام مفتاح الترجمة
                 // في حالة فشل الإرسال لجوجل شيت، سيظل يفتح الواتساب لضمان وصول الطلب.
                 const encodedMessage = encodeURIComponent(orderMessage);
                 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;

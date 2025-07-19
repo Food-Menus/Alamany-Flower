@@ -11,9 +11,11 @@
 </head>
 <body>
 
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<main class="content">
+    <main class="content">
         <section class="form-section">
             <h2 data-translate-key="feedbackFormTitle">مشاركة رأيك</h2>
             <form id="feedbackForm">
@@ -60,50 +62,56 @@
             <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
             <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="">© 2025 Techno Scince. All rights reserved.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
         <a href="./../../index.html" class="nav-item ">
             <i class="fas fa-home"></i>
-            <span data-translate-key="">الرئيسية</span>
+            <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./wishlist.html" class="nav-item" >
+        <a href="./wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
-            <span data-translate-key="">السلة</span>
+            <span data-translate-key="cart">السلة</span>
         </a>
         <a href="./view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
-            <span data-translate-key="">القائمة</span>
+            <span data-translate-key="menu">القائمة</span>
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./about.html" data-translate-key="">من نحن </a></li>
-            <li><a href="./add-feedback.html" data-translate-key="">شاركنا برأيك</a></li>
-            <li><a href="./view-products.html" data-translate-key="">اكمل طلبك</a></li>
-            <li><a href="./../admin/admin-dashboard.html" data-translate-key="">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./../admin/admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
 
-<script src="./../../server/script.js"></script>
-
-     <script>
+    <script src="./../../server/script.js"></script>
+    <script src="./../../server/translate.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const feedbackForm = document.getElementById('feedbackForm');
             // تأكد من أن هذا هو رابط النشر (Deploy) الخاص بسكريبت Google Apps الخاص بك
             const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbxmzFGH3Oke-wO6iTd3g0rJPuhKV2Q6uJ5em_NMRQ-BzYjjd_O79LKQPvB9tSEBSgU/exec';
+
+            // دالة مساعدة للحصول على نص مترجم
+            function getTranslatedText(key) {
+                const lang = localStorage.getItem('lang') || 'ar'; // أو أي لغة افتراضية
+                return (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            }
 
             if (feedbackForm) {
                 feedbackForm.addEventListener('submit', async (e) => {
@@ -111,7 +119,7 @@
 
                     const submitButton = feedbackForm.querySelector('button[type="submit"]');
                     submitButton.disabled = true; // تعطيل الزر لمنع الإرسال المتعدد
-                    submitButton.textContent = 'جاري الإرسال...'; // تغيير نص الزر
+                    submitButton.textContent = getTranslatedText('submittingFeedback'); // تغيير نص الزر
 
                     // جمع البيانات من النموذج
                     const name = document.getElementById('name').value;
@@ -138,19 +146,18 @@
                         const result = await response.json();
 
                         if (result.result === 'success') {
-                            // استخدام ترجمة مناسبة أو رسالة افتراضية
-                            alert(translations[localStorage.getItem('preferredLang') || 'ar']?.feedbackAddedSuccess || 'تم إرسال تقييمك بنجاح!');
+                            alert(getTranslatedText('feedbackAddedSuccess'));
                             feedbackForm.reset(); // إعادة تعيين النموذج بعد النجاح
                         } else {
                             console.error('حدث خطأ في Google Apps Script:', result.error);
-                            alert('حدث خطأ أثناء إرسال التقييم. الرجاء المحاولة مرة أخرى.');
+                            alert(getTranslatedText('feedbackSubmissionError'));
                         }
                     } catch (error) {
                         console.error('حدث خطأ في الاتصال:', error);
-                        alert('حدث خطأ في الاتصال بالخادم. الرجاء التأكد من اتصالك بالإنترنت والمحاولة مرة أخرى.');
+                        alert(getTranslatedText('connectionError'));
                     } finally {
                         submitButton.disabled = false; // إعادة تفعيل الزر
-                        submitButton.textContent = 'إرسال التقييم'; // استعادة نص الزر الأصلي
+                        submitButton.textContent = getTranslatedText('submitFeedback'); // استعادة نص الزر الأصلي
                     }
                 });
             }
