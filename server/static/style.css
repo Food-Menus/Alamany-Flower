@@ -8,8 +8,8 @@ category-item
 .product-card .actions button
 add-to-cart-btn
 actions
-
-
+site-footer
+navbar
 */
 
 :root {
@@ -74,6 +74,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .navbar .brand-name {
@@ -515,11 +517,12 @@ button {
 
 /* Footer */
 .site-footer {
-    background-color: var(--secondary-color);
+    background-color: #333333bf;
     color: var(--white);
     text-align: center;
     padding: 20px;
-    margin-top: auto; /* Pushes footer to the bottom */
+    margin-top: auto; 
+    border-radius: 30px;
 }
 
 .site-footer .social-links a {
