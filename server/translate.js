@@ -252,7 +252,9 @@ const translations = {
         orderSentAndSaved: 'تم إرسال الطلب وحفظ البيانات (الرجاء التحقق من جوجل شيت).',
         errorSavingOrder: 'حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.',
         quantityUpdated: 'تم تحديث الكمية.',
-        notAvailable: 'غير متاح'
+        notAvailable: 'غير متاح',
+        downloadApp: 'تحميل التطبيق للاندرويد',
+
     },
     'en': {
         // General keys and keys from the Homepage
@@ -505,7 +507,8 @@ const translations = {
         orderSentAndSaved: 'Order sent and data saved (please check Google Sheet).',
         errorSavingOrder: 'An error occurred while saving the order. Please try again.',
         quantityUpdated: 'Quantity updated.',
-        notAvailable: 'N/A'
+        notAvailable: 'N/A',
+        downloadApp: 'Download Our App',
     }
 };
 
