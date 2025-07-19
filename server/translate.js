@@ -1,13 +1,5 @@
 // server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
-// server/static/js/translations.js
+
 const translations = {
     'ar': {
         // مفاتيح عامة ومفاتيح من الصفحة الرئيسية
@@ -54,7 +46,7 @@ const translations = {
         aboutUs: 'من نحن',
         shareFeedback: 'شاركنا برأيك',
         completeOrder: 'أكمل طلبك',
-        adminDashboard: 'لوحة تحكم المدير',
+        adminLogin: 'تسجيل دخول المدير', // تم تعديلها لتتناسب مع استخدامها في الكود
         allRightsReserved: '© 2025 Techno Scince. جميع الحقوق محفوظة.',
         close: 'إغلاق',
 
@@ -297,8 +289,8 @@ const translations = {
         roseChocBoxAlt: 'Rose Chocolate Box',
         roseBox: 'Rose Box',
         bestSellersTitle: 'Best Sellers',
-        addToCart: 'Add to Cart',
-        addToWishlist: 'Add to Wishlist',
+        addToCart: 'Add',
+        addToWishlist: 'Like',
         home: 'Home',
         wishlist: 'Wishlist',
         cart: 'Cart',
@@ -307,7 +299,7 @@ const translations = {
         aboutUs: 'About Us',
         shareFeedback: 'Share Your Opinion',
         completeOrder: 'Complete Your Order',
-        adminDashboard: 'Admin Dashboard',
+        adminLogin: 'Admin Login', // تم تعديلها لتتناسب مع استخدامها في الكود
         allRightsReserved: '© 2025 Techno Scince. All rights reserved.',
         close: 'Close',
 
@@ -517,80 +509,13 @@ const translations = {
     }
 };
 
-
-
-
-
-// في script.js أو ملف JavaScript مخصص للترجمة
-
-// تحميل ملف الترجمة أولاً
-// <script src="./server/static/js/translations.js"></script>
+// **الكود الجديد أو المعدّل لتبديل اللغة وتطبيق الاتجاه:**
 
 document.addEventListener('DOMContentLoaded', () => {
+    // حاول الحصول على عنصر languageSwitcher، قد لا يكون موجودًا في كل الصفحات
     const languageSwitcher = document.getElementById('language-switcher');
-    const currentLang = localStorage.getItem('lang') || 'ar'; // اللغة الافتراضية
-    
-    // دالة لتطبيق الترجمة على عناصر HTML
-    function applyTranslation(lang) {
-        document.querySelectorAll('[data-translate-key]').forEach(element => {
-            const key = element.dataset.translateKey;
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
-            } else if (key === "") { // للحالات التي لا يوجد بها مفتاح ترجمة صريح
-                // يمكننا ترك النص الأصلي أو التعامل معه بطريقة أخرى
-                // مثلاً: إذا كان النص داخل العنصر H2 "أجمل زهور لأروع المناسبات" ليس لديه مفتاح
-                // وتريد ترجمته، يجب أن تضيف له مفتاحًا في HTML مثل data-translate-key="beautifulFlowersOccasions"
-                // ثم تضيفه في ملف الترجمة.
-                // حالياً، هذا الكود سيتركه كما هو.
-            }
-        });
-
-        // تحديث زر تبديل اللغة ليعكس اللغة الحالية
-        if (lang === 'ar') {
-            languageSwitcher.textContent = 'EN / عربي';
-        } else {
-            languageSwitcher.textContent = 'عربي / EN';
-        }
-
-        // تحديث اتجاه الصفحة (RTL/LTR)
-        document.documentElement.setAttribute('lang', lang);
-        if (lang === 'ar') {
-            document.body.style.direction = 'rtl';
-        } else {
-            document.body.style.direction = 'ltr';
-        }
-        
-        // تحديث النصوص في دوال showToast و showMessage
-        // هذه النصوص ليست في HTML مباشرة لذا يجب تحديثها يدوياً
-        // ستحتاج لتمرير لغة الترجمة لهذه الدوال أو جعلها تعتمد على currentLang
-        // مثال:
-        const oldShowToast = showToast; // احتفظ بالدالة الأصلية
-        showToast = (message, type = 'success') => {
-            let translatedMessage = message;
-            // يمكنك هنا محاولة ترجمة الرسالة بناءً على `translations[lang]` إذا كانت الرسائل ثابتة
-            // أو التأكد أن الرسائل التي تمررها للدالة هي مفاتيح ترجمة وليست نصوصاً خام
-            // لتفادي التعقيد، سأفترض أن الرسائل التي تأتي من showToast و showMessage
-            // هي رسائل ديناميكية قد لا تكون لها مفاتيح ترجمة في ملف الترجمة.
-            // ولكن إذا كانت رسائل ثابتة مثل "No products to display"
-            // فيمكنك تعديل fetchAndDisplaySpecialProducts لاستخدام مفاتيح ترجمة:
-            // مثلاً: showMessage(translations[currentLang].noProductsMessage, 'error');
-
-            oldShowToast(translatedMessage, type);
-        };
-    }
-
-    // تبديل اللغة
-    languageSwitcher.addEventListener('click', () => {
-        const newLang = currentLang === 'ar' ? 'en' : 'ar';
-        localStorage.setItem('lang', newLang);
-        location.reload(); // إعادة تحميل الصفحة لتطبيق التغييرات بالكامل
-    });
-
-    // تطبيق اللغة عند تحميل الصفحة
-    applyTranslation(currentLang);
-
-
-    // *** تعديلات على دوال العرض والرسائل لجعلها قابلة للترجمة ***
+    // استخدم اللغة المحفوظة، أو العربية كافتراضي
+    let currentLang = localStorage.getItem('lang') || 'ar'; 
 
     // دالة مساعدة للحصول على نص مترجم، مع دعم المتغيرات
     function getTranslatedText(key, replacements = {}) {
@@ -603,34 +528,77 @@ document.addEventListener('DOMContentLoaded', () => {
         return text;
     }
 
-    // تعديل دالة showToast
-    const originalShowToast = showToast;
-    showToast = (key, type = 'success', replacements = {}) => {
-        const message = getTranslatedText(key, replacements);
-        originalShowToast(message, type);
+    // دالة لتطبيق الترجمة على عناصر HTML وتحديد الاتجاه
+    function applyTranslation(lang) {
+        document.querySelectorAll('[data-translate-key]').forEach(element => {
+            const key = element.dataset.translateKey;
+            if (translations[lang] && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+
+        // تحديث زر تبديل اللغة إذا كان موجودًا
+        if (languageSwitcher) {
+            if (lang === 'ar') {
+                languageSwitcher.textContent = 'EN / عربي';
+            } else {
+                languageSwitcher.textContent = 'عربي / EN';
+            }
+        }
+
+        // **تحديث اتجاه الصفحة (RTL/LTR) - هذا هو الجزء الأساسي لجميع الصفحات**
+        document.documentElement.setAttribute('lang', lang);
+        document.body.style.direction = (lang === 'ar' ? 'rtl' : 'ltr');
+    }
+
+    // تبديل اللغة عند النقر على الزر (إذا كان موجودًا)
+    if (languageSwitcher) {
+        languageSwitcher.addEventListener('click', () => {
+            currentLang = (currentLang === 'ar' ? 'en' : 'ar');
+            localStorage.setItem('lang', currentLang);
+            // إعادة تحميل الصفحة لتطبيق التغييرات بالكامل على جميع النصوص
+            location.reload(); 
+        });
+    }
+
+    // **تطبيق اللغة عند تحميل الصفحة لأول مرة**
+    applyTranslation(currentLang);
+
+    // --- تعديلات على دوال العرض والرسائل لجعلها قابلة للترجمة ---
+    // هذه الدوال يجب أن تكون موجودة في نطاق عام أو في ملف script.js 
+    // حتى تتمكن الملفات الأخرى من الوصول إليها.
+    // إذا كنت تستخدمها فقط في الصفحة الرئيسية، فلا داعي لوضعها هنا.
+    // ولكن بما أنك تريد أن تكون الترجمة جيدة جداً، فسنقوم بتضمينها هنا 
+    // كدوال عامة (global) لضمان استخدامها الصحيح مع مفاتيح الترجمة.
+
+    // دالة لإظهار رسالة عامة (مثل رسائل التحميل أو الخطأ)
+    // تأكد أن لديك عنصر HTML بالـ ID 'message' في صفحاتك
+    window.showMessage = (key, type, replacements = {}) => {
+        const messageDiv = document.getElementById('message'); // يجب أن يكون هذا العنصر موجودًا
+        if (messageDiv) {
+            const message = getTranslatedText(key, replacements);
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${type}`;
+        }
     };
 
-    // تعديل دالة showMessage
-    const originalShowMessage = showMessage;
-    showMessage = (key, type, replacements = {}) => {
-        const message = getTranslatedText(key, replacements);
-        originalShowMessage(message, type);
+    // دالة لإظهار رسالة Toast (تظهر وتختفي تلقائياً)
+    // تأكد أن لديك عنصر HTML بالـ ID 'toastMessage' في صفحاتك
+    window.showToast = (key, type = 'success', replacements = {}) => {
+        const toastMessage = document.getElementById('toastMessage'); // يجب أن يكون هذا العنصر موجودًا
+        if (toastMessage) {
+            const message = getTranslatedText(key, replacements);
+            toastMessage.textContent = message;
+            toastMessage.className = `toast-message show ${type}`;
+            setTimeout(() => {
+                toastMessage.className = toastMessage.className.replace("show", "");
+            }, 3000); // إخفاء بعد 3 ثوانٍ
+        }
     };
 
-
-    // تحديث استخدام showToast و showMessage في fetchAndDisplaySpecialProducts
-    // (ستحتاج لتعديل هذا الجزء في الكود HTML الخاص بك، أو التأكد من أن script.js يتم تحميله بعده)
-    // أو الأفضل، انقل هذه الدوال إلى script.js
-
-    // أمثلة للتعديلات داخل fetchAndDisplaySpecialProducts:
-    // 1. عند عدم وجود منتجات كافية:
-    // showMessage(getTranslatedText('notEnoughProducts'), 'error');
-    // 2. عند فشل الجلب:
-    // showMessage(getTranslatedText('failedToFetchProducts') + error.message, 'error');
-    // 3. عند إضافة للسلة:
-    // showToast('productQuantityUpdated', 'success', { productName: product.product_Name });
-    // showToast('productAddedToCart', 'success', { productName: product.product_Name });
-    // 4. عند إضافة لقائمة الأمنيات:
-    // showToast('productAddedToWishlist', 'success', { productName: product.product_Name });
-    // showToast('productAlreadyInWishlist', 'info', { productName: product.product_Name });
+    // يمكنك إضافة دوال مساعدة أخرى هنا إذا كنت تستخدمها في صفحات مختلفة
+    // وتعتمد على الترجمة، مثل:
+    // window.redirectToProducts = (categoryValue) => { ... }
+    // window.redirectToStoreWithFilter = (occasionValue) => { ... }
+    // تأكد من عدم تكرار تعريف هذه الدوال إذا كانت معرفة بالفعل في script.js
 });
