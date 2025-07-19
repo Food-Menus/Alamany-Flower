@@ -89,9 +89,11 @@
 </head>
 <body>
 
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<main class="content">
+    <main class="content">
         <section class="data-display-section">
             <h2 data-translate-key="viewFeedbackTitle">تقييمات العملاء</h2>
             <div id="feedbackList">
@@ -101,7 +103,7 @@
     </main>
 
 
-<footer class="site-footer">
+    <footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
@@ -115,9 +117,9 @@
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./../user/wishlist.html" class="nav-item" >
+        <a href="./../user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
@@ -125,7 +127,7 @@
         </a>
         <a href="./../user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -133,19 +135,22 @@
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
-<script src="./../../server/script.js"></script>
-    <script>
+
+
+    
+    <script src="./../../server/script.js"></script>
+    <script src="./../../server/translate.js"></script> <script>
         document.addEventListener('DOMContentLoaded', () => {
             // رابط Google Sheet API لجمع البيانات. تأكد من أنه "Anyone with the link can view".
             // هذا الرابط يأتي من: File > Share > Publish to web > Embed > Publish.
@@ -154,6 +159,18 @@
 
             const feedbackListContainer = document.getElementById('feedbackList');
             const emptyMessage = feedbackListContainer.querySelector('.empty-message');
+
+            // دالة مساعدة للحصول على نص مترجم
+            function getTranslatedText(key, replacements = {}) {
+                const lang = localStorage.getItem('lang') || 'ar';
+                let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+                for (const placeholder in replacements) {
+                    if (replacements.hasOwnProperty(placeholder)) {
+                        text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                    }
+                }
+                return text;
+            }
 
             // دالة لإنشاء نجوم التقييم
             function createRatingStars(rating) {
@@ -207,8 +224,8 @@
                         // تأكد من أن row.c موجود ويحتوي على عناصر كافية
                         // يجب أن تتطابق الفهارس مع ترتيب الأعمدة في Google Sheet
                         // (name, feedback, number, condition, rating, timestamp)
-                        const name = row.c[0]?.v || 'مجهول'; // العمود الأول
-                        const feedbackText = row.c[1]?.v || 'لا يوجد تعليق.'; // العمود الثاني
+                        const name = row.c[0]?.v || getTranslatedText('anonymous'); // العمود الأول
+                        const feedbackText = row.c[1]?.v || getTranslatedText('noComment'); // العمود الثاني
                         const rating = parseInt(row.c[3]?.v) || 0; // العمود الخامس (التقييم)
                         const timestamp = row.c[5]?.v; // العمود السادس (التاريخ)
 
@@ -226,8 +243,9 @@
                         // عرض اسم المقيّم والتاريخ
                         const pMeta = document.createElement('p');
                         pMeta.classList.add('feedback-meta');
-                        const datePart = timestamp ? new Date(timestamp).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : 'تاريخ غير متوفر';
-                        pMeta.innerHTML = `${translations[localStorage.getItem('preferredLang') || 'ar']?.feedbackBy || 'بواسطة:'} ${name}`;
+                        // تاريخ غير متوفر
+                        const datePart = timestamp ? new Date(timestamp).toLocaleDateString(localStorage.getItem('lang') === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : getTranslatedText('dateNotAvailable');
+                        pMeta.innerHTML = `${getTranslatedText('feedbackBy')} ${name} <span class="feedback-date">(${datePart})</span>`;
                         feedbackCard.appendChild(pMeta);
 
                         feedbackListContainer.appendChild(feedbackCard);
@@ -236,21 +254,22 @@
                 } catch (error) {
                     console.error('حدث خطأ أثناء جلب أو تحليل البيانات:', error);
                     emptyMessage.style.display = 'block';
-                    emptyMessage.textContent = 'حدث خطأ أثناء تحميل التقييمات.';
+                    emptyMessage.textContent = getTranslatedText('errorLoadingFeedback');
                 }
             }
 
             fetchAndDisplayFeedback();
         });
     </script>
-        <script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const Token = localStorage.getItem('Token');
             if (!Token) {
                 window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
-            } else {
-                document.getElementById('Token').textContent = Token;
             }
+            // إزالة هذا الجزء: else { document.getElementById('Token').textContent = Token; }
+            // لا يوجد عنصر بالـ ID "Token" في هذا الـ HTML. إذا كان هذا الكود مخصصًا لصفحة لوحة التحكم، فمن الأفضل أن يكون هناك.
+            // إذا كان لغرض آخر، يجب إضافة العنصر المقابل في HTML.
         });
     </script>
 </body>

@@ -11,12 +11,10 @@
 </head>
 <body>
 
-<!--###################################################################################-->
-    <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<!--###################################################################################-->
-
-
     <main class="content">
         <section class="data-display-section">
             <h2 data-translate-key="adminPanelTitle">لوحة تحكم المدير</h2>
@@ -27,10 +25,11 @@
                 </a>
                 <a href="./add-product.html" class="admin-control-button">
                     <i class="fas fa-boxes"></i>
-                    <span data-translate-key="manageProducts">اضافه منتج</span>
+                    <span data-translate-key="addProduct">إضافة منتج</span>
                 </a>
-                <a href="./edit-product.html" class="admin-control-button"> <i class="fas fa-edit"></i>
-                    <span data-translate-key="addFeedback">تعديل منتج</span>
+                <a href="./edit-product.html" class="admin-control-button">
+                    <i class="fas fa-edit"></i>
+                    <span data-translate-key="editProduct">تعديل منتج</span>
                 </a>
                 <a href="./view-feedback.html" class="admin-control-button">
                     <i class="fas fa-star-half-alt"></i>
@@ -49,15 +48,6 @@
     </main>
 
 
-
-
-
-
-
-
-
-
-<!--###################################################################################-->
     <footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
@@ -72,9 +62,9 @@
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./../user/wishlist.html" class="nav-item" >
+        <a href="./../user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
@@ -82,7 +72,7 @@
         </a>
         <a href="./../user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -90,47 +80,54 @@
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
-<!--###################################################################################-->
-
     <script src="./../../server/script.js"></script>
-     <script>
+    <script src="./../../server/translate.js"></script> <script>
+        // دالة مساعدة للحصول على نص مترجم
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar'; // أو أي لغة افتراضية
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const logoutBtn = document.getElementById('logoutBtn');
 
-                if (logoutBtn) { // تأكد أن الزر موجود قبل محاولة إضافة مستمع الحدث له
-                    logoutBtn.addEventListener('click', () => {
-                        // حذف التوكين من Local Storage
-                        localStorage.removeItem('Token');
+            if (logoutBtn) { // تأكد أن الزر موجود قبل محاولة إضافة مستمع الحدث له
+                logoutBtn.addEventListener('click', () => {
+                    // حذف التوكين من Local Storage
+                    localStorage.removeItem('Token');
 
-                        // إظهار رسالة للمستخدم (اختياري)
-                        alert('تم تسجيل الخروج بنجاح!');
+                    // إظهار رسالة للمستخدم
+                    alert(getTranslatedText('logoutSuccess'));
 
-                        // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول أو الصفحة الرئيسية
-                        // اختر إحدى الصفحات بناءً على تصميم تطبيقك
-                        window.location.href = './admin-login.html'; // أو './index.html'
-                    });
-                }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+                    // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول أو الصفحة الرئيسية
+                    window.location.href = './admin-login.html'; // أو './index.html'
+                });
+            }
+
+            // التحقق من التوكن عند تحميل الصفحة
             const Token = localStorage.getItem('Token');
             if (!Token) {
                 window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
-            } else {
-                document.getElementById('Token').textContent = Token;
             }
+            // لا يوجد عنصر بالـ ID "Token" في هذه الصفحة لعرضه، لذا تم حذف السطر
+            // document.getElementById('Token').textContent = Token;
         });
     </script>
 </body>

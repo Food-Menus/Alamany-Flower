@@ -5,6 +5,9 @@
 // server/static/js/translations.js
 // server/static/js/translations.js
 // server/static/js/translations.js
+// server/static/js/translations.js
+// server/static/js/translations.js
+// server/static/js/translations.js
 const translations = {
     'ar': {
         // مفاتيح عامة ومفاتيح من الصفحة الرئيسية
@@ -26,7 +29,7 @@ const translations = {
         butterflyRoses: 'ورد فراشات',
         satinRoses: 'ورد ساتان',
         driedFlowers: 'مجففات',
-        giftsAlias: 'هدايا',
+        giftsAlias: 'جيفتات', // تم تحديثها بناءً على استخدامك في الكود
         chooseWhatYouLove: 'اختر ما تحب',
         chooseYourOccasion: 'اختر حسب مناسبتك',
         chooseYourGift: 'اختر هديتك',
@@ -36,7 +39,7 @@ const translations = {
         giftBag: 'شنطة هدايا',
         glasses: 'كاسات',
         balloons: 'بالونات',
-        roseChocBox: 'بوكس ورد + شوكولاتة',
+        roseChocBox: 'بوكس ورد وشوكولاتة',
         roseBouquet: 'باقة ورد',
         roseChocBoxAlt: 'بوكس ورد شوكولاتة',
         roseBox: 'بوكس ورد',
@@ -51,7 +54,7 @@ const translations = {
         aboutUs: 'من نحن',
         shareFeedback: 'شاركنا برأيك',
         completeOrder: 'أكمل طلبك',
-        adminLogin: 'تسجيل دخول المدير',
+        adminDashboard: 'لوحة تحكم المدير',
         allRightsReserved: '© 2025 Techno Scince. جميع الحقوق محفوظة.',
         close: 'إغلاق',
 
@@ -102,7 +105,7 @@ const translations = {
         feedbackSubmissionError: 'حدث خطأ أثناء إرسال التقييم. الرجاء المحاولة مرة أخرى.',
         connectionError: 'حدث خطأ في الاتصال بالخادم. الرجاء التأكد من اتصالك بالإنترنت والمحاولة مرة أخرى.',
 
-        // مفاتيح جديدة خاصة بصفحة "من نحن" (about)
+        // مفاتيح خاصة بصفحة "من نحن" (about)
         aboutUsTitle: 'حول المتجر',
         aboutUsContent: 'قصر زهور الأماني هو وجهتك المثالية لأجمل الزهور والنباتات والهدايا. نلتزم بتقديم أجود المنتجات وأفضل خدمة عملاء، لجعل لحظاتكم السعيدة أكثر إشراقًا. مهمتنا هي إلهام السعادة والجمال من خلال منتجاتنا وخدماتنا الفريدة.',
         aboutUsMission: 'مهمتنا',
@@ -110,10 +113,118 @@ const translations = {
         aboutUsVision: 'رؤيتنا',
         aboutUsVisionContent: 'أن نكون المتجر الرائد للزهور في المنطقة، معروفين بإبداعنا وجودتنا.',
 
+        // مفاتيح خاصة بصفحة عرض التقييمات (view-feedback)
+        viewFeedbackTitle: 'تقييمات العملاء',
+        noFeedback: 'لا توجد تقييمات لعرضها بعد.',
+        anonymous: 'مجهول',
+        noComment: 'لا يوجد تعليق.',
+        dateNotAvailable: 'تاريخ غير متوفر',
+        feedbackBy: 'بواسطة:',
+        errorLoadingFeedback: 'حدث خطأ أثناء تحميل التقييمات.',
+
+        // مفاتيح خاصة بصفحة التقارير (admin-reports)
+        reportsTitle: 'التقارير والإحصائيات',
+        loadingReports: 'جاري تحميل التقارير...',
+        reportsError: 'حدث خطأ أثناء تحميل التقارير. الرجاء التأكد من اتصالك بالإنترنت ومن إعدادات جداول البيانات.',
+        totalOrders: 'إجمالي الطلبات',
+        totalSales: 'إجمالي المبيعات',
+        totalFeedback: 'إجمالي التقييمات',
+        averageRating: 'متوسط التقييم',
+        mostSoldProducts: 'المنتجات الأكثر مبيعًا',
+        ratingDistribution: 'توزيع التقييمات (النجوم)',
+        salesCount: 'عدد المبيعات', // لعنوان الرسم البياني
+        mostSoldProductsTitle: 'المنتجات الأكثر مبيعاً (عدد الطلبات)', // لعنوان الرسم البياني
+        ordersCount: 'عدد الطلبات', // لمحور Y في الرسم البياني
+        product: 'المنتج', // لمحور X في الرسم البياني
+        oneStar: '1 نجمة',
+        twoStars: '2 نجوم',
+        threeStars: '3 نجوم',
+        fourStars: '4 نجوم',
+        fiveStars: '5 نجوم',
+        feedbackCount: 'عدد التقييمات', // لعنوان الرسم البياني
+        customerRatingDistribution: 'توزيع تقييمات العملاء', // لعنوان الرسم البياني
+
+        // مفاتيح خاصة بصفحة الطلبات الواردة (admin-orders)
+        latestOrdersBtn: 'أحدث الطلبات',
+        ordersTitle: 'الطلبات الواردة',
+        noOrders: 'لا توجد طلبات حاليًا.',
+        refreshPage: 'تحديث الصفحة',
+        customerName: 'اسم العميل',
+        orderValue: 'قيمة الطلب',
+        noNotes: 'لا يوجد ملاحظات',
+        orderReceived: 'تم الاستلام',
+        orderPreparing: 'قيد التحضير',
+        orderDelivered: 'تم التسليم',
+        errorLoadingOrders: 'حدث خطأ أثناء تحميل الطلبات.',
+
+        // مفاتيح خاصة بصفحة تعديل/حذف المنتجات (admin-edit-delete-product)
+        editDeleteProductTitle: 'تعديل / حذف منتج',
+        selectProductLabel: 'اختر المنتج:',
+        selectProductPlaceholder: '-- اختر منتجًا --',
+        productDetailsLabel: 'تفاصيل المنتج:',
+        saveChangesBtn: 'حفظ التعديلات',
+        deleteProductBtn: 'حذف المنتج',
+        noProductsAvailable: 'لا توجد منتجات متاحة.',
+        httpError: 'خطأ HTTP! الحالة: ',
+        imageEncodingError: 'حدث خطأ في ترميز ملف الصورة.',
+        imageReadingError: 'حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.',
+        noProductToDelete: 'الرجاء اختيار منتج لحذفه أولاً.',
+        confirmDeleteProduct: 'هل أنت متأكد أنك تريد حذف المنتج: "{productName}"؟',
+        failed: 'فشل: ',
+        unknownServerError: 'خطأ غير معروف من الخادم.',
+        connectionErrorServer: 'حدث خطأ أثناء الاتصال بالخادم: ',
+        response: 'الاستجابة: ',
+
+        // مفاتيح خاصة بصفحة تسجيل دخول المدير (admin-login)
+        adminLoginTitle: 'تسجيل دخول المدير',
+        usernameLabel: 'اسم المستخدم:',
+        passwordLabel: 'كلمة المرور:',
+        loginBtn: 'تسجيل الدخول',
+        alreadyLoggedInRedirect: 'تم تسجيل الدخول مسبقًا. جاري التوجيه...',
+        connectionErrorRetry: 'حدث خطأ أثناء الاتصال بالخادم. الرجاء المحاولة مرة أخرى.',
+        verifying: 'جاري التحقق...',
+        loginSuccessRedirect: 'تم تسجيل الدخول بنجاح! جاري التوجيه...',
+        incorrectPassword: 'كلمة المرور غير صحيحة.',
+        usernameNotFound: 'اسم المستخدم غير موجود.',
+
+        // مفاتيح خاصة بصفحة لوحة تحكم المدير (admin-dashboard)
+        adminPanelTitle: 'لوحة تحكم المدير',
+        manageOrders: 'إدارة الطلبات',
+        addProduct: 'إضافة منتج', // تم استخدامها الآن للزر
+        editProduct: 'تعديل منتج', // تم استخدامها الآن للزر
+        viewAllFeedback: 'عرض كل التقييمات',
+        viewReports: 'عرض التقارير',
+        logout: 'تسجيل الخروج',
+        logoutSuccess: 'تم تسجيل الخروج بنجاح!',
+
+        // مفاتيح جديدة خاصة بصفحة إضافة منتج (admin-add-product)
+        addNewProductTitle: 'إضافة منتج جديد',
+        productNameLabel: 'اسم المنتج:',
+        productDetailsLabel: 'تفاصيل المنتج:',
+        price1Label: 'السعر الأول:',
+        price2Label: 'السعر الثاني:',
+        type1Label: 'النوع الأول:',
+        type2Label: 'النوع الثاني:',
+        selectType1Placeholder: 'اختر النوع الأول',
+        selectType2Placeholder: 'اختر النوع الثاني',
+        suitableForLabel: 'مناسب لـ (فئات):',
+        selectOccasionPlaceholder: 'اختر المناسبة',
+        productImageLabel: 'صورة المنتج:',
+        addProductBtn: 'إضافة المنتج',
+        selectType1Required: 'الرجاء اختيار النوع الأول للمنتج.',
+        selectType2Required: 'الرجاء اختيار النوع الثاني للمنتج.',
+        selectOccasionRequired: 'الرجاء اختيار المناسبة للمنتج.',
+        productAddedSuccess: 'تم إضافة المنتج "{productName}" بنجاح!', // رسالة نجاح مع placeholder
+
+        // مفاتيح أنواع الورد والاكسسوارات الجديدة التي قد تكون مفيدة
+        giftBox: 'بوكس هدايا',
+        bears: 'دباديب',
+        giftBags: 'شنط هدايا',
+
         // رسائل JavaScript (تم دمجها وتحديثها)
         noDetails: 'لا توجد تفاصيل.',
         noProductsMessage: 'لا توجد منتجات مميزة لعرضها.',
-        failedToFetchProducts: 'فشل في جلب المنتجات: {errorMessage}',
+        failedToFetchProducts: 'فشل في جلب المنتجات: ',
         productQuantityUpdated: 'تم تحديث كمية "{productName}" في السلة!',
         productAddedToCart: 'تمت إضافة "{productName}" إلى السلة بنجاح!',
         productAddedToWishlist: 'تمت إضافة "{productName}" إلى قائمة الأمنيات بنجاح!',
@@ -171,7 +282,7 @@ const translations = {
         butterflyRoses: 'Butterfly Roses',
         satinRoses: 'Satin Roses',
         driedFlowers: 'Dried Flowers',
-        giftsAlias: 'Gifts',
+        giftsAlias: 'Gifts', // Updated based on your code usage
         chooseWhatYouLove: 'Choose What You Love',
         chooseYourOccasion: 'Choose by Occasion',
         chooseYourGift: 'Choose Your Gift',
@@ -196,7 +307,7 @@ const translations = {
         aboutUs: 'About Us',
         shareFeedback: 'Share Your Opinion',
         completeOrder: 'Complete Your Order',
-        adminLogin: 'Admin Login',
+        adminDashboard: 'Admin Dashboard',
         allRightsReserved: '© 2025 Techno Scince. All rights reserved.',
         close: 'Close',
 
@@ -255,10 +366,118 @@ const translations = {
         aboutUsVision: 'Our Vision',
         aboutUsVisionContent: 'To be the leading flower store in the region, known for our creativity and quality.',
 
+        // New keys specific to the "View Feedback" page
+        viewFeedbackTitle: 'Customer Reviews',
+        noFeedback: 'No reviews to display yet.',
+        anonymous: 'Anonymous',
+        noComment: 'No comment.',
+        dateNotAvailable: 'Date not available',
+        feedbackBy: 'By:',
+        errorLoadingFeedback: 'Error loading reviews.',
+
+        // New keys specific to the Reports page (admin-reports)
+        reportsTitle: 'Reports and Statistics',
+        loadingReports: 'Loading reports...',
+        reportsError: 'An error occurred while loading reports. Please check your internet connection and spreadsheet settings.',
+        totalOrders: 'Total Orders',
+        totalSales: 'Total Sales',
+        totalFeedback: 'Total Feedback',
+        averageRating: 'Average Rating',
+        mostSoldProducts: 'Most Sold Products',
+        ratingDistribution: 'Rating Distribution (Stars)',
+        salesCount: 'Sales Count', // for chart label
+        mostSoldProductsTitle: 'Most Sold Products (Order Count)', // for chart title
+        ordersCount: 'Order Count', // for Y-axis label
+        product: 'Product', // for X-axis label
+        oneStar: '1 Star',
+        twoStars: '2 Stars',
+        threeStars: '3 Stars',
+        fourStars: '4 Stars',
+        fiveStars: '5 Stars',
+        feedbackCount: 'Feedback Count', // for chart label
+        customerRatingDistribution: 'Customer Rating Distribution', // for chart title
+
+        // New keys specific to the Admin Orders page
+        latestOrdersBtn: 'Latest Orders',
+        ordersTitle: 'Incoming Orders',
+        noOrders: 'No orders currently.',
+        refreshPage: 'Refresh Page',
+        customerName: 'Customer Name',
+        orderValue: 'Order Value',
+        noNotes: 'No notes',
+        orderReceived: 'Order Received',
+        orderPreparing: 'Preparing',
+        orderDelivered: 'Delivered',
+        errorLoadingOrders: 'Error loading orders.',
+
+        // New keys specific to the Edit/Delete Product page (admin-edit-delete-product)
+        editDeleteProductTitle: 'Edit / Delete Product',
+        selectProductLabel: 'Select Product:',
+        selectProductPlaceholder: '-- Select a product --',
+        productDetailsLabel: 'Product Details:',
+        saveChangesBtn: 'Save Changes',
+        deleteProductBtn: 'Delete Product',
+        noProductsAvailable: 'No products available.',
+        httpError: 'HTTP error! Status: ',
+        imageEncodingError: 'Error encoding image file.',
+        imageReadingError: 'Error reading image file. Please try again.',
+        noProductToDelete: 'Please select a product to delete first.',
+        confirmDeleteProduct: 'Are you sure you want to delete the product: "{productName}"?',
+        failed: 'Failed: ',
+        unknownServerError: 'Unknown server error.',
+        connectionErrorServer: 'Error connecting to server: ',
+        response: 'Response: ',
+
+        // New keys specific to the Admin Login page (admin-login)
+        adminLoginTitle: 'Admin Login',
+        usernameLabel: 'Username:',
+        passwordLabel: 'Password:',
+        loginBtn: 'Login',
+        alreadyLoggedInRedirect: 'Already logged in. Redirecting...',
+        connectionErrorRetry: 'Error connecting to server. Please try again.',
+        verifying: 'Verifying...',
+        loginSuccessRedirect: 'Login successful! Redirecting...',
+        incorrectPassword: 'Incorrect password.',
+        usernameNotFound: 'Username not found.',
+
+        // New keys specific to the Admin Dashboard page (admin-dashboard)
+        adminPanelTitle: 'Admin Panel',
+        manageOrders: 'Manage Orders',
+        addProduct: 'Add Product',
+        editProduct: 'Edit Product',
+        viewAllFeedback: 'View All Feedback',
+        viewReports: 'View Reports',
+        logout: 'Logout',
+        logoutSuccess: 'Logged out successfully!',
+
+        // New keys specific to the Add Product page (admin-add-product)
+        addNewProductTitle: 'Add New Product',
+        productNameLabel: 'Product Name:',
+        productDetailsLabel: 'Product Details:',
+        price1Label: 'Price One:',
+        price2Label: 'Price Two:',
+        type1Label: 'Type One:',
+        type2Label: 'Type Two:',
+        selectType1Placeholder: 'Select Type One',
+        selectType2Placeholder: 'Select Type Two',
+        suitableForLabel: 'Suitable For (Categories):',
+        selectOccasionPlaceholder: 'Select Occasion',
+        productImageLabel: 'Product Image:',
+        addProductBtn: 'Add Product',
+        selectType1Required: 'Please select the first product type.',
+        selectType2Required: 'Please select the second product type.',
+        selectOccasionRequired: 'Please select the occasion for the product.',
+        productAddedSuccess: 'Product "{productName}" added successfully!',
+
+        // New flower/accessory type keys that might be useful
+        giftBox: 'Gift Box',
+        bears: 'Bears',
+        giftBags: 'Gift Bags',
+
         // JavaScript messages (merged and updated)
         noDetails: 'No details available.',
         noProductsMessage: 'No special products to display.',
-        failedToFetchProducts: 'Failed to fetch products: {errorMessage}',
+        failedToFetchProducts: 'Failed to fetch products: ',
         productQuantityUpdated: 'Quantity of "{productName}" updated in cart!',
         productAddedToCart: '"{productName}" added to cart successfully!',
         productAddedToWishlist: '"{productName}" added to wishlist successfully!',

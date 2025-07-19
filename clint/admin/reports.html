@@ -91,9 +91,11 @@
 </head>
 <body>
 
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <button id="language-switcher" class="lang-switcher">EN / عربي</button>
-<main class="content">
+    <main class="content">
         <section class="data-display-section">
             <h2 data-translate-key="reportsTitle">التقارير والإحصائيات</h2>
 
@@ -120,7 +122,7 @@
             </div>
 
             <div class="chart-container">
-                <h3 data-translate-key="mostSoldProducts">المنتجات الأكثر مبيعاً</h3>
+                <h3 data-translate-key="mostSoldProducts">المنتجات الأكثر مبيعًا</h3>
                 <canvas id="mostSoldProductsChart"></canvas>
             </div>
 
@@ -129,7 +131,7 @@
                 <canvas id="ratingDistributionChart"></canvas>
             </div>
 
-            </section>
+        </section>
     </main>
 
 
@@ -147,9 +149,9 @@
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./../user/wishlist.html" class="nav-item" >
+        <a href="./../user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
@@ -157,7 +159,7 @@
         </a>
         <a href="./../user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -165,18 +167,19 @@
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
-<script src="./../../server/script.js"></script>
+    <script src="./../../server/script.js"></script>
+    <script src="./../../server/translate.js"></script>  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             // URLs for Google Sheets API (gviz/tq endpoint)
@@ -188,6 +191,19 @@
             const loadingMessage = document.querySelector('.loading-message');
             const errorMessage = document.querySelector('.error-message');
             const mainStatsDiv = document.getElementById('mainStats');
+
+            // دالة مساعدة للحصول على نص مترجم
+            function getTranslatedText(key, replacements = {}) {
+                const lang = localStorage.getItem('lang') || 'ar'; // أو أي لغة افتراضية
+                let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+                for (const placeholder in replacements) {
+                    if (replacements.hasOwnProperty(placeholder)) {
+                        text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                    }
+                }
+                return text;
+            }
+
 
             // Hide stats and charts initially
             mainStatsDiv.style.display = 'none';
@@ -211,6 +227,7 @@
             function showErrorMessage() {
                 loadingMessage.style.display = 'none';
                 errorMessage.style.display = 'block';
+                errorMessage.textContent = getTranslatedText('reportsError');
             }
 
             // Main function to load all data and render reports
@@ -246,7 +263,7 @@
                     });
 
                     document.getElementById('totalOrdersCount').textContent = totalOrders;
-                    document.getElementById('totalSalesAmount').textContent = `${totalSales.toFixed(2)} جنيه`;
+                    document.getElementById('totalSalesAmount').textContent = `${totalSales.toFixed(2)} ${getTranslatedText('egp')}`;
 
                     // --- Process Feedback Data ---
                     let totalFeedback = feedbackData.length;
@@ -279,7 +296,7 @@
                         data: {
                             labels: topProductsLabels,
                             datasets: [{
-                                label: 'عدد المبيعات',
+                                label: getTranslatedText('salesCount'),
                                 data: topProductsData,
                                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                                 borderColor: 'rgba(75, 192, 192, 1)',
@@ -294,7 +311,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'المنتجات الأكثر مبيعاً (عدد الطلبات)',
+                                    text: getTranslatedText('mostSoldProductsTitle'),
                                     font: { size: 16 }
                                 }
                             },
@@ -303,13 +320,13 @@
                                     beginAtZero: true,
                                     title: {
                                         display: true,
-                                        text: 'عدد الطلبات'
+                                        text: getTranslatedText('ordersCount')
                                     }
                                 },
                                 x: {
                                     title: {
                                         display: true,
-                                        text: 'المنتج'
+                                        text: getTranslatedText('product')
                                     }
                                 }
                             }
@@ -317,7 +334,13 @@
                     });
 
                     // Chart 2: Rating Distribution
-                    const ratingLabels = ['1 نجمة', '2 نجوم', '3 نجوم', '4 نجوم', '5 نجوم'];
+                    const ratingLabels = [
+                        getTranslatedText('oneStar'),
+                        getTranslatedText('twoStars'),
+                        getTranslatedText('threeStars'),
+                        getTranslatedText('fourStars'),
+                        getTranslatedText('fiveStars')
+                    ];
                     const ratingData = Object.values(ratingCounts);
 
                     new Chart(document.getElementById('ratingDistributionChart'), {
@@ -325,14 +348,14 @@
                         data: {
                             labels: ratingLabels,
                             datasets: [{
-                                label: 'عدد التقييمات',
+                                label: getTranslatedText('feedbackCount'),
                                 data: ratingData,
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.6)', // 1 star
                                     'rgba(255, 159, 64, 0.6)', // 2 stars
                                     'rgba(255, 205, 86, 0.6)', // 3 stars
                                     'rgba(75, 192, 192, 0.6)', // 4 stars
-                                    'rgba(54, 162, 235, 0.6)'  // 5 stars
+                                    'rgba(54, 162, 235, 0.6)' // 5 stars
                                 ],
                                 borderColor: [
                                     'rgba(255, 99, 132, 1)',
@@ -352,7 +375,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'توزيع تقييمات العملاء',
+                                    text: getTranslatedText('customerRatingDistribution'),
                                     font: { size: 16 }
                                 }
                             }
@@ -373,7 +396,9 @@
             if (!Token) {
                 window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
             } else {
-                document.getElementById('Token').textContent = Token;
+                // قد يكون هذا السطر مكررًا أو غير ضروري هنا إذا لم يكن هناك عنصر بالـ ID "Token" في هذه الصفحة
+                // إذا كان هذا الكود يخص صفحة لوحة تحكم المدير، يجب أن يكون العنصر موجودًا هناك.
+                // document.getElementById('Token').textContent = Token;
             }
         });
     </script>

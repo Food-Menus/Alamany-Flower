@@ -86,65 +86,65 @@
 
 <header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
 <div class="container">
-        <h2>إضافة منتج جديد</h2>
+        <h2 data-translate-key="addNewProductTitle">إضافة منتج جديد</h2>
         <form id="addProductForm">
             <div class="form-group">
-                <label for="product_Name">اسم المنتج:</label>
+                <label for="product_Name" data-translate-key="productNameLabel">اسم المنتج:</label>
                 <input type="text" id="product_Name" name="product_Name" required>
             </div>
 
             <div class="form-group">
-                <label for="product_Details">تفاصيل المنتج:</label>
+                <label for="product_Details" data-translate-key="productDetailsLabel">تفاصيل المنتج:</label>
                 <textarea id="product_Details" name="product_Details"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="product_prise_1">السعر الأول:</label>
+                <label for="product_prise_1" data-translate-key="price1Label">السعر الأول:</label>
                 <input type="number" step="0.01" id="product_prise_1" name="product_prise_1" required>
             </div>
 
             <div class="form-group">
-                <label for="product_prise_2">السعر الثاني:</label>
+                <label for="product_prise_2" data-translate-key="price2Label">السعر الثاني:</label>
                 <input type="number" step="0.01" id="product_prise_2" name="product_prise_2">
             </div>
 
             <div class="form-group">
-                <label for="product_type_1">النوع الأول:</label>
+                <label for="product_type_1" data-translate-key="type1Label">النوع الأول:</label>
                 <select id="product_type_1" name="product_type_1" required>
-                    <option value="">اختر النوع الأول</option>
-                    <option value="ورد">ورد</option>
-                    <option value="اكسسوارات">اكسسوارات</option>
+                    <option value="" data-translate-key="selectType1Placeholder">اختر النوع الأول</option>
+                    <option value="ورد" data-translate-key="flowersOnly">ورد</option>
+                    <option value="اكسسوارات" data-translate-key="accessoriesOnly">اكسسوارات</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="product_type_2">النوع الثاني:</label>
+                <label for="product_type_2" data-translate-key="type2Label">النوع الثاني:</label>
                 <select id="product_type_2" name="product_type_2" required disabled>
-                    <option value="">اختر النوع الثاني</option>
+                    <option value="" data-translate-key="selectType2Placeholder">اختر النوع الثاني</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="product_suitable">مناسب لـ (فئات):</label>
+                <label for="product_suitable" data-translate-key="suitableForLabel">مناسب لـ (فئات):</label>
                 <select id="product_suitable" name="product_suitable" required>
-                    <option value="">اختر المناسبة</option>
-                    <option value="افتتاح">افتتاح</option>
-                    <option value="حب">حب</option>
-                    <option value="تخرج">تخرج</option>
-                    <option value="عيد ميلاد">عيد ميلاد</option>
-                    <option value="مولود جديد">مولود جديد</option>
-                    <option value="الف مبروك">الف مبروك</option>
-                    <option value="ذكرى سنوية">ذكرى سنوية</option>
-                    <option value="قراءة فاتحة">قراءة فاتحة</option>
-                    <option value="خطوبة">خطوبة</option>
+                    <option value="" data-translate-key="selectOccasionPlaceholder">اختر المناسبة</option>
+                    <option value="افتتاح" data-translate-key="opening">افتتاح</option>
+                    <option value="حب" data-translate-key="love">حب</option>
+                    <option value="تخرج" data-translate-key="graduation">تخرج</option>
+                    <option value="عيد ميلاد" data-translate-key="birthday">عيد ميلاد</option>
+                    <option value="مولود جديد" data-translate-key="newborn">مولود جديد</option>
+                    <option value="الف مبروك" data-translate-key="congratulations">الف مبروك</option>
+                    <option value="ذكرى سنوية" data-translate-key="anniversary">ذكرى سنوية</option>
+                    <option value="قراءة فاتحة" data-translate-key="engagementReading">قراءة فاتحة</option>
+                    <option value="خطوبة" data-translate-key="engagement">خطوبة</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="product_image">صورة المنتج:</label>
+                <label for="product_image" data-translate-key="productImageLabel">صورة المنتج:</label>
                 <input type="file" id="product_image" name="product_image" accept="image/*">
             </div>
 
-            <button type="submit" class="submit">إضافة المنتج</button>
+            <button type="submit" class="submit" data-translate-key="addProductBtn">إضافة المنتج</button>
         </form>
         <div id="message" class="message"></div>
     </div>
@@ -167,7 +167,7 @@
         </a>
         <a href="./../user/wishlist.html" class="nav-item" >
             <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
@@ -175,7 +175,7 @@
         </a>
         <a href="./../user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -183,78 +183,114 @@
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">لوحة تحكم المدير</a></li>
             <button class="admin-control-button" id="logoutBtn" style="margin-top: 20px; width: 80%; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
                 <i class="fas fa-sign-out-alt"></i>
                 <span data-translate-key="logout">تسجيل الخروج</span>
             </button>
-        </ul>        
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
     <script src="./../../server/script.js"></script>
-    <script>
+    <script src="./../../server/translate.js"></script> <script>
+        // دالة مساعدة للحصول على نص مترجم
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar'; // أو أي لغة افتراضية
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
+
         // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // مثال: https://script.google.com/macros/s/AKfycbz.../exec
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec';
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. منطق التحقق من التوكن وإعادة التوجيه (أصبح مستقلًا ومعدّل)
+            // 1. منطق التحقق من التوكن وإعادة التوجيه
             const Token = localStorage.getItem('Token');
             if (!Token) {
                 window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
                 return; // مهم: وقف تنفيذ بقية السكريبت إذا لم يكن هناك توكن
             }
-            // لا حاجة لـ document.getElementById('Token').textContent = Token; لأن ليس لديك عنصر بهذا الـ ID
-
 
             // 2. منطق القوائم المنسدلة الديناميكية
             const productType1 = document.getElementById('product_type_1');
             const productType2 = document.getElementById('product_type_2');
+            const productSuitable = document.getElementById('product_suitable'); // جلب عنصر المناسبة
 
-            // تعريف الخيارات لكل نوع
+            // تعريف الخيارات لكل نوع (مع استخدام المفاتيح لتسهيل الترجمة)
             const productType2Options = {
                 'ورد': [
-                    { value: 'ورد طبيعي', text: 'ورد طبيعي' },
-                    { value: 'ورد صناعي', text: 'ورد صناعي' },
-                    { value: 'ورد ساتان', text: 'ورد ساتان' },
-                    { value: 'مجففات', text: 'مجففات' },
-                    { value: 'جيفتات', text: 'جيفتات' },
-                    { value: 'ورد فراشات', text: 'ورد فراشات' }
+                    { value: 'ورد طبيعي', key: 'naturalRoses' },
+                    { value: 'ورد صناعي', key: 'artificialRoses' },
+                    { value: 'ورد ساتان', key: 'satinRoses' },
+                    { value: 'مجففات', key: 'driedFlowers' },
+                    { value: 'جيفتات', key: 'giftsAlias' }, // تعديل ليتوافق مع القاموس الموجود
+                    { value: 'ورد فراشات', key: 'butterflyRoses' }
                 ],
                 'اكسسوارات': [
-                    { value: 'بوكس هدايا', text: 'بوكس هدايا' },
-                    { value: 'دباديب', text: 'دباديب' },
-                    { value: 'هدايا', text: 'هدايا' },
-                    { value: 'شنط هدايا', text: 'شنط هدايا' },
-                    { value: 'كاسات', text: 'كاسات' },
-                    { value: 'بالونات', text: 'بالونات' },
-                    { value: 'بوكس ورد وشوكولاتة', text: 'بوكس ورد وشوكولاتة' },
-                    { value: 'باقة ورد', text: 'باقة ورد' },
-                    { value: 'بوكس ورد شوكولاتة', text: 'بوكس ورد شوكولاتة' }
+                    { value: 'بوكس هدايا', key: 'giftBox' }, // مفتاح جديد محتمل
+                    { value: 'دباديب', key: 'bears' }, // مفتاح جديد محتمل
+                    { value: 'هدايا', key: 'gifts' },
+                    { value: 'شنط هدايا', key: 'giftBags' }, // مفتاح جديد محتمل
+                    { value: 'كاسات', key: 'glasses' },
+                    { value: 'بالونات', key: 'balloons' },
+                    { value: 'بوكس ورد وشوكولاتة', key: 'roseChocBox' },
+                    { value: 'باقة ورد', key: 'roseBouquet' },
+                    { value: 'بوكس ورد شوكولاتة', key: 'roseChocBoxAlt' }
                 ]
             };
+
+            const suitableOptions = [
+                { value: 'افتتاح', key: 'opening' },
+                { value: 'حب', key: 'love' },
+                { value: 'تخرج', key: 'graduation' },
+                { value: 'عيد ميلاد', key: 'birthday' },
+                { value: 'مولود جديد', key: 'newborn' },
+                { value: 'الف مبروك', key: 'congratulations' },
+                { value: 'ذكرى سنوية', key: 'anniversary' },
+                { value: 'قراءة فاتحة', key: 'engagementReading' },
+                { value: 'خطوبة', key: 'engagement' }
+            ];
 
             // دالة لتحديث خيارات القائمة المنسدلة الثانية
             function updateProductType2Options() {
                 const selectedType1 = productType1.value;
-                productType2.innerHTML = '<option value="">اختر النوع الثاني</option>'; // تفريغ الخيارات الحالية وإضافة الخيار الافتراضي
+                productType2.innerHTML = `<option value="" data-translate-key="selectType2Placeholder">${getTranslatedText('selectType2Placeholder')}</option>`;
                 productType2.disabled = true; // تعطيل القائمة الثانية افتراضياً
 
                 if (selectedType1 && productType2Options[selectedType1]) {
                     productType2Options[selectedType1].forEach(option => {
                         const newOption = document.createElement('option');
                         newOption.value = option.value;
-                        newOption.textContent = option.text;
+                        newOption.textContent = getTranslatedText(option.key); // ترجمة النص
+                        newOption.setAttribute('data-translate-key', option.key); // إضافة مفتاح الترجمة
                         productType2.appendChild(newOption);
                     });
                     productType2.disabled = false; // تفعيل القائمة الثانية إذا كان هناك اختيار صالح في الأولى
                 }
+            }
+
+            // دالة لتطبيق الترجمة على خيارات "مناسب لـ"
+            function populateSuitableOptions() {
+                productSuitable.innerHTML = `<option value="" data-translate-key="selectOccasionPlaceholder">${getTranslatedText('selectOccasionPlaceholder')}</option>`;
+                suitableOptions.forEach(option => {
+                    const newOption = document.createElement('option');
+                    newOption.value = option.value;
+                    newOption.textContent = getTranslatedText(option.key);
+                    newOption.setAttribute('data-translate-key', option.key);
+                    productSuitable.appendChild(newOption);
+                });
             }
 
             // إضافة مستمع حدث لتغيير القائمة المنسدلة الأولى
@@ -262,6 +298,7 @@
 
             // استدعاء الدالة عند تحميل الصفحة للتأكد من الحالة الأولية الصحيحة
             updateProductType2Options();
+            populateSuitableOptions(); // استدعاء لملء وترجمة خيارات المناسبات
 
 
             // 3. منطق إرسال النموذج (الخاص بإضافة المنتج)
@@ -280,26 +317,25 @@
                 const productPrise2 = parseFloat(document.getElementById('product_prise_2').value) || 0;
                 const productType1_val = document.getElementById('product_type_1').value; // استخدام متغير جديد لتجنب تضارب الاسم
                 const productType2_val = document.getElementById('product_type_2').value; // استخدام متغير جديد لتجنب تضارب الاسم
-                const productSuitable = document.getElementById('product_suitable').value;
+                const productSuitable_val = document.getElementById('product_suitable').value; // استخدام متغير جديد
                 const productImageInput = document.getElementById('product_image');
 
                 // تحقق من أن القوائم المنسدلة المطلوبة تم اختيارها
                 if (!productType1_val) {
-                    messageDiv.textContent = 'الرجاء اختيار النوع الأول للمنتج.';
+                    messageDiv.textContent = getTranslatedText('selectType1Required');
                     messageDiv.classList.add('error');
                     return;
                 }
                 if (!productType2_val && !productType2.disabled) { // تحقق فقط إذا لم تكن القائمة الثانية معطلة
-                    messageDiv.textContent = 'الرجاء اختيار النوع الثاني للمنتج.';
+                    messageDiv.textContent = getTranslatedText('selectType2Required');
                     messageDiv.classList.add('error');
                     return;
                 }
-                if (!productSuitable) {
-                    messageDiv.textContent = 'الرجاء اختيار المناسبة للمنتج.';
+                if (!productSuitable_val) {
+                    messageDiv.textContent = getTranslatedText('selectOccasionRequired');
                     messageDiv.classList.add('error');
                     return;
                 }
-
 
                 // إنشاء FormData يدويًا لإضافة القيم المعدلة
                 const formData = new FormData();
@@ -310,7 +346,7 @@
                 formData.append('product_prise_2', productPrise2);
                 formData.append('product_type_1', productType1_val); // استخدام المتغير الجديد
                 formData.append('product_type_2', productType2_val); // استخدام المتغير الجديد
-                formData.append('product_suitable', productSuitable);
+                formData.append('product_suitable', productSuitable_val);
 
                 // معالجة الصورة إذا تم اختيارها
                 if (productImageInput.files.length > 0) {
@@ -323,13 +359,13 @@
                             formData.append('product_image', base64Image);
                             await sendFormData(formData, messageDiv);
                         } else {
-                            messageDiv.textContent = 'حدث خطأ في ترميز ملف الصورة.';
+                            messageDiv.textContent = getTranslatedText('imageEncodingError');
                             messageDiv.classList.add('error');
                         }
                     };
 
                     reader.onerror = function() {
-                        messageDiv.textContent = 'حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.';
+                        messageDiv.textContent = getTranslatedText('imageReadingError');
                         messageDiv.classList.add('error');
                         console.error('FileReader error:', reader.error);
                     };
@@ -351,23 +387,23 @@
 
                     if (!response.ok) {
                         const errorText = await response.text();
-                        throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+                        throw new Error(`${getTranslatedText('httpError')} ${response.status}. ${getTranslatedText('response')}: ${errorText}`);
                     }
 
                     const result = await response.json();
 
                     if (result.success) {
-                        messageDiv.textContent = result.message;
+                        messageDiv.textContent = getTranslatedText('productAddedSuccess', { productName: formData.get('product_Name') }); // استخدام المفتاح الجديد
                         messageDiv.classList.add('success');
                         document.getElementById('addProductForm').reset();
                         // إعادة تعيين القوائم المنسدلة بعد إعادة تعيين النموذج
                         updateProductType2Options(); // لإعادة product_type_2 إلى حالتها الأولية المعطلة
                     } else {
-                        messageDiv.textContent = 'فشل: ' + (result.message || 'خطأ غير معروف من الخادم.');
+                        messageDiv.textContent = `${getTranslatedText('failed')}: ${result.message || getTranslatedText('unknownServerError')}`;
                         messageDiv.classList.add('error');
                     }
                 } catch (error) {
-                    messageDiv.textContent = 'حدث خطأ أثناء الاتصال بالخادم: ' + error.message;
+                    messageDiv.textContent = `${getTranslatedText('connectionErrorServer')} ${error.message}`;
                     messageDiv.classList.add('error');
                     console.error('Error sending data:', error);
                 }
@@ -379,11 +415,26 @@
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', () => {
                     localStorage.removeItem('Token');
-                    alert('تم تسجيل الخروج بنجاح!');
+                    alert(getTranslatedText('logoutSuccess'));
                     window.location.href = './admin-login.html';
                 });
             }
 
+            // تطبيق الترجمة على العناصر عند تحميل الصفحة
+            function applyTranslations() {
+                document.querySelectorAll('[data-translate-key]').forEach(element => {
+                    const key = element.getAttribute('data-translate-key');
+                    if (key) {
+                        // For select options, we need to handle their textContent specifically
+                        if (element.tagName === 'OPTION') {
+                            element.textContent = getTranslatedText(key);
+                        } else {
+                            element.textContent = getTranslatedText(key);
+                        }
+                    }
+                });
+            }
+            applyTranslations(); // Call once on DOMContentLoaded
         });
     </script>
 </body>

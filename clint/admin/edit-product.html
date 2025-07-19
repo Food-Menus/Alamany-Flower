@@ -113,76 +113,73 @@
     </style>
 </head>
 <body>
-<!--###################################################################################-->
-<header class="navbar"><div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br></header>
-<!--###################################################################################-->
-
-
+    <header class="navbar">
+        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+    </header>
     <div class="container">
-            <h2>تعديل / حذف منتج</h2>
+        <h2 data-translate-key="editDeleteProductTitle">تعديل / حذف منتج</h2>
 
-            <div class="form-group">
-                <label for="productSelector">اختر المنتج:</label>
-                <select id="productSelector">
-                    <option value="">-- اختر منتجًا --</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="productSelector" data-translate-key="selectProductLabel">اختر المنتج:</label>
+            <select id="productSelector">
+                <option value="" data-translate-key="selectProductPlaceholder">-- اختر منتجًا --</option>
+            </select>
+        </div>
 
-            <div id="productDetailsForm" class="hidden">
-                <form id="editProductForm">
-                    <div class="form-group">
-                        <label for="edit_product_Name">اسم المنتج:</label>
-                        <input type="text" id="edit_product_Name" name="product_Name" readonly>
-                    </div>
+        <div id="productDetailsForm" class="hidden">
+            <form id="editProductForm">
+                <div class="form-group">
+                    <label for="edit_product_Name" data-translate-key="productNameLabel">اسم المنتج:</label>
+                    <input type="text" id="edit_product_Name" name="product_Name" readonly>
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_Details">تفاصيل المنتج:</label>
-                        <textarea id="edit_product_Details" name="product_Details"></textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_Details" data-translate-key="productDetailsLabel">تفاصيل المنتج:</label>
+                    <textarea id="edit_product_Details" name="product_Details"></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_prise_1">السعر الأول:</label>
-                        <input type="number" step="0.01" id="edit_product_prise_1" name="product_prise_1">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_prise_1" data-translate-key="price1Label">السعر الأول:</label>
+                    <input type="number" step="0.01" id="edit_product_prise_1" name="product_prise_1">
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_prise_2">السعر الثاني:</label>
-                        <input type="number" step="0.01" id="edit_product_prise_2" name="product_prise_2">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_prise_2" data-translate-key="price2Label">السعر الثاني:</label>
+                    <input type="number" step="0.01" id="edit_product_prise_2" name="product_prise_2">
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_type_1">النوع الأول:</label>
-                        <input type="text" id="edit_product_type_1" name="product_type_1">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_type_1" data-translate-key="type1Label">النوع الأول:</label>
+                    <input type="text" id="edit_product_type_1" name="product_type_1">
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_type_2">النوع الثاني:</label>
-                        <input type="text" id="edit_product_type_2" name="product_type_2">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_type_2" data-translate-key="type2Label">النوع الثاني:</label>
+                    <input type="text" id="edit_product_type_2" name="product_type_2">
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_suitable">مناسب لـ (فئات):</label>
-                        <input type="text" id="edit_product_suitable" name="product_suitable">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_suitable" data-translate-key="suitableForLabel">مناسب لـ (فئات):</label>
+                    <input type="text" id="edit_product_suitable" name="product_suitable">
+                </div>
 
-                    <div class="form-group">
-                        <label for="edit_product_image">صورة المنتج:</label>
-                        <input type="file" id="edit_product_image" name="product_image" accept="image/*">
-                        <img id="current_product_image" src="" alt="صورة المنتج الحالية" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none;">
-                    </div>
+                <div class="form-group">
+                    <label for="edit_product_image" data-translate-key="productImageLabel">صورة المنتج:</label>
+                    <input type="file" id="edit_product_image" name="product_image" accept="image/*">
+                    <img id="current_product_image" src="" alt="صورة المنتج الحالية" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none;">
+                </div>
 
-                    <div class="buttons-group">
-                        <button type="submit" class="submit-btn">حفظ التعديلات</button>
-                        <button type="button" id="deleteProductBtn" class="delete-btn">حذف المنتج</button>
-                    </div>
-                </form>
-            </div>
-            <div class="loading-spinner" id="loadingSpinner"></div>
-            <div id="message" class="message"></div>
+                <div class="buttons-group">
+                    <button type="submit" class="submit-btn" data-translate-key="saveChangesBtn">حفظ التعديلات</button>
+                    <button type="button" id="deleteProductBtn" class="delete-btn" data-translate-key="deleteProductBtn">حذف المنتج</button>
+                </div>
+            </form>
+        </div>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <div id="message" class="message"></div>
     </div>
 
 
-<!--###################################################################################-->
     <footer class="site-footer">
         <div class="social-links">
             <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
@@ -197,9 +194,9 @@
             <i class="fas fa-home"></i>
             <span data-translate-key="home">الرئيسية</span>
         </a>
-        <a href="./../user/wishlist.html" class="nav-item" >
+        <a href="./../user/wishlist.html" class="nav-item">
             <i class="fas fa-heart"></i>
-            <span data-translate-key="likes">الإعجابات</span>
+            <span data-translate-key="wishlist">الإعجابات</span>
         </a>
         <a href="./../user/cart.html" class="nav-item">
             <i class="fas fa-shopping-basket"></i>
@@ -207,7 +204,7 @@
         </a>
         <a href="./../user/view-products.html" class="nav-item">
             <i class="fas fa-store"></i>
-            <span data-translate-key="admin">المتجر</span>
+            <span data-translate-key="store">المتجر</span>
         </a>
         <button class="nav-item hamburger-menu-btn">
             <i class="fas fa-bars"></i>
@@ -215,21 +212,19 @@
         </button>
     </nav>
     <div class="side-menu">
-        <h1>قصر زهور الأماني</h1>
+        <h1 data-translate-key="brandName">قصر زهور الأماني</h1>
         <br><br><br><br><br>
         <ul>
-            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن </a></li>
-            <li><a href="./../user/add-feedback.html" data-translate-key="contactUs">شاركنا برأيك</a></li>
-            <li><a href="./../user/view-products.html" data-translate-key="faq">اكمل طلبك</a></li>
-            <li><a href="./admin-dashboard.html" data-translate-key="adminDashboard">تسجيل دخول المدير</a></li>
-        </ul>        
+            <li><a href="./../user/about.html" data-translate-key="aboutUs">من نحن</a></li>
+            <li><a href="./../user/add-feedback.html" data-translate-key="shareFeedback">شاركنا برأيك</a></li>
+            <li><a href="./../user/view-products.html" data-translate-key="completeOrder">أكمل طلبك</a></li>
+            <li><a href="./admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
+        </ul>
         <br><br><br><br><br>
-        <button class="close-side-menu">close</button>
+        <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
-<!--###################################################################################-->
-
-<script src="./../../server/script.js"></script>
-    <script>
+    <script src="./../../server/script.js"></script>
+    <script src="./../../server/translate.js"></script>   <script>
         // *** استبدل هذا بـ URL تطبيق الويب الخاص بك من Google Apps Script ***
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz3X1nWtO_iyoGiUQm1YMLwSoiZYKEP0bdpO_vyQbfZRZLcezr3vJ0wdQy232ev-do/exec'; // يجب أن يكون هذا نفس الـ URL الذي استخدمته لإضافة المنتج
 
@@ -240,6 +235,18 @@
         const messageDiv = document.getElementById('message');
         const loadingSpinner = document.getElementById('loadingSpinner');
         let allProducts = []; // لتخزين جميع المنتجات التي تم جلبها
+
+        // دالة مساعدة للحصول على نص مترجم
+        function getTranslatedText(key, replacements = {}) {
+            const lang = localStorage.getItem('lang') || 'ar'; // أو أي لغة افتراضية
+            let text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+            for (const placeholder in replacements) {
+                if (replacements.hasOwnProperty(placeholder)) {
+                    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+                }
+            }
+            return text;
+        }
 
         // دوال مساعدة لإظهار/إخفاء Spinner والرسائل
         function showSpinner() {
@@ -264,11 +271,11 @@
                 // نستخدم doGet لطلب قائمة المنتجات
                 const response = await fetch(WEB_APP_URL);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(getTranslatedText('httpError') + response.status);
                 }
                 allProducts = await response.json();
 
-                productSelector.innerHTML = '<option value="">-- اختر منتجًا --</option>'; // مسح الخيارات القديمة
+                productSelector.innerHTML = `<option value="">${getTranslatedText('selectProductPlaceholder')}</option>`; // مسح الخيارات القديمة
                 if (allProducts && allProducts.length > 0) {
                     allProducts.forEach(product => {
                         const option = document.createElement('option');
@@ -277,10 +284,10 @@
                         productSelector.appendChild(option);
                     });
                 } else {
-                    showMessage('لا توجد منتجات متاحة.', 'error');
+                    showMessage(getTranslatedText('noProductsAvailable'), 'error');
                 }
             } catch (error) {
-                showMessage('فشل في جلب المنتجات: ' + error.message, 'error');
+                showMessage(getTranslatedText('failedToFetchProducts') + error.message, 'error');
                 console.error('Error fetching products:', error);
             } finally {
                 hideSpinner();
@@ -357,12 +364,12 @@
                         formData.append('product_image', base64Image);
                         await sendDataToAppsScript(formData);
                     } else {
-                        showMessage('حدث خطأ في ترميز ملف الصورة.', 'error');
+                        showMessage(getTranslatedText('imageEncodingError'), 'error');
                     }
                 };
 
                 reader.onerror = function() {
-                    showMessage('حدث خطأ أثناء قراءة ملف الصورة. يرجى المحاولة مرة أخرى.', 'error');
+                    showMessage(getTranslatedText('imageReadingError'), 'error');
                     console.error('FileReader error:', reader.error);
                 };
 
@@ -378,11 +385,13 @@
         deleteProductBtn.addEventListener('click', async function() {
             const originalProductName = document.getElementById('edit_product_Name').value;
             if (!originalProductName) {
-                showMessage('الرجاء اختيار منتج لحذفه أولاً.', 'error');
+                showMessage(getTranslatedText('noProductToDelete'), 'error');
                 return;
             }
 
-            if (confirm(`هل أنت متأكد أنك تريد حذف المنتج: "${originalProductName}"؟`)) {
+            if (confirm(getTranslatedText('confirmDeleteProduct', {
+                    productName: originalProductName
+                }))) {
                 const formData = new FormData();
                 formData.append('action', 'delete'); // تحديد العملية كـ 'delete'
                 formData.append('product_Name', originalProductName); // إرسال اسم المنتج كمعرف
@@ -402,7 +411,7 @@
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+                    throw new Error(getTranslatedText('httpError') + response.status + getTranslatedText('response') + errorText);
                 }
 
                 const result = await response.json();
@@ -418,10 +427,10 @@
                     document.getElementById('current_product_image').src = '';
                     productSelector.value = ''; // إعادة القائمة المنسدلة للوضع الافتراضي
                 } else {
-                    showMessage('فشل: ' + (result.message || 'خطأ غير معروف من الخادم.'), 'error');
+                    showMessage(getTranslatedText('failed') + (result.message || getTranslatedText('unknownServerError')), 'error');
                 }
             } catch (error) {
-                showMessage('حدث خطأ أثناء الاتصال بالخادم: ' + error.message, 'error');
+                showMessage(getTranslatedText('connectionErrorServer') + error.message, 'error');
                 console.error('Error sending data:', error);
             } finally {
                 hideSpinner();
@@ -430,16 +439,15 @@
 
         // --- عند تحميل الصفحة، جلب المنتجات لأول مرة ---
         document.addEventListener('DOMContentLoaded', fetchProducts);
-
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const Token = localStorage.getItem('Token');
             if (!Token) {
                 window.location.href = './admin-login.html'; // إعادة التوجيه إلى صفحة تسجيل الدخول إذا لم يكن هناك توكن
-            } else {
-                document.getElementById('Token').textContent = Token;
             }
+            // لا يوجد عنصر بالـ ID "Token" في هذه الصفحة لعرضه
+            // إذا كان مطلوبًا في صفحة أخرى (مثل admin-dashboard)، يجب إضافة الكود هناك.
         });
     </script>
 </body>
