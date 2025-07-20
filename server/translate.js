@@ -99,7 +99,7 @@ const translations = {
 
         // مفاتيح خاصة بصفحة "من نحن" (about)
         aboutUsTitle: 'حول المتجر',
-        aboutUsContent: 'قصر زهور الأماني هو وجهتك المثالية لأجمل الزهور والنباتات والهدايا. نلتزم بتقديم أجود المنتجات وأفضل خدمة عملاء، لجعل لحظاتكم السعيدة أكثر إشراقًا. مهمتنا هي إلهام السعادة والجمال من خلال منتجاتنا وخدماتنا الفريدة.',
+        aboutUsContent: 'زهور الربيع هو وجهتك المثالية لأجمل الزهور والنباتات والهدايا. نلتزم بتقديم أجود المنتجات وأفضل خدمة عملاء، لجعل لحظاتكم السعيدة أكثر إشراقًا. مهمتنا هي إلهام السعادة والجمال من خلال منتجاتنا وخدماتنا الفريدة.',
         aboutUsMission: 'مهمتنا',
         aboutUsMissionContent: 'تقديم أجود الزهور والنباتات والهدايا مع خدمة عملاء استثنائية.',
         aboutUsVision: 'رؤيتنا',
@@ -233,7 +233,7 @@ const translations = {
         cartClearedSuccessfully: 'تم تفريغ السلة بنجاح.',
         cartEmptyMessage: 'سلة مشترياتك فارغة. الرجاء إضافة منتجات قبل إرسال الطلب.',
         fillAllRequiredFields: 'الرجاء ملء جميع الحقول المطلوبة (الاسم، رقم الهاتف، العنوان).',
-        welcomeMessage: 'أهلاً بك في قصر زهور الأماني!',
+        welcomeMessage: 'أهلاً بك في زهور الربيع!',
         newOrderMessage: 'لديك طلب جديد:',
         productsSection: '--- المنتجات ---',
         quantity: 'الكمية',
@@ -248,7 +248,7 @@ const translations = {
         customerInfoSection: '--- معلومات العميل ---',
         name: 'الاسم',
         notes: 'ملاحظات',
-        thanksForOrder: 'شكراً لطلبك من قصر زهور الأماني!',
+        thanksForOrder: 'شكراً لطلبك من زهور الربيع!',
         orderSentAndSaved: 'تم إرسال الطلب وحفظ البيانات (الرجاء التحقق من جوجل شيت).',
         errorSavingOrder: 'حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.',
         quantityUpdated: 'تم تحديث الكمية.',
@@ -257,8 +257,8 @@ const translations = {
 
     },
     'en': {
-        // General keys and keys from the Homepage
-        brandName: 'Al-Amani Flowers Palace',
+        // General keys and keys from the Homepage <h1> Spring flowers</h1>
+        brandName: 'Spring flowers',
         clickHere: 'Order Now',
         beautifulFlowersOccasions: 'Beautiful Flowers for Wonderful Occasions',
         wideSelectionFlowers: 'A wide selection of flowers for every occasion.',
@@ -354,7 +354,7 @@ const translations = {
 
         // New keys specific to the "About Us" page
         aboutUsTitle: 'About The Store',
-        aboutUsContent: 'Al-Amani Flowers Palace is your ideal destination for the most beautiful flowers, plants, and gifts. We are committed to providing the highest quality products and best customer service, to make your happy moments brighter. Our mission is to inspire happiness and beauty through our unique products and services.',
+        aboutUsContent: 'Spring flowers is your ideal destination for the most beautiful flowers, plants, and gifts. We are committed to providing the highest quality products and best customer service, to make your happy moments brighter. Our mission is to inspire happiness and beauty through our unique products and services.',
         aboutUsMission: 'Our Mission',
         aboutUsMissionContent: 'To provide the finest flowers, plants, and gifts with exceptional customer service.',
         aboutUsVision: 'Our Vision',
@@ -488,7 +488,7 @@ const translations = {
         cartClearedSuccessfully: 'Cart emptied successfully.',
         cartEmptyMessage: 'Your shopping cart is empty. Please add products before sending the order.',
         fillAllRequiredFields: 'Please fill in all required fields (Name, Phone Number, Address).',
-        welcomeMessage: 'Welcome to Al-Amani Flowers Palace!',
+        welcomeMessage: 'Welcome to Spring flowers!',
         newOrderMessage: 'You have a new order:',
         productsSection: '--- Products ---',
         quantity: 'Quantity',
@@ -503,7 +503,7 @@ const translations = {
         customerInfoSection: '--- Customer Information ---',
         name: 'Name',
         notes: 'Notes',
-        thanksForOrder: 'Thank you for your order from Al-Amani Flowers Palace!',
+        thanksForOrder: 'Thank you for your order from Spring flowers!',
         orderSentAndSaved: 'Order sent and data saved (please check Google Sheet).',
         errorSavingOrder: 'An error occurred while saving the order. Please try again.',
         quantityUpdated: 'Quantity updated.',
