@@ -1197,3 +1197,319 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+
+
+
+
+
+
+const chatData = {
+    initial: {
+        message: 'أهلاً بك في زهور الربيع! كيف يمكنني مساعدتك اليوم؟',
+        options: [
+            { text: 'معلومات عن المتجر', nextState: 'storeInfo' },
+            { text: 'استفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'خدمة العملاء', nextState: 'customerService' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    storeInfo: {
+        message: 'ما الذي تود معرفته عن متجرنا؟',
+        options: [
+            { text: 'أيام العمل', nextState: 'workingDays' },
+            { text: 'مواعيد العمل', nextState: 'workingHours' },
+            { text: 'عنوان المتجر', nextState: 'address' },
+            { text: 'خدمة التوصيل', nextState: 'delivery' },
+            { text: 'من نحن', nextState: 'aboutUs' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    workingDays: {
+        message: 'نحن نعمل طوال أيام الأسبوع باستثناء الجمعة، من السبت إلى الخميس.',
+        options: [
+            { text: 'مواعيد العمل', nextState: 'workingHours' },
+            { text: 'عنوان المتجر', nextState: 'address' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    workingHours: {
+        message: 'ساعات العمل لدينا من 9 صباحًا حتى 10 مساءً يوميًا.',
+        options: [
+            { text: 'أيام العمل', nextState: 'workingDays' },
+            { text: 'عنوان المتجر', nextState: 'address' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    address: {
+        message: 'متجر زهور الربيع يقع في: الجيزة، شارع الهرم الرئيسي، بجوار كافيه النخيل. نحن بانتظارك!',
+        options: [
+            { text: 'أيام العمل', nextState: 'workingDays' },
+            { text: 'مواعيد العمل', nextState: 'workingHours' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    delivery: {
+        message: 'نقدم خدمة التوصيل لجميع أنحاء الجيزة والقاهرة الكبرى. تكلفة التوصيل تعتمد على المسافة. هل لديك استفسار عن منطقة معينة؟',
+        options: [
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    aboutUs: {
+        message: 'زهور الربيع هو وجهتك المثالية لأجمل الزهور والنباتات والهدايا. نلتزم بتقديم أجود المنتجات وأفضل خدمة عملاء، لجعل لحظاتكم السعيدة أكثر إشراقًا. مهمتنا هي إلهام السعادة والجمال من خلال منتجاتنا وخدماتنا الفريدة.',
+        options: [
+            { text: 'مهمتنا', nextState: 'ourMission' },
+            { text: 'رؤيتنا', nextState: 'ourVision' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    ourMission: {
+        message: 'مهمتنا: تقديم أجود الزهور والنباتات والهدايا مع خدمة عملاء استثنائية.',
+        options: [
+            { text: 'رؤيتنا', nextState: 'ourVision' },
+            { text: 'العودة لـ من نحن', nextState: 'aboutUs' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    ourVision: {
+        message: 'رؤيتنا: أن نكون المتجر الرائد للزهور في المنطقة، معروفين بإبداعنا وجودتنا.',
+        options: [
+            { text: 'مهمتنا', nextState: 'ourMission' },
+            { text: 'العودة لـ من نحن', nextState: 'aboutUs' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    flowerInquiry: {
+        message: 'يسعدنا مساعدتك! ما هو نوع الورد الذي تبحث عنه أو المناسبة التي تحتاج لورد لها؟',
+        options: [
+            { text: 'ورد طبيعي', nextState: 'naturalFlowers' },
+            { text: 'ورد صناعي', nextState: 'artificialFlowers' },
+            { text: 'مجففات', nextState: 'driedFlowers' },
+            { text: 'باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'هدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    naturalFlowers: {
+        message: 'لدينا تشكيلة رائعة من الورد الطبيعي الطازج! مثل: الورود، الزنابق، التوليب، الجوري، وعباد الشمس. ما النوع المفضل لديك؟',
+        options: [
+            { text: 'ورد طبيعي', nextState: 'specificNaturalFlowers' },
+            { text: 'العودة للاستفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    specificNaturalFlowers: {
+        message: 'لدينا: ورود حمراء، زنابق بيضاء، توليب بألوان مختلفة، جوري، وعباد الشمس. أي نوع تود الاستفسار عنه؟',
+        options: [
+            { text: 'الورود الحمراء', nextState: 'redRosesInfo' },
+            { text: 'الزنابق البيضاء', nextState: 'whiteLiliesInfo' },
+            { text: 'العودة لـ ورد طبيعي', nextState: 'naturalFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    redRosesInfo: {
+        message: 'الورود الحمراء رمز الحب والعاطفة! لدينا باقات متنوعة تبدأ من 150 جنيه. هل تود معرفة المزيد عن الأحجام أو طلب خاص؟',
+        options: [
+            { text: 'أحجام الباقات', nextState: 'bouquetSizes' },
+            { text: 'طلب باقة خاصة', nextState: 'specialOrder' },
+            { text: 'العودة لـ ورد طبيعي', nextState: 'naturalFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    whiteLiliesInfo: {
+        message: 'الزنابق البيضاء مثالية للنقاء والاحتفالات الهادئة. تتوفر لدينا بأحجام مختلفة وأسعار تبدأ من 200 جنيه. هل تحتاج صور أو تفاصيل إضافية؟',
+        options: [
+            { text: 'العودة لـ ورد طبيعي', nextState: 'naturalFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    bouquetSizes: {
+        message: 'لدينا باقات صغيرة، متوسطة، وكبيرة، بالإضافة لإمكانية تصميم باقة حسب رغبتك.',
+        options: [
+            { text: 'طلب باقة خاصة', nextState: 'specialOrder' },
+            { text: 'العودة لـ ورد طبيعي', nextState: 'naturalFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    specialOrder: {
+        message: 'لطلب باقة خاصة، يرجى التواصل معنا مباشرة على الرقم: 01xxxxxxxxx أو زيارة المتجر لنتحدث عن تصميمك المثالي.',
+        options: [
+            { text: 'العودة لـ أحجام الباقات', nextState: 'bouquetSizes' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    artificialFlowers: {
+        message: 'الورد الصناعي لدينا بجودة عالية ومظهر طبيعي يدوم طويلاً! لدينا ورود، أوركيد، ونباتات زينة صناعية. هل تبحث عن شيء معين؟',
+        options: [
+            { text: 'ورد فراشات', nextState: 'butterflyRoses' },
+            { text: 'ورد ساتان', nextState: 'satinRoses' },
+            { text: 'العودة للاستفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    butterflyRoses: {
+        message: 'لدينا تشكيلة مميزة من ورد الفراشات الصناعي بألوان وأحجام مختلفة لإضافة لمسة جمالية فريدة.',
+        options: [
+            { text: 'العودة لـ ورد صناعي', nextState: 'artificialFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    satinRoses: {
+        message: 'الورد الساتان الصناعي يتميز بجماله وأناقته، مثالي للديكورات الراقية والباقات التي تدوم طويلاً.',
+        options: [
+            { text: 'العودة لـ ورد صناعي', nextState: 'artificialFlowers' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    driedFlowers: {
+        message: 'لدينا مجففات أنيقة تدوم طويلاً وتضيف لمسة جمالية فريدة لديكور منزلك أو مكتبك.',
+        options: [
+            { text: 'العودة للاستفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    occasionBouquets: {
+        message: 'لدينا باقات مصممة خصيصًا لكل مناسبة! ما هي مناسبتك؟',
+        options: [
+            { text: 'قراءة فاتحة', nextState: 'engagementReadingBouquets' },
+            { text: 'خطوبة', nextState: 'engagementBouquets' },
+            { text: 'عيد ميلاد', nextState: 'birthdayBouquets' },
+            { text: 'ذكرى سنوية', nextState: 'anniversaryBouquets' },
+            { text: 'تخرج', nextState: 'graduationBouquets' },
+            { text: 'مولود جديد', nextState: 'newbornBouquets' },
+            { text: 'حب', nextState: 'loveBouquets' },
+            { text: 'تهنئة/نجاح', nextState: 'congratulationsBouquets' },
+            { text: 'افتتاح', nextState: 'openingBouquets' },
+            { text: 'العودة للاستفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    engagementReadingBouquets: {
+        message: 'باقات قراءة الفاتحة تتميز بالأناقة والرقة، ونصممها لتناسب هذه المناسبة الخاصة.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    engagementBouquets: {
+        message: 'باقات الخطوبة لدينا مصممة خصيصًا لتعبر عن الفرحة والاحتفال بهذه اللحظة السعيدة.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    birthdayBouquets: {
+        message: 'لباقات أعياد الميلاد، نقدم تصميمات مبهجة بألوان زاهية وأنواع ورد متنوعة تناسب كل الأذواق. يمكننا إضافة بطاقة معايدة وهدايا صغيرة.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    anniversaryBouquets: {
+        message: 'لباقات الذكرى السنوية، نصمم باقات رومانسية وأنيقة تعبر عن الحب والتقدير المستمر.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    graduationBouquets: {
+        message: 'احتفل بلحظات التخرج مع باقاتنا المبهجة والمصممة خصيصًا لهذه المناسبة الهامة.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    newbornBouquets: {
+        message: 'لباقات المولود الجديد، لدينا تصميمات رقيقة بألوان ناعمة ومبهجة لتهنئة الأهل بالوافد الجديد.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    loveBouquets: {
+        message: 'عبر عن مشاعرك بأجمل باقات الحب، المصممة خصيصًا لتعبر عن أعمق العواطف.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    congratulationsBouquets: {
+        message: 'لباقات التهنئة والنجاح، لدينا خيارات راقية تعبر عن الفرح والتقدير. يمكننا تنسيق ألوان محددة حسب طلبك.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    openingBouquets: {
+        message: 'لباقات الافتتاح، نقدم تصميمات فخمة ومميزة تناسب المناسبات الرسمية وافتتاحات الأعمال.',
+        options: [
+            { text: 'العودة لـ باقات المناسبات', nextState: 'occasionBouquets' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    giftsSelection: {
+        message: 'لدينا تشكيلة رائعة من الهدايا لتكمل باقتك أو تقدمها بمفردها. ماذا تود أن ترى؟',
+        options: [
+            { text: 'بوكس', nextState: 'giftBox' },
+            { text: 'دب', nextState: 'bearGift' },
+            { text: 'شنطة هدايا', nextState: 'giftBag' },
+            { text: 'كاسات', nextState: 'glassesGift' },
+            { text: 'بالونات', nextState: 'balloonsGift' },
+            { text: 'بوكس ورد وشوكولاتة', nextState: 'roseChocBox' },
+            { text: 'العودة للاستفسار عن الورد', nextState: 'flowerInquiry' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    giftBox: {
+        message: 'تتوفر لدينا بوكسات هدايا أنيقة ومتنوعة، يمكن تنسيقها مع الورد أو الهدايا الأخرى.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    bearGift: {
+        message: 'لدينا دباديب بأحجام وألوان مختلفة، هدية لطيفة ومميزة لكل الأعمار.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    giftBag: {
+        message: 'شنط هدايا بتصاميم جذابة وأحجام متنوعة لتناسب جميع هداياك.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    glassesGift: {
+        message: 'كاسات أنيقة ومميزة، مثالية كهدية أو لإضافة لمسة جمالية لطاولتك.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    balloonsGift: {
+        message: 'بالونات بألوان وأشكال مختلفة لتضفي جوًا من البهجة على مناسبتك.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    roseChocBox: {
+        message: 'بوكسات ورد وشوكولاتة، هدية فاخرة تجمع بين جمال الورد ومذاق الشوكولاتة اللذيذ.',
+        options: [
+            { text: 'العودة لـ الهدايا', nextState: 'giftsSelection' },
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    customerService: {
+        message: 'للتحدث مع ممثل خدمة العملاء، يرجى الاتصال على الرقم: 01xxxxxxxxx خلال مواعيد العمل، أو إرسال بريد إلكتروني إلى info@zohouralrabea.com وسنقوم بالرد عليك في أقرب وقت ممكن.',
+        options: [
+            { text: 'العودة للقائمة الرئيسية', nextState: 'initial' }
+        ]
+    },
+    // Add more states and messages as needed
+};
+      

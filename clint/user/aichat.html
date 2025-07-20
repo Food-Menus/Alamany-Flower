@@ -2,227 +2,348 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./../../server/static/pngwing.com.png" type="image/x-icon">
     <title>زهور الربيع - المساعد الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* General Styles */
-        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+<style>
+    /* General Styles */
+    @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 
+    :root {
+        --primary-color: #ffbf00;   /* Amber */
+        --secondary-color: #6f0e8f; /* Dark Purple */
+        --secondary-color2: #8c8c8c; /* Medium Grey */
+        --light-grey: #f4f4f4;      /* Light Grey Background */
+        --white: #f4f4f4;           /* White */
+        --color1: #ff4444;          /* Red */
+        --color2: #35c528;          /* Green */
+        --color3: #52008c;          /* Darker Purple for buttons */
+        --text-color: #bf6f00;      /* Amber Text */
+        --border-radius: 8px;       /* Standard Border Radius */
+        
+        /* Base font size for desktop */
+        font-size: 16px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Almarai', sans-serif;
+        background-color: var(--white);
+        color: var(--text-color);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--primary-color);
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        color: inherit;
+        font-size: inherit;
+    }
+
+    /* --- Navbar (Top Header) --- */
+    .navbar {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .navbar .brand-name {
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+    }
+
+    /* --- Chatbot Specific Styles --- */
+    .chatbot-container {
+        width: 100%;
+        flex-grow: 1;
+        margin: 0 auto;
+        max-width: 1200px;
+        border-radius: 0;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chat-messages {
+        flex-grow: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        background-color: var(--light-grey);
+        padding-bottom: 6rem;
+    }
+
+    .message {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .message.bot {
+        justify-content: flex-start;
+    }
+
+    .message.bot .message-bubble {
+        background-color: var(--secondary-color);
+        color: var(--white);
+        border-bottom-right-radius: 0;
+        margin-right: 0;
+        margin-left: 0.5rem;
+    }
+
+    .message.user {
+        justify-content: flex-end;
+    }
+
+    .message.user .message-bubble {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        border-bottom-left-radius: 0;
+    }
+
+    .message-bubble {
+        padding: 0.8rem 1.2rem;
+        border-radius: 1.25rem;
+        max-width: 80%;
+        word-wrap: break-word;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    /* Robot Avatar Specific Styles */
+    .bot-avatar {
+        width: 4rem;
+        height: 4rem;
+        object-fit: contain;
+        flex-shrink: 0;
+        box-shadow: none;
+        animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* Fixed Chat Options at the bottom */
+    .chat-options {
+        padding: 0.8rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        justify-content: center;
+        background-color: var(--white);
+        border-top: 1px solid #eee;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-top: 1px solid #ddd;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    .chat-option-button {
+        background-color: var(--color3);
+        color: var(--white);
+        padding: 0.8rem 1rem;
+        border-radius: 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        white-space: nowrap;
+        flex: 1 1 auto;
+        min-width: 45%;
+        max-width: 100%;
+    }
+
+    .chat-option-button:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+    .chat-option-button:active {
+        transform: translateY(0);
+    }
+
+    /* --- Responsive adjustments for different screen sizes --- */
+
+    /* شاشات كبيرة جداً (مثل شاشات سطح المكتب الواسعة) */
+    @media (min-width: 1200px) {
         :root {
-            --primary-color: #ffbf00;   /* Amber */
-            --secondary-color: #6f0e8f; /* Dark Purple */
-            --secondary-color2: #8c8c8c; /* Medium Grey */
-            --light-grey: #f4f4f4;      /* Light Grey Background */
-            --white: #f4f4f4;           /* White */
-            --color1: #ff4444;          /* Red */
-            --color2: #35c528;          /* Green */
-            --color3: #52008c;          /* Darker Purple for buttons */
-            --text-color: #bf6f00;      /* Amber Text */
-            --border-radius: 8px;       /* Standard Border Radius */
+            font-size: 18px;
+        }
+        
+        .chatbot-container {
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Almarai', sans-serif;
-            background-color: var(--white);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--primary-color);
-        }
-
-        button {
-            cursor: pointer;
-            border: none;
-            background-color: transparent;
-            color: inherit;
-            font-size: inherit;
-        }
-
-        /* Navbar (Top Header) */
-        .navbar {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 15px 20px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: sticky; /* Keeps the header at the top */
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
+        .bot-avatar {
+            width: 5rem;
+            height: 5rem;
         }
 
         .navbar .brand-name {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .chat-option-button {
+            min-width: 120px;
+            max-width: 250px;
+        }
+    }
+
+    /* شاشات متوسطة (أجهزة لوحية وأجهزة كمبيوتر محمولة صغيرة) */
+    @media (max-width: 992px) {
+        :root {
+            font-size: 16px;
+        }
+        
+        .navbar .brand-name {
+            font-size: 1.4rem;
         }
 
-        /* --- Chatbot Specific Styles --- */
-        .chatbot-container {
-            width: 100%;
-            flex-grow: 1; /* Allows the chat area to fill available vertical space */
-            margin: 0;
-            border-radius: 0;
-            box-shadow: none;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Ensures content inside is clipped if it overflows */
+        .bot-avatar {
+            width: 4.5rem;
+            height: 4.5rem;
         }
 
         .chat-messages {
-            flex-grow: 1; /* Allows messages area to scroll and fill space */
-            padding: 20px;
-            overflow-y: auto; /* Enables vertical scrolling for messages */
-            background-color: var(--light-grey);
-            padding-bottom: 90px; /* Space for the fixed chat options at the bottom */
-        }
-
-        .message {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: flex-start; /* Aligns avatar and bubble at the top */
-        }
-
-        /* Styles for bot messages (left-aligned with avatar) */
-        .message.bot {
-            justify-content: flex-start; /* رسالة الروبوت والروبوت على أقصى اليسار */
-        }
-
-        .message.bot .message-bubble {
-            background-color: var(--secondary-color);
-            color: var(--white);
-            border-bottom-right-radius: 0; /* Flat edge next to avatar */
-            margin-right: 0;
-            margin-left: 8px; /* Space between bot image and bubble */
-        }
-
-        /* Styles for user messages (right-aligned) */
-        .message.user {
-            justify-content: flex-end; /* رسالة المستخدم على أقصى اليمين */
-        }
-
-        .message.user .message-bubble {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            border-bottom-left-radius: 0; /* Flat edge on the right */
-        }
-
-        .message-bubble {
-            padding: 12px 18px;
-            border-radius: 20px; /* Rounded corners for bubbles */
-            max-width: 80%; /* Limits bubble width */
-            word-wrap: break-word; /* Prevents long words from overflowing */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-        }
-
-        /* Robot Avatar Specific Styles */
-        .bot-avatar {
-            /* حجم الروبوت ضعف حجمه الأخير (240px) */
-            width: 240px;
-            height: auto; /* Maintain aspect ratio */
-            max-height: 240px; /* Limits height visually */
-            object-fit: contain; /* Ensures the entire image is visible without cropping */
-            flex-shrink: 0; /* Prevents the image from shrinking */
-            box-shadow: none; /* No shadow on the image itself */
-            /* Animation for floating effect */
-            animation: float 2s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); } /* زيادة حركة الطيران قليلاً مع الحجم الأكبر */
-            100% { transform: translateY(0px); }
-        }
-
-        /* Fixed Chat Options at the bottom */
-        .chat-options {
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap; /* Allows buttons to wrap to the next line */
-            gap: 10px; /* Space between buttons */
-            justify-content: center; /* Centers buttons horizontally */
-            background-color: var(--white);
-            border-top: 1px solid #eee;
-            position: fixed; /* Fixes the options to the viewport */
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000; /* Ensures options are on top of other content */
-            border-top: 1px solid #ddd; /* Visual separator */
-            padding: 10px 20px; /* Adjust padding for fixed position */
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.08); /* Shadow above options */
+            padding-bottom: 7rem;
         }
 
         .chat-option-button {
-            background-color: var(--color3);
-            color: var(--white);
-            padding: 15px;
-            border-radius: 25px; /* Pill-shaped buttons */
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            white-space: nowrap; /* Prevents text from wrapping inside the button */
+            font-size: 0.95rem;
+            padding: 0.7rem 0.9rem;
+        }
+    }
+
+    /* شاشات صغيرة (الهواتف الذكية) */
+    @media (max-width: 768px) {
+        :root {
+            font-size: 18px; /* زيادة حجم الخط الأساسي للهواتف */
+        }
+        
+        body {
+            padding: 0;
         }
 
-        .chat-option-button:hover {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            transform: translateY(-2px); /* Slight lift on hover */
+        .navbar {
+            padding: 0.8rem;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        .chat-option-button:active {
-            transform: translateY(0); /* Returns to original position on click */
+        .navbar .brand-name {
+            font-size: 1.3rem;
         }
 
-        /* Responsive adjustments for chatbot */
-        @media (max-width: 768px) { /* Adjust breakpoint for larger robot */
-            .chat-messages {
-                padding: 15px;
-                padding-bottom: 80px; /* More space for options on small screens */
-            }
-            .chat-options {
-                padding:15px;
-            }
-            .chat-option-button {
-                padding:  12px;
-                font-size: 0.85em;
-            }
-            .bot-avatar {
-                /* قللت حجم الروبوت قليلاً على الشاشات الأصغر ليتناسب بشكل أفضل */
-                width: 80px; /* ليكون 3x حجمه الأصلي على الشاشات الصغيرة */
-                max-height: 120px;
-            }
+        .chatbot-container {
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
-        /* Styling for the specific image path (if used in messages) */
-        img[src="./../../server/static/images/4.png"] {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            margin-top: 10px;
+        .chat-messages {
+            padding: 0.8rem;
+            padding-bottom: 8rem; /* مساحة أكبر للأزرار في الأسفل */
         }
-    </style>
+
+        .message-bubble {
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            max-width: 85%;
+        }
+
+        .bot-avatar {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .chat-options {
+            padding: 0.6rem;
+            gap: 0.5rem;
+        }
+
+        .chat-option-button {
+            font-size: 1rem;
+            padding: 0.8rem;
+            min-width: 45%;
+            border-radius: 1.5rem;
+        }
+    }
+
+    /* شاشات صغيرة جداً (بعض الهواتف القديمة) */
+    @media (max-width: 480px) {
+        :root {
+            font-size: 16px;
+        }
+        
+        .chat-messages {
+            padding-bottom: 8.5rem;
+        }
+
+        .chat-option-button {
+            font-size: 0.9rem;
+            padding: 0.7rem;
+            min-width: 100%;
+        }
+
+        .bot-avatar {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+        
+        .message-bubble {
+            font-size: 0.95rem;
+        }
+    }
+
+    /* Styling for the specific image path (if used in messages) */
+    img[src="./../../server/static/images/4.png"] {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--border-radius);
+        margin-top: 10px;
+    }
+</style>
 </head>
 <body>
+    <!-- باقي الكود كما هو بدون تغيير -->
     <header class="navbar">
         <div class="brand-name">الرد الذكي - زهور الربيع</div>
     </header>
@@ -237,6 +358,7 @@
     </main>
 
     <script>
+        // باقي الكود JavaScript كما هو بدون تغيير
         const chatMessages = document.getElementById('chat-messages');
         const chatOptions = document.getElementById('chat-options');
 
@@ -244,6 +366,7 @@
         let conversationState = 'initial';
 
         // Defines the conversation flow and responses
+
 const chatData = {
     initial: {
         message: 'أهلاً بك في زهور الربيع! كيف يمكنني مساعدتك اليوم؟',
@@ -550,6 +673,8 @@ const chatData = {
     },
     // Add more states and messages as needed
 };
+      
+
         // Function to add a message to the chat display
         function addMessage(text, sender) {
             const messageDiv = document.createElement('div');
@@ -558,7 +683,6 @@ const chatData = {
             // Add robot avatar for bot messages
             if (sender === 'bot') {
                 const botAvatar = document.createElement('img');
-                // مسار صورة الروبوت هنا: تأكد من أن الملف robot-avatar.png موجود في نفس مجلد ملف HTML
                 botAvatar.src = './../../server/static/images/4.png';
                 botAvatar.alt = 'Bot Avatar';
                 botAvatar.classList.add('bot-avatar');
@@ -570,17 +694,16 @@ const chatData = {
             messageBubble.textContent = text;
             messageDiv.appendChild(messageBubble);
             chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         // Function to display the available options as buttons
         function displayOptions(options) {
-            chatOptions.innerHTML = ''; // Clear previous options
+            chatOptions.innerHTML = '';
             options.forEach(option => {
                 const button = document.createElement('button');
                 button.classList.add('chat-option-button');
                 button.textContent = option.text;
-                // When a button is clicked, trigger handleUserChoice
                 button.onclick = () => handleUserChoice(option.nextState, option.text);
                 chatOptions.appendChild(button);
             });
@@ -588,31 +711,29 @@ const chatData = {
 
         // Handles user's choice and updates the conversation
         function handleUserChoice(nextState, userMessageText) {
-            // Add user's message to the chat
             addMessage(userMessageText, 'user');
-
-            // Update the conversation state based on user's choice
             conversationState = nextState;
 
-            // Simulate a delay before bot responds
             setTimeout(() => {
                 const botResponse = chatData[conversationState];
                 if (botResponse) {
                     addMessage(botResponse.message, 'bot');
                     displayOptions(botResponse.options);
                 } else {
-                    // Fallback if the state is not found
                     addMessage('عذراً، لا أفهم طلبك. الرجاء اختيار من الخيارات المتاحة.', 'bot');
                     displayOptions(chatData.initial.options);
                     conversationState = 'initial';
                 }
-            }, 500); // 0.5 second delay
+            }, 500);
         }
 
         // Initializes the chat when the page loads
         document.addEventListener('DOMContentLoaded', () => {
-            addMessage(chatData.initial.message, 'bot'); // Display initial bot message
-            displayOptions(chatData.initial.options);   // Display initial options
+            // Add welcome message with a slight delay for better UX
+            setTimeout(() => {
+                addMessage(chatData.initial.message, 'bot');
+                displayOptions(chatData.initial.options);
+            }, 300);
         });
     </script>
 </body>
