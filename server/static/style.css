@@ -11,18 +11,19 @@ actions
 site-footer
 navbar
 category-item
+<button id="language-switcher" class="lang-switcher">EN / عربي</button>
 */
 
 :root {
-    --primary-color: #e7ad00; /* Pink */
-    --secondary-color: #333;   /* Dark Grey */
-    --secondary-color2: #8c8c8c;   /* Dark Grey */
+    --primary-color: #ffbf00; /* Pink#e7ad00; */
+    --secondary-color: #6f0e8f;   /* Dark Grey   #333;*/
+    --secondary-color2: #8c8c8c;   /* Dark Grey  #8c8c8c;*/
     --light-grey: #f4f4f4;
     --white: #ffffff;
     --color1: #ff4444;
     --color2: #35c528;
-    --color3: #a50000;
-    --text-color: #333;
+    --color3: #52008c;
+    --text-color: #bf6f00;
     --border-radius: 8px;
 }
 
@@ -678,12 +679,11 @@ button {
     color: var(--white); /* نص أبيض */
     border: none;
     padding: 8px 15px;
-    margin-left: 30%;
-    margin-right: 30%;
+
     margin-top: 25px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 15px;
     font-weight: bold;
     transition: background-color 0.3s ease;
 }

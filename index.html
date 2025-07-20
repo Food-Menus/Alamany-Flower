@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./../../server/static/images/logoIcon.jpg" type="image/x-icon">
-    <title>قصر زهور الأماني - الصفحة الرئيسية </title>
+    <title>زهور الربيع - الصفحة الرئيسية </title>
     <link rel="stylesheet" href="./server/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-color: #e7ad00; /* Pinkish-orange */
-            --secondary-color: #333;   /* Dark Grey */
-            --secondary-color2: #8c8c8c;    /* Medium Grey */
-            --light-grey: #f4f4f4; /* Light background */
-            --white: #ffffff;
+
             --border-color: #e0e0e0;
             --shadow-light: rgba(0, 0, 0, 0.05);
             --shadow-medium: rgba(0, 0, 0, 0.1);
             --card-button-bg-add: #35c528; /* Original green for add to cart */
             --card-button-bg-wish:#ff4444; /* Primary color for wishlist */
+            
         }
         .special-offers {
             position: relative;
@@ -179,7 +176,7 @@
         /* على الشاشات الصغيرة جداً، عمود واحد */
         @media (max-width: 768px) {
             .products-grid {
-                grid-template-columns: 1fr; /* عمود واحد على الشاشات الصغيرة */
+                grid-template-columns: 4fr; /* عمود واحد على الشاشات الصغيرة */
                 padding: 5px;
             }
             .product-card {
@@ -189,6 +186,9 @@
                 padding: 10px;
                 margin: 10px auto;
             }
+
+            
+            
         }
 
 
@@ -390,10 +390,13 @@
     </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="brand-name" data-translate-key="brandName">قصر زهور الأماني</div><br>
+
+<!-- ##################################################################################################### -->
+    <header class="navbar"><div class="brand-name" data-translate-key="brandName">زهور الربيع</div><br>
     </header>
-    <button id="language-switcher" class="lang-switcher">EN / عربي</button>
+<!-- ##################################################################################################### -->
+
+
     <main class="content">
 
         <section class="special-offers">
@@ -494,12 +497,13 @@
 
         <section class="ads-section">
             <div class="ad-container">
-                <img src="./server/static/images/Cover Image.png" alt="إعلان 1">
-                <img src="./server/static/images/Cover Image.png" alt="إعلان 2">
+                <img src="./server/static/Cover Image.png" alt="إعلان 1">
+                <img src="./server/static/Cover Image.png" alt="إعلان 2">
             </div>
         </section>
 
         <section class="categories-section">
+            <h2 data-translate-key="pickYourFlower"> اختر وردتك </h2>
             <div class="categories-grid">
                 <button class="category-item" onclick="redirectToProducts('ورد طبيعي')">
                     <i class="fas fa-seedling"></i> <span data-translate-key="naturalRoses">ورد طبيعي</span>
@@ -578,7 +582,7 @@
                 </button>
             </div>
         </section>
-
+<!-- 
         <section class="categories-section">
             <div class="categories-grid">
                 <button class="category-item" onclick="redirectToStoreWithFilter('بوكس ورد + شوكولاتة')">
@@ -594,7 +598,7 @@
                     <span data-translate-key="roseBox">بوكس ورد</span>
                 </button>
             </div>
-        </section>
+        </section> -->
 
         <section class="best-sellers-section">
             <h2 data-translate-key="bestSellersTitle">الأكثر مبيعًا</h2>
@@ -610,17 +614,18 @@
 
         </section>
 
-        </main>
+    </main>
 
 
+<!-- ##################################################################################################### -->
     <footer class="site-footer">
         <div class="social-links">
-            <a href="https://www.facebook.com/123flowerking/"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/al_amany_flower/"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@alamanyflower?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/201121721735"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/Techno.Science.TC"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.facebook.com/Techno.Science.TC"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/Techno.Science.TC"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/0114182463"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p data-translate-key="allRightsReserved">© 2025 Techno Science. All rights reserved.</p>
+        <p data-translate-key="allRightsReserved">© 2025 Techno Scince. All rights reserved.</p>
     </footer>
     <nav class="bottom-nav">
         <a href="index.html" class="nav-item active">
@@ -654,10 +659,13 @@
             <li><a href="./clint/admin/admin-dashboard.html" data-translate-key="adminLogin">تسجيل دخول المدير</a></li>
             <li><a href="./server/static/Alamanii Flowers.apk" download data-translate-key="downloadApp" class="download-app-link">
              <i class="fas fa-download"></i>   تنزيل التطبيق للاندرويد   </a></li>
+             <li><button id="language-switcher" class="lang-switcher">EN / عربي</button></li>
         </ul>
         <br><br><br><br><br>
         <button class="close-side-menu" data-translate-key="close">close</button>
     </div>
+<!-- ##################################################################################################### -->
+
     <script src="./server/script.js"></script>
     <script src="./server/translate.js"></script> <script>
         // الدالة الموجودة بالفعل لأزرار الفئات العادية (إذا كانت موجودة)
@@ -957,6 +965,7 @@
             window.location.href = `./clint/user/view-products.html?${targetParam}=${encodeURIComponent(paramValue)}`;
         }
     </script>
+
 </body>
 </html>
 

@@ -3,7 +3,7 @@
 const translations = {
     'ar': {
         // مفاتيح عامة ومفاتيح من الصفحة الرئيسية
-        brandName: 'قصر زهور الأماني',
+        brandName: ' زهور الربيع ',
         clickHere: 'اطلب الآن',
         beautifulFlowersOccasions: 'أجمل زهور لأروع المناسبات',
         wideSelectionFlowers: 'تشكيلة واسعة من الزهور لكل مناسبة.',
@@ -22,7 +22,7 @@ const translations = {
         satinRoses: 'ورد ساتان',
         driedFlowers: 'مجففات',
         giftsAlias: 'جيفتات', // تم تحديثها بناءً على استخدامك في الكود
-        chooseWhatYouLove: 'اختر ما تحب',
+        pickYourFlower: 'اختر وردتك',
         chooseYourOccasion: 'اختر حسب مناسبتك',
         chooseYourGift: 'اختر هديتك',
         box: 'بوكس',
@@ -277,7 +277,7 @@ const translations = {
         satinRoses: 'Satin Roses',
         driedFlowers: 'Dried Flowers',
         giftsAlias: 'Gifts', // Updated based on your code usage
-        chooseWhatYouLove: 'Choose What You Love',
+        pickYourFlower: 'Pick Your Flower',
         chooseYourOccasion: 'Choose by Occasion',
         chooseYourGift: 'Choose Your Gift',
         box: 'Box',
