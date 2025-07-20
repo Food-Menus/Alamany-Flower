@@ -387,6 +387,83 @@
         .toast-message.error {
             background-color: #f44336; 
         }
+
+
+
+
+
+
+
+
+
+        #ai-assistant-container {
+            position: fixed;
+            top: 50%; /* لتوسيطه عموديًا في البداية */
+            right: 1px; /* المسافة من يمين الشاشة */
+            transform: translateY(-50%); /* يكمل التوسيط العمودي */
+            z-index: 1000;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #ai-assistant-robot {
+            width: 100px; /* يمكنك تعديل عرض الصورة حسب الحاجة */
+            height: auto;
+            animation: float 3s ease-in-out infinite; /* حركة الطفو */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); } /* مقدار الارتفاع والانخفاض */
+            100% { transform: translateY(0px); }
+        }
+
+        #ai-assistant-message {
+            background-color: #333; /* لون خلفية الرسالة */
+            color: #fff; /* لون نص الرسالة */
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+            white-space: nowrap; /* يمنع النص من الانقسام لعدة أسطر */
+            opacity: 0; /* تبدأ مخفية */
+            visibility: hidden; /* تبدأ مخفية */
+            transform: translateY(10px); /* تبدأ أسفل قليلًا */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
+        }
+
+        #ai-assistant-container:hover #ai-assistant-message {
+            opacity: 1; /* تظهر عند مرور الماوس فوق الروبوت */
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #remove-assistant-area {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 0, 0, 0.7); /* خلفية حمراء شفافة */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 999;
+            display: none; /* مخفية في البداية */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #remove-assistant-area.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        #remove-assistant-area p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -616,6 +693,16 @@
 
     </main>
 
+    <div id="ai-assistant-container">
+        <img id="ai-assistant-robot" src="./server/static/images/1.png" alt="مساعد آلي">
+        <div id="ai-assistant-message">
+            <p>أنا مساعدك الشخصي! اضغط علي لنتحدث.</p>
+        </div>
+    </div>
+
+    <div id="remove-assistant-area">
+        <p>اسحب المساعد إلى هنا لإزالته</p>
+    </div>
 
 <!-- ##################################################################################################### -->
     <footer class="site-footer">
@@ -965,6 +1052,145 @@
             window.location.href = `./clint/user/view-products.html?${targetParam}=${encodeURIComponent(paramValue)}`;
         }
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const assistantContainer = document.getElementById('ai-assistant-container');
+    const assistantRobot = document.getElementById('ai-assistant-robot');
+    const removeArea = document.getElementById('remove-assistant-area');
+
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    // --- تم إزالة هذا الجزء: لا يوجد تحميل للموضع من localStorage بعد الآن ---
+    // if (localStorage.getItem('assistantX') && localStorage.getItem('assistantY')) {
+    //     assistantContainer.style.left = localStorage.getItem('assistantX') + 'px';
+    //     assistantContainer.style.top = localStorage.getItem('assistantY') + 'px';
+    //     assistantContainer.style.right = 'auto';
+    //     assistantContainer.style.bottom = 'auto';
+    //     assistantContainer.style.transform = 'none';
+    // }
+    // --- نهاية الإزالة ---
+
+    // Function to get event coordinates (handles both mouse and touch)
+    function getCoords(e) {
+        if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+    }
+
+    // Function to handle moving
+    function moveAssistant(e) {
+        if (!isDragging) return;
+        e.preventDefault(); // Prevent scrolling on touch devices during drag
+
+        const coords = getCoords(e);
+        let newX = coords.x - offsetX;
+        let newY = coords.y - offsetY;
+
+        assistantContainer.style.left = `${newX}px`;
+        assistantContainer.style.top = `${newY}px`;
+        assistantContainer.style.right = 'auto';
+        assistantContainer.style.bottom = 'auto';
+        assistantContainer.style.transform = 'none'; // Ensure no conflicting transforms
+
+        // Check for proximity to remove area
+        const assistantRect = assistantContainer.getBoundingClientRect();
+        const removeRect = removeArea.getBoundingClientRect();
+
+        if (
+            assistantRect.right > removeRect.left &&
+            assistantRect.left < removeRect.right &&
+            assistantRect.bottom > removeRect.top &&
+            assistantRect.top < removeRect.bottom
+        ) {
+            removeArea.style.backgroundColor = 'rgba(255, 0, 0, 1)'; // Highlight when close
+        } else {
+            removeArea.style.backgroundColor = 'rgba(255, 0, 0, 0.7)';
+        }
+    }
+
+    // Start dragging (Mouse and Touch)
+    function startDragging(e) {
+        isDragging = true;
+        const coords = getCoords(e);
+        offsetX = coords.x - assistantContainer.getBoundingClientRect().left;
+        offsetY = coords.y - assistantContainer.getBoundingClientRect().top;
+        assistantContainer.style.cursor = 'grabbing';
+        removeArea.classList.add('visible'); // Show remove area
+        assistantContainer.style.transition = 'none'; // Disable transition during drag
+    }
+
+    assistantContainer.addEventListener('mousedown', startDragging);
+    assistantContainer.addEventListener('touchstart', startDragging, { passive: false }); // passive: false to allow preventDefault
+
+    // End dragging (Mouse and Touch)
+    function endDragging() {
+        if (isDragging) {
+            isDragging = false;
+            assistantContainer.style.cursor = 'grab';
+            removeArea.classList.remove('visible'); // Hide remove area
+
+            const assistantRect = assistantContainer.getBoundingClientRect();
+            const removeRect = removeArea.getBoundingClientRect();
+
+            // Check if assistant is over the remove area
+            if (
+                assistantRect.right > removeRect.left &&
+                assistantRect.left < removeRect.right &&
+                assistantRect.bottom > removeRect.top &&
+                assistantRect.top < removeRect.bottom
+            ) {
+                assistantContainer.style.display = 'none'; // Hide assistant
+                localStorage.setItem('assistantHidden', 'true'); // Save state for hiding
+            } else {
+                // --- تم إزالة هذا الجزء: لا يوجد حفظ للموضع في localStorage بعد الآن ---
+                // localStorage.removeItem('assistantHidden'); // Clear state if not removed
+                // localStorage.setItem('assistantX', assistantContainer.getBoundingClientRect().left);
+                // localStorage.setItem('assistantY', assistantContainer.getBoundingClientRect().top);
+                // --- نهاية الإزالة ---
+                // إذا لم يتم إزالته، تأكد من إظهاره مجددًا إذا كان مخفيًا
+                if (localStorage.getItem('assistantHidden') === 'true') {
+                    localStorage.removeItem('assistantHidden');
+                    assistantContainer.style.display = 'block'; // أو 'flex' حسب الـ CSS
+                }
+            }
+            assistantContainer.style.transition = 'transform 0.3s ease-in-out'; // Re-enable transition
+        }
+    }
+
+    document.addEventListener('mouseup', endDragging);
+    document.addEventListener('touchend', endDragging);
+
+    // Dragging logic (Mouse and Touch)
+    document.addEventListener('mousemove', moveAssistant);
+    document.addEventListener('touchmove', moveAssistant, { passive: false }); // passive: false to allow preventDefault
+
+    // Click/Tap to navigate
+    assistantRobot.addEventListener('click', (e) => {
+        // Prevent navigation if currently dragging (for mouse)
+        if (e.target.closest('#ai-assistant-container') && isDragging) {
+            return;
+        }
+        window.location.href = './clint/user/aichat.html'; // استبدل بمسار صفحة المساعد الخاصة بك
+    });
+
+    // Initial check for hidden state (on page load)
+    // هذا الجزء سيبقى ليسمح بإخفاء المساعد إذا تم سحبه لمنطقة الإزالة
+    if (localStorage.getItem('assistantHidden') === 'true') {
+        assistantContainer.style.display = 'none';
+    } else {
+        // إذا لم يكن مخفيًا، تأكد من إعادة ضبط موقعه الأولي من CSS
+        // هذا ليس ضرورياً إذا كان الـ CSS يحدد الموضع الأولي،
+        // ولكن للتأكيد في حالة وجود أي تداخل سابق.
+        assistantContainer.style.top = 'auto'; // لإلغاء أي top سابق من localStorage
+        assistantContainer.style.left = 'auto'; // لإلغاء أي left سابق من localStorage
+        assistantContainer.style.bottom = '10px'; // الموضع الافتراضي
+        assistantContainer.style.right = '1px'; // الموضع الافتراضي
+        assistantContainer.style.transform = 'none'; // لإلغاء أي transform سابق
+    }
+});
+ </script>
 
 </body>
 </html>
